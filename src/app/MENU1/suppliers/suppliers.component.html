@@ -1,0 +1,73 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a class="breadcrumb-text" href="#">Home</a></li>
+    <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
+        <a href="javascript:void(0)" [routerLink]="breadLink.url" class="breadcrumb-text">{{breadLink.name }}</a></li>
+</ol>
+</nav>
+ 
+<section class="section-content padding-y bg">
+  <div class="container">
+    <table *ngIf="!edited" class="table  table-hover">
+      <thead>
+        <th>Supplier_ID</th>
+        <th>Name</th>
+        <th>
+          <input
+            type="button"
+            value="New"
+            class="btn btn-primary"
+            (click)="Supplier(item)"
+          />
+        </th>
+      </thead>
+      <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+          <td>{{ item.Supplier_ID }}</td>      
+        <td>{{ item.Company_Name }}</td>
+        <td>
+          <input
+            type="button"
+            value="Edit"
+            class="btn btn-primary"
+            (click)="Supplier(item)"
+          />
+        </td>
+      </tr>
+    </table>
+ 
+    <br /><br />
+    {{ diagnostic }}
+    <form
+      (ngSubmit)="onSubmit(model)"
+      *ngIf="edited"
+      novalidate
+      #heroForm="ngForm"
+    >
+      <div class="form-group">
+        <label for="Contact_Name">Company Name</label>
+        <input
+          id="Contact_Name"
+          name="Contact_Name"
+          [(ngModel)]="model.Contact_Name"
+          type="text"
+          class="form-control"
+          placeholder="Enter email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="Company_Name">Contact Name</label>
+        <input
+          id="Company_Name"
+          name="Company_Name"
+          [(ngModel)]="model.Company_Name"
+          type="text"
+          class="form-control"
+          placeholder="Password"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>
