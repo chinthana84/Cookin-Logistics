@@ -7,7 +7,8 @@ import { SuppliersComponent } from './MENU1/suppliers/suppliers.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './_shared/Shared.module';
-
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,10 @@ import { SharedModule } from './_shared/Shared.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     SharedModule,
     FormsModule,
+    ToastrModule.forRoot(),
      RouterModule.forRoot([
       {
          path: 'suppliers',  component: SuppliersComponent,
@@ -32,9 +35,4 @@ import { SharedModule } from './_shared/Shared.module';
 })
 export class AppModule { }
 
-// 'component2/:id1/:id2', componen
-// children: [
-//   {path: '', redirectTo: 'tracks'}, ①
-//   {path: 'tracks', component: ArtistTrackListComponent}, ②
-//   {path: 'albums', component: ArtistAlbumListComponent}, ③
-//   ]
+ 

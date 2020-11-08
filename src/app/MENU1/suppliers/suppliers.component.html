@@ -1,42 +1,63 @@
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a class="breadcrumb-text" href="#">Home</a></li>
-    <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
-        <a href="javascript:void(0)" [routerLink]="breadLink.url" class="breadcrumb-text">{{breadLink.name }}</a></li>
-</ol>
+    <li class="breadcrumb-item">
+      <a class="breadcrumb-text" href="#">Home</a>
+    </li>
+    <li
+      *ngFor="let breadLink of displayBreadcrumbList"
+      class="breadcrumb-item active"
+      aria-current="page"
+    >
+      <a
+        href="javascript:void(0)"
+        [routerLink]="breadLink.url"
+        class="breadcrumb-text"
+        >{{ breadLink.name }}</a
+      >
+    </li>
+  </ol>
 </nav>
- 
+
 <section class="section-content padding-y bg">
   <div class="container">
-    <table *ngIf="!edited" class="table  table-hover">
-      <thead>
-        <th>Supplier_ID</th>
-        <th>Name</th>
-        <th>
-          <input
-            type="button"
-            value="New"
-            class="btn btn-primary"
-            (click)="Supplier(item)"
-          />
-        </th>
-      </thead>
-      <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
-          <td>{{ item.Supplier_ID }}</td>      
-        <td>{{ item.Company_Name }}</td>
-        <td>
-          <input
-            type="button"
-            value="Edit"
-            class="btn btn-primary"
-            (click)="Supplier(item)"
-          />
-        </td>
-      </tr>
-    </table>
- 
-    <br /><br />
-    {{ diagnostic }}
+    <div *ngIf="!edited" >
+      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]='searchID'></app-search>
+      <table class="table  table-hover">
+        <thead>
+          <th>Supplier_ID</th>
+          <th>Name</th>
+          <th>
+            <input
+              type="button"
+              value="New"
+              class="btn btn-primary"
+              (click)="Supplier(item)"
+            />
+          </th>
+        </thead>
+        <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+          <td>{{ item.Supplier_ID }}</td>
+          <td>{{ item.Company_Name }}</td>
+          <td>
+            <input
+              type="button"
+              value="Edit"
+              class="btn btn-primary"
+              (click)="Supplier(item)"
+            />
+          </td>
+        </tr>
+      </table>
+  
+      <app-pager
+        (pagedClicked)="setPage($event)"
+        [pagerX]="gridOption"
+      ></app-pager>
+      <br /><br />
+    </div>
+
+
     <form
       (ngSubmit)="onSubmit(model)"
       *ngIf="edited"

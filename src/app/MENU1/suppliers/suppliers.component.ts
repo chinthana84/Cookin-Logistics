@@ -3,14 +3,16 @@ import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.mode
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { ActivatedRoute, Route, NavigationEnd, Router, Params } from '@angular/router';
 import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
-import { Supplier } from 'src/app/models/supplier.model';
+import { Supplier } from 'src/app/models/supplier.model';   
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-suppliers',
   templateUrl: './suppliers.component.html',
   styleUrls: ['./suppliers.component.css']
 })
 export class SuppliersComponent implements OnInit {
-
+  searchID = 1;
   model: Supplier = {};
   edited: boolean = false
 
@@ -22,9 +24,10 @@ export class SuppliersComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,private toastr: ToastrService
+      ) {
 
-
+   
     this.edited = false
   }
 
@@ -79,6 +82,42 @@ export class SuppliersComponent implements OnInit {
       {
         "Company_Name": "ABC Mung Bean Drink 250ml",
         "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
+      },
+      {
+        "Company_Name": "ABC Mung Bean Drink 250ml",
+        "Supplier_ID":1
       }
 
     ];
@@ -88,9 +127,9 @@ export class SuppliersComponent implements OnInit {
  
 
     this.gridOption.datas = {
-      "totalItems": 7,
+      "totalItems": 11,
       "currentPage": 1,
-      "pageSize": 12.0,
+      "pageSize": 10.0,
       "totalPages": 1,
       "startPage": 1,
       "endPage": 1,
@@ -142,8 +181,17 @@ export class SuppliersComponent implements OnInit {
     // });
   }
 
-  onSubmit(form: Supplier) {
+  onSubmit(form: Supplier) { 
+    this.toastr.success("ssssssssss")
     console.log(form)
+
+    // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {  
+    //   alert("Yes clicked");  
+    // }, function () {  
+    //   alert("No clicked");  
+    // })  
+  //  this.router.navigate(['/suppliers'] );
   }
+  
 
 }
