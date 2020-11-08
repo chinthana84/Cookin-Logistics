@@ -9,11 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './_shared/Shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.module'; 
 @NgModule({
   declarations: [
     AppComponent,
-    SuppliersComponent
+    SuppliersComponent 
   ],
   imports: [
     BrowserModule,
@@ -21,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     FormsModule,
     ToastrModule.forRoot(),
+    ConfirmDialogModule,
      RouterModule.forRoot([
       {
          path: 'suppliers',  component: SuppliersComponent,

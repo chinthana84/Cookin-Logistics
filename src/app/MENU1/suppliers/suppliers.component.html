@@ -1,3 +1,4 @@
+<app-confirm-dialog></app-confirm-dialog>
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -21,12 +22,21 @@
 
 <section class="section-content padding-y bg">
   <div class="container">
-    <div *ngIf="!edited" >
-      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]='searchID'></app-search>
-      <table class="table  table-hover">
+    <div *ngIf="!edited">
+      <app-search
+        (searchClicked)="setPage($event)"
+        [searchOptionsX]="gridOption.colNames"
+        [searchID]="searchID"
+      ></app-search>
+      <table class="table table-hover">
         <thead>
           <th>Supplier_ID</th>
-          <th>Name</th>
+          <th>Company Name</th>
+          <th>Contact Name</th>
+          <th>Contact Title</th>
+          <th>Phone</th>
+          <th>Fax</th>
+
           <th>
             <input
               type="button"
@@ -36,9 +46,17 @@
             />
           </th>
         </thead>
-        <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+        <tr
+          *ngFor="let item of gridOption.datas.pagedItems"
+          class="table-hover"
+        >
           <td>{{ item.Supplier_ID }}</td>
           <td>{{ item.Company_Name }}</td>
+          <td>{{ item.Contact_Name }}</td>
+          <td>{{ item.Contact_Title }}</td>
+          <td>{{ item.Phone }}</td>
+          <td>{{ item.Fax }}</td>
+
           <td>
             <input
               type="button"
@@ -49,14 +67,13 @@
           </td>
         </tr>
       </table>
-  
+
       <app-pager
         (pagedClicked)="setPage($event)"
         [pagerX]="gridOption"
       ></app-pager>
       <br /><br />
     </div>
-
 
     <form
       (ngSubmit)="onSubmit(model)"
@@ -65,26 +82,61 @@
       #heroForm="ngForm"
     >
       <div class="form-group">
-        <label for="Contact_Name">Company Name</label>
+        <label for="Contact_Name">Contact Name</label>
         <input
           id="Contact_Name"
           name="Contact_Name"
           [(ngModel)]="model.Contact_Name"
           type="text"
           class="form-control"
-          placeholder="Enter email"
+          placeholder="Contact_Name"
         />
       </div>
 
       <div class="form-group">
-        <label for="Company_Name">Contact Name</label>
+        <label for="Company_Name">Company Name</label>
         <input
           id="Company_Name"
           name="Company_Name"
           [(ngModel)]="model.Company_Name"
           type="text"
           class="form-control"
-          placeholder="Password"
+          placeholder="Company Name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="Contact_Title">Contact Title</label>
+        <input
+          id="Contact_Title"
+          name="Contact_Title"
+          [(ngModel)]="model.Contact_Title"
+          type="text"
+          class="form-control"
+          placeholder="Contact Title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input
+          id="Phone"
+          name="Phone"
+          [(ngModel)]="model.Phone"
+          type="text"
+          class="form-control"
+          placeholder="Phone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Fax">Fax</label>
+        <input
+          id="Fax"
+          name="Fax"
+          [(ngModel)]="model.Fax"
+          type="text"
+          class="form-control"
+          placeholder="Fax"
         />
       </div>
 
