@@ -9,11 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './_shared/Shared.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.module'; 
+import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.module';
+import { CategoryComponent } from './MENU1/category/category/category.component'; 
 @NgModule({
   declarations: [
     AppComponent,
-    SuppliersComponent 
+    SuppliersComponent,
+    CategoryComponent 
   ],
   imports: [
     BrowserModule,

@@ -143,11 +143,6 @@ export class SuppliersComponent implements OnInit {
     // obj.girdId = GridType.Category;
     //obj.defaultSortColumnName = 'Description';
 
-
-
-
-
-
     this.gridOption.datas = {
       "totalItems": 11,
       "currentPage": 1,
