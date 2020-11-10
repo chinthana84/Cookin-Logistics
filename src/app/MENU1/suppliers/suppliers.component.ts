@@ -6,6 +6,7 @@ import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from 
 import { Supplier } from 'src/app/models/supplier.model';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-suppliers',
@@ -23,93 +24,90 @@ export class SuppliersComponent implements OnInit {
     datas: {}
   };
 
-  pieces: Supplier[] = [
-    {
-      "Company_Name": "naimal",
-      "Contact_Name" :"xxx",
-      "Supplier_ID": 1,
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal",
-      "Supplier_ID": 2,
-      "Contact_Name" :"xxx",
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal",
-      "Supplier_ID": 3, "Contact_Name" :"xxx",
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal",
-      "Supplier_ID": 4, "Contact_Name" :"xxx",
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimall",
-      "Supplier_ID": 5, "Contact_Name" :"xxx",
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal",
-      "Supplier_ID": 6, "Contact_Name" :"xxx",
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal",
-      "Supplier_ID": 7,
-      "Contact_Title": "MR", "Contact_Name" :"xxx",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimall", "Contact_Name" :"xxx",
-      "Supplier_ID": 8,
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "naimal", "Contact_Name" :"xxx",
-      "Supplier_ID": 9,
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    },
-    {
-      "Company_Name": "namel", "Contact_Name" :"xxx",
-      "Supplier_ID": 10,
-      "Contact_Title": "MR",
-      "Phone": "2548",
-      "Fax": "11111111111"
-    } 
+  // pieces: Supplier[] = [
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Contact_Name" :"xxx",
+  //     "Supplier_ID": 1,
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Supplier_ID": 2,
+  //     "Contact_Name" :"xxx",
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Supplier_ID": 3, "Contact_Name" :"xxx",
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Supplier_ID": 4, "Contact_Name" :"xxx",
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimall",
+  //     "Supplier_ID": 5, "Contact_Name" :"xxx",
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Supplier_ID": 6, "Contact_Name" :"xxx",
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal",
+  //     "Supplier_ID": 7,
+  //     "Contact_Title": "MR", "Contact_Name" :"xxx",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimall", "Contact_Name" :"xxx",
+  //     "Supplier_ID": 8,
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "naimal", "Contact_Name" :"xxx",
+  //     "Supplier_ID": 9,
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   },
+  //   {
+  //     "Company_Name": "namel", "Contact_Name" :"xxx",
+  //     "Supplier_ID": 10,
+  //     "Contact_Title": "MR",
+  //     "Phone": "2548",
+  //     "Fax": "11111111111"
+  //   } 
 
-  ];
+  // ];
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
+  constructor(private http: HttpClient,private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
   ) {
 
 
     this.edited = false
   }
 
-  displayBreadcrumbList: Array<any>;
-  route: string = '';
-  initialUrl: string = '';
-  masterBreadcrumbList: Array<any>;
+
 
 
   ngOnInit() {
@@ -125,7 +123,7 @@ export class SuppliersComponent implements OnInit {
       }
       else if (params.id > 0) {
         this.edited = true
-        this.model = this.pieces.filter(i => i.Supplier_ID == params.id)[0]
+        //'this.model = this.pieces.filter(i => i.Supplier_ID == params.id)[0]
         console.log(this.model)
       }
       else {
@@ -135,28 +133,33 @@ export class SuppliersComponent implements OnInit {
     }
     );
 
-    this.setBreadcrumb()
+
 
   }
 
   setPage(obj: SearchObject) {
     // obj.girdId = GridType.Category;
-    //obj.defaultSortColumnName = 'Description';
+    obj.defaultSortColumnName = 'Company_Name';
 
-    this.gridOption.datas = {
-      "totalItems": 11,
-      "currentPage": 1,
-      "pageSize": 10.0,
-      "totalPages": 1,
-      "startPage": 1,
-      "endPage": 1,
-      "startIndex": 0,
-      "endIndex": 6,
-      "pagedItems": this.pieces,
-      "pages": [
-        1
-      ]
-    };
+    this.http.post<any>('http://localhost:9999/api/grid',obj,{}).subscribe(data => {
+      console.log(data);
+      this.gridOption.datas=data;
+  })
+
+    // this.gridOption.datas = {
+    //   "totalItems": 11,
+    //   "currentPage": 1,
+    //   "pageSize": 10.0,
+    //   "totalPages": 1,
+    //   "startPage": 1,
+    //   "endPage": 1,
+    //   "startIndex": 0,
+    //   "endIndex": 6,
+    //   "pagedItems": this.pieces,
+    //   "pages": [
+    //     1
+    //   ]
+    // };
 
   }
 
@@ -168,35 +171,10 @@ export class SuppliersComponent implements OnInit {
       this.router.navigate(['/suppliers/edit'], { queryParams: { id: item.Supplier_ID } });
     }
     this.edited = true
-    this.setBreadcrumb()
+     
   }
 
-  setBreadcrumb() {
-    //   this.router.events.subscribe((val) => {
-    this.displayBreadcrumbList = [];
-    if (location.pathname !== '') {
-      this.route = location.pathname;
-      this.masterBreadcrumbList = this.route.split('/');
-      this.masterBreadcrumbList = this.masterBreadcrumbList.slice(1, this.masterBreadcrumbList.length);
-      for (let i = 0; i < this.masterBreadcrumbList.length; i++) {
-        if (i !== 0) {
-          this.initialUrl = this.displayBreadcrumbList[i - 1];
-        } else {
-          this.initialUrl = '/';
-        }
-        const breadCrumbObj = {
-          name: this.masterBreadcrumbList[i],
-          url: this.initialUrl + this.masterBreadcrumbList[i],
-          id: i
-        };
-        this.displayBreadcrumbList.push(breadCrumbObj);
-      }
-    } else {
-      this.route = 'Home';
-    }
-    console.log(this.displayBreadcrumbList)
-    // });
-  }
+
 
   onSubmit(form: Supplier) {
     this.toastr.success("ssssssssss")

@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-bread-crumb',
+  templateUrl: './bread-crumb.component.html',
+  styleUrls: ['./bread-crumb.component.css']
 })
-export class AppComponent {
-  title = 'Cookin-Logistics';
+export class BreadCrumbComponent implements OnInit {
   displayBreadcrumbList: Array<any>;
   route: string = '';
   initialUrl: string = '';
@@ -42,8 +41,8 @@ export class AppComponent {
     } else {
       this.route = 'Home';
     }
-     
+    console.log(this.displayBreadcrumbList)
    });
   }
- 
+
 }
