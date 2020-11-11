@@ -1,6 +1,3 @@
-
-
-
 <section class="section-content padding-y bg">
   <div class="container">
     <div *ngIf="!edited">
@@ -9,12 +6,12 @@
         [searchOptionsX]="gridOption.colNames"
         [searchID]="searchID"
       ></app-search>
-      <table class="table table-hover">
+      <table class="table table-striped table-sm">
         <thead>
           <th>Supplier_ID</th>
           <th>Company Name</th>
           <th>Contact Name</th>
-          <th>Contact Title</th>
+          <th>Title</th>
           <th>Phone</th>
           <th>Fax</th>
 
@@ -31,10 +28,10 @@
           *ngFor="let item of gridOption.datas.pagedItems"
           class="table-hover"
         >
-          <td>{{ item.Supplier_ID }}</td>
-          <td>{{ item.Company_Name }}</td>
-          <td>{{ item.Contact_Name }}</td>
-          <td>{{ item.Contact_Title }}</td>
+          <td>{{ item.SupplierId }}</td>
+          <td>{{ item.CompanyName }}</td>
+          <td>{{ item.ContactName }}</td>
+          <td>{{ item.ContactTitle }}</td>
           <td>{{ item.Phone }}</td>
           <td>{{ item.Fax }}</td>
 
@@ -63,23 +60,23 @@
       #heroForm="ngForm"
     >
       <div class="form-group">
-        <label for="Contact_Name">Contact Name</label>
+        <label for="ContactName">Contact Name</label>
         <input
-          id="Contact_Name"
-          name="Contact_Name"
-          [(ngModel)]="model.Contact_Name"
+          id="ContactName"
+          name="ContactName"
+          [(ngModel)]="model.ContactName"
           type="text"
           class="form-control"
-          placeholder="Contact_Name"
+          placeholder="ContactName"
         />
       </div>
 
       <div class="form-group">
-        <label for="Company_Name">Company Name</label>
+        <label for="CompanyName">Company Name</label>
         <input
-          id="Company_Name"
-          name="Company_Name"
-          [(ngModel)]="model.Company_Name"
+          id="CompanyName"
+          name="CompanyName"
+          [(ngModel)]="model.CompanyName"
           type="text"
           class="form-control"
           placeholder="Company Name"
@@ -87,11 +84,11 @@
       </div>
 
       <div class="form-group">
-        <label for="Contact_Title">Contact Title</label>
+        <label for="ContactTitle">Contact Title</label>
         <input
-          id="Contact_Title"
-          name="Contact_Title"
-          [(ngModel)]="model.Contact_Title"
+          id="ContactTitle"
+          name="ContactTitle"
+          [(ngModel)]="model.ContactTitle"
           type="text"
           class="form-control"
           placeholder="Contact Title"
