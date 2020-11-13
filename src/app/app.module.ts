@@ -1,4 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
+ 
+
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -11,19 +12,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.module';
-import { CategoryComponent } from './MENU1/category/category/category.component'; 
+import { CategoryComponent } from './MENU1/category/category.component';
+import { ProductComponent } from './MENU1/product/product.component';
+import { CommonModule } from '@angular/common';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     SuppliersComponent,
-    CategoryComponent 
+    CategoryComponent,
+    ProductComponent
   ],
   imports: [
-    BrowserModule,
+
+
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
-
+    CommonModule,
     FormsModule,
     ToastrModule.forRoot(),
     ConfirmDialogModule,
@@ -34,11 +41,13 @@ import { CategoryComponent } from './MENU1/category/category/category.component'
       },{
         path: 'category',  component: CategoryComponent,  children:[{path:'edit',component:SuppliersComponent}]
       }
+      ,{
+        path: 'products',  component: ProductComponent,  children:[{path:'edit',component:ProductComponent}]
+      }
    ])
   ],
   providers: [],
-  bootstrap: [AppComponent] 
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
- 
- 
+

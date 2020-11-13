@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { GridType } from 'src/app/models/gridType.enum';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-suppliers',
@@ -51,7 +52,7 @@ export class SuppliersComponent implements OnInit {
         this.edited = true
         //'this.model = this.pieces.filter(i => i.Supplier_ID == params.id)[0]
 
-        this.http.get<any>('http://localhost:9999/api/supplier/GetByID/' + params.id).subscribe(data => {
+        this.http.get<any>(`${environment.APIEndpoint}/supplier/GetByID/` + params.id).subscribe(data => {
           this.model = data;
         })
 
@@ -72,7 +73,7 @@ export class SuppliersComponent implements OnInit {
     obj.girdId = GridType.Supplier;
     obj.defaultSortColumnName = 'CompanyName';
 
-    this.http.post<any>('http://localhost:9999/api/grid', obj, {}).subscribe(data => {
+    this.http.post<any>(`${environment.APIEndpoint}/grid`, obj, {}).subscribe(data => {
       console.log(data);
       this.gridOption.datas = data;
     })
@@ -95,7 +96,7 @@ export class SuppliersComponent implements OnInit {
   onSubmit(obj: Supplier) {
 
 
-    this.http.post<any>('http://localhost:9999/api/supplier', obj, {}).subscribe(data => {
+    this.http.post<any>(`${environment.APIEndpoint}/api/supplier`, obj, {}).subscribe(data => {
       console.log(data);
 
       this.toastr.success("ssssssssss")
