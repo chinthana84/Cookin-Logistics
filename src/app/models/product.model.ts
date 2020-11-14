@@ -17,5 +17,24 @@ export class Product {
 
   public Supplier?: Supplier
   public Category?: Categories
+
+  public    ProductStorages? :ProductStorages[] =[] ;
 }
 
+export   class ProductStorages
+{
+    public  ProductStorageId?: number = 0;
+    public  StoreId?: number = 0;
+    public  ProductId?: number = 0;
+
+    public   Product?: Product;
+    public Store?:StorageAreas  ;
+}
+
+export class StorageAreas
+{
+     public   StoreId ?:number=0
+    public   StoreName?:string=''
+
+
+}

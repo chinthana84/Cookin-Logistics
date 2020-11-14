@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Categories } from 'src/app/models/categories.model';
 import { GridType } from 'src/app/models/gridType.enum';
-import { Product } from 'src/app/models/product.model';
+import { Product, ProductStorages, StorageAreas } from 'src/app/models/product.model';
 import { Supplier } from 'src/app/models/supplier.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit {
   model: Product = {};
   modelCategory :Categories[]=[];
   modelSupplier :Supplier[]=[];
+  modelStorageAreas :StorageAreas[]=[]
 
   searchObject: SearchObject = {};
   gridOption: GridOptions = {
@@ -59,6 +60,9 @@ export class ProductComponent implements OnInit {
           this.modelSupplier = data;
         });
 
+        this.http.get<any>(`${environment.APIEndpoint}/common/GetAllStorageAreas`).subscribe(data => {
+          this.modelStorageAreas = data;
+        });
         this.http.get<any>(`${environment.APIEndpoint}/product/GetAllCategory`).subscribe(data => {
           this.modelCategory = data;
 
@@ -94,6 +98,14 @@ export class ProductComponent implements OnInit {
       this.router.navigate(['/products/edit'], { queryParams: { id: obj.ProductId } });
     }
     this.edited = true
+  }
+
+  AddStorageArea()
+  {
+    var obj=new ProductStorages();
+    obj.Store=new StorageAreas()
+    this.model.ProductStorages.push(obj);
+
   }
 
   onSubmit(obj :Product)
