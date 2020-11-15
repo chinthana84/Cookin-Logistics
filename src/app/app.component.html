@@ -7,24 +7,33 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-        
+
           <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
                 <a class="nav-link" href="#">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li>        
-              <li class="nav-item">
-                  <a class="nav-link" routerLink = "suppliers">Supplier</a>
+              </li>
 
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Level1</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" routerLink = "suppliers">Supplier</a>
+                  <a class="dropdown-item" routerLink = "category">category</a>
+                  <a class="dropdown-item" routerLink = "products">products</a>
+
+                </div>
               </li>
-              <li class="nav-item">
-                    <a class="nav-link" routerLink = "category">category</a> 
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" routerLink = "recipes">Recipe</a>
+
+
+                </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink = "products">products</a> 
-          </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
               </li>
@@ -46,9 +55,9 @@
           </div>
         </nav>
 
-         
-        
-        
+
+
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
@@ -68,8 +77,8 @@
     </li>
   </ol>
 </nav>
-        
+
   <router-outlet></router-outlet>
-  
+
   </div>
 

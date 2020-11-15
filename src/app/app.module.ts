@@ -1,4 +1,4 @@
- 
+
 
 import { NgModule } from '@angular/core';
 import { RouteReuseStrategy } from '@angular/router';
@@ -15,6 +15,7 @@ import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.mod
 import { CategoryComponent } from './MENU1/category/category.component';
 import { ProductComponent } from './MENU1/product/product.component';
 import { CommonModule } from '@angular/common';
+import { OrderModule } from './ORDER_RELATED/order.module';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     ToastrModule.forRoot(),
     ConfirmDialogModule,
+    OrderModule,
      RouterModule.forRoot([
       {
          path: 'suppliers',  component: SuppliersComponent,  children:[{path:'edit',component:SuppliersComponent}]
@@ -44,6 +46,7 @@ import { CommonModule } from '@angular/common';
       ,{
         path: 'products',  component: ProductComponent,  children:[{path:'edit',component:ProductComponent}]
       }
+      
    ])
   ],
   providers: [],

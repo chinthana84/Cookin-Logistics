@@ -33,8 +33,8 @@
       <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
       <br /><br />
     </div>
-
-    <form   *ngIf="this.edited" novalidate #heroForm="ngForm">
+   
+    <form (ngSubmit)="onSubmit(model)"  *ngIf="this.edited" novalidate #heroForm="ngForm">
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -52,7 +52,10 @@
           <div class="form-group">
             <label for="modelCategory">CategoryName</label>
 
-            <select class="form-control" id="modelCategory" name="modelCategory" [(ngModel)]="this.model.CategoryId">
+            <select    class="form-control" id="modelCategory"
+             name="modelCategory"
+
+             [(ngModel)]="this.model.CategoryId  ">
               <option *ngFor="let i of this.modelCategory" [ngValue]="i.CategoryId">
                 {{ i.CategoryName }}
               </option>
@@ -64,7 +67,8 @@
           <div class="form-group">
             <label for="modelSupplier">CompanyName</label>
 
-            <select class="form-control" id="modelSupplier" name="modelSupplier" [(ngModel)]="this.model.SupplierId">
+            <select class="form-control" id="modelSupplier"
+            name="modelSupplier" [(ngModel)]="this.model.SupplierId">
               <option *ngFor="let i of this.modelSupplier" [ngValue]="i.SupplierId">
                 {{ i.CompanyName }}
               </option>
@@ -108,7 +112,7 @@
       </div>
 
       <div class="row">
-        {{ this.model.ProductStorages |json}}
+
         <table class="table table-striped table-sm">
           <thead>
             <th>StorageID</th>
@@ -121,15 +125,15 @@
           <tbody>
 
             <tr *ngFor="let i of this.model.ProductStorages ; let index=index" class="table-hover">
-              <td>{{ i.Store?.StoreId ||0}}</td>
-              <td>{{ i.Store?.StoreName ||''}}</td>
+              <td>{{ i.StoreId ||0}}</td>
+
 
               <td>
                 <input type="button" value="Edit" class="btn btn-primary" />
               </td>
               <td>
                 <select class="form-control" id="modelStorageAreas" name="modelStorageAreas{{index}}"
-                  [(ngModel)]="i.Store.StoreId">
+                  [(ngModel)]="i.StoreId">
                   <option *ngFor="let i of this.modelStorageAreas" [ngValue]="i.StoreId">
                     {{ i.StoreName }}
                   </option>

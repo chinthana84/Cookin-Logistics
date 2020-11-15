@@ -7,6 +7,7 @@ import { GridType } from 'src/app/models/gridType.enum';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
+import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -24,7 +25,7 @@ export class CategoryComponent implements OnInit {
     datas: {}
   };
 
- constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
+ constructor(    private commonService:CommonService,private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
   ) {
 
 

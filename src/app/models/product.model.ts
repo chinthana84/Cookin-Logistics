@@ -27,8 +27,6 @@ export   class ProductStorages
     public  StoreId?: number = 0;
     public  ProductId?: number = 0;
 
-    public   Product?: Product;
-    public Store?:StorageAreas  ;
 }
 
 export class StorageAreas

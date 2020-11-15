@@ -1,5 +1,6 @@
 export enum GridType {
   Supplier = 1,
   Category = 2,
-  Product =3
+  Product =3,
+  Recipe=4
 }
