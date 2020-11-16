@@ -1,4 +1,4 @@
 export class Grid{
-    colName:string;
+    colName?:string;
+    colText?:string;
   }
-  

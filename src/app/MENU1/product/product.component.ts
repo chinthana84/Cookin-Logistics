@@ -22,19 +22,20 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./product.component.css"],
 })
 export class ProductComponent implements OnInit {
-  searchID = 1;
+  
   edited: boolean = false;
   model: Product = {};
   modelCategory: Categories[] = [];
   modelSupplier: Supplier[] = [];
   modelStorageAreas: StorageAreas[] = [];
 
-  searchObject: SearchObject = {};
+
   gridOption: GridOptions = {
     colNames: [{ colName: "ProductName" }],
+    searchObject: new SearchObject(),
     datas: {},
+    searchID: 1
   };
-
   constructor(
     private http: HttpClient,
     private router: Router,

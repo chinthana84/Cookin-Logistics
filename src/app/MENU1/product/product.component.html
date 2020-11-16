@@ -1,7 +1,7 @@
 <section class="section-content padding-y bg">
   <div class="container">
     <div *ngIf="!this.edited">
-      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]="searchID">
+      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]="gridOption.searchID">
       </app-search>
       <table class="table table-striped table-sm">
         <thead>
@@ -33,7 +33,7 @@
       <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
       <br /><br />
     </div>
-   
+
     <form (ngSubmit)="onSubmit(model)"  *ngIf="this.edited" novalidate #heroForm="ngForm">
       <div class="row">
         <div class="col-md-4">

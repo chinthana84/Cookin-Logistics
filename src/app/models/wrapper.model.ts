@@ -9,11 +9,12 @@ export class Wrapper {
   public CuisneTypes?:RefTable[]=[];
 }
 
-export interface Human {
+export interface IMyGrid {
 
-  getTyrePressure: () => void;
+ // getTyrePressure: () => void;
+   setPage(obj: SearchObject):void;
 
   gridOption: GridOptions;
-  searchObject: SearchObject ;
+
 }
 

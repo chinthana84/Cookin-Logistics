@@ -2,16 +2,16 @@
   <div class="container">
 
     <div *ngIf="!this.edited">
-      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]="searchID">
+      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]="gridOption.searchID">
       </app-search>
       <table class="table table-striped table-sm">
         <thead>
           <th>RecipeId</th>
           <th>RecipeName</th>
-          <th>CuisneTypes</th>
-            <th>Course</th>
-            <th>Moc</th>
-            <th>Prep</th>
+          <th>Course</th>
+          <th>CuisineName </th>
+          <th>MocName </th>
+          <th>PrepName </th>
 
           <th>
             <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
@@ -21,10 +21,12 @@
           <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
             <td>{{ item.RecipeId }}</td>
             <td>{{ item.RecipeName }}</td>
-             <td>{{ item.Cuisine.RefDescription}}</td>
-             <td>{{ item.Course.RefDescription}}</td>
-             <td>{{ item.Moc.RefDescription}}</td>
-             <td>{{ item.Prep.RefDescription}}</td>
+            <td>{{ item.CourseName }}</td>
+            <td>{{ item.CuisineName }}</td>
+            <td>{{ item.MocName }}</td>
+            <td>{{ item.PrepName }}</td>
+
+
 
             <td>
               <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />

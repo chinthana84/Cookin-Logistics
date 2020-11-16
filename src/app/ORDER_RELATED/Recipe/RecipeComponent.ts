@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Recipe } from 'src/app/models/recipe.model';
-import { Human, Wrapper } from 'src/app/models/wrapper.model';
+import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
@@ -17,20 +17,17 @@ import { environment } from 'src/environments/environment';
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.css']
 })
-export class RecipeComponent implements OnInit {
-
-
-  searchID = 1;
-  searchObject: SearchObject={};
-  gridOption: GridOptions = {
-    colNames: [{ colName: "RecipeName" }],
-    datas: {},
-  };
-
-
+export class RecipeComponent implements OnInit,IMyGrid {
   edited: boolean = false;
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
+
+  gridOption: GridOptions = {
+    colNames: [{ colName: "RecipeName",colText:"Name" },{ colName: "CourseName",colText:"Course" }],
+    searchObject: {},
+    datas: {},
+    searchID: 1
+  };
 
 
 
@@ -46,6 +43,15 @@ export class RecipeComponent implements OnInit {
   }
 
 
+  setPage(obj: SearchObject): void {
+    obj.girdId = GridType.Recipe;
+    obj.defaultSortColumnName = "RecipeId";
+    this.http
+      .post<GridOptions>(`${environment.APIEndpoint}/grid`,obj, {})
+      .subscribe((data) => {
+        this.gridOption.datas = data;
+      });
+  }
 
 
 
@@ -84,16 +90,7 @@ export class RecipeComponent implements OnInit {
 
   }
 
-  setPage(obj: SearchObject) {
-    obj.girdId = GridType.Recipe;
-    obj.defaultSortColumnName = "RecipeId";
 
-    this.http
-      .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
-      .subscribe((data) => {
-        this.gridOption.datas = data;
-      });
-  }
 
   Action(obj: Recipe) {
     if (obj == undefined) {

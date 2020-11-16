@@ -3,7 +3,7 @@
       <div class="form-group">
           <select class="form-control"  [(ngModel)]="searchColumn" >
               <option *ngFor="let x of searchOptionsX; let index = index" [value]="x.colName" >
-                {{x.colName }}
+                {{x.colText }}
               </option>
           </select>
       </div>
