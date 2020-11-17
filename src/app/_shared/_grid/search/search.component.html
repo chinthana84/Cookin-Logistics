@@ -1,12 +1,18 @@
- <div  class="row" *ngIf="searchID==1">
+ <div  class="row"  >
     <div class="col-md-4 col-sm-4 form-horizontal">
       <div class="form-group">
+        <div class="form-group">
           <select class="form-control"  [(ngModel)]="searchColumn" >
-              <option *ngFor="let x of searchOptionsX; let index = index" [value]="x.colName" >
-                {{x.colText }}
+              <option *ngFor="let x of this.getPropertNames();
+               let index = index" [value]="x"  >
+                {{x }}
               </option>
           </select>
       </div>
+      </div>
+
+
+
     </div>
       <!-- <div class="col-md-3 col-sm-3 form-horizontal">
       <div class="form-group">

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Recipe } from 'src/app/models/recipe.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
@@ -22,14 +23,12 @@ export class RecipeComponent implements OnInit,IMyGrid {
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
 
-  gridOption: GridOptions = {
-    colNames: [{ colName: "RecipeName",colText:"Name" },{ colName: "CourseName",colText:"Course" }],
-    searchObject: {},
-    datas: {},
-    searchID: 1
-  };
 
-
+gridOption: GridOptions = {
+  
+  datas: {},
+  GridClassInstance:new RecipeGrid()
+};
 
   constructor(
     private http: HttpClient,
@@ -43,6 +42,7 @@ export class RecipeComponent implements OnInit,IMyGrid {
   }
 
 
+
   setPage(obj: SearchObject): void {
     obj.girdId = GridType.Recipe;
     obj.defaultSortColumnName = "RecipeId";
@@ -53,12 +53,7 @@ export class RecipeComponent implements OnInit,IMyGrid {
       });
   }
 
-
-
   ngOnInit(): void {
-
-
-
     this.setPage({ pageNo: 1, searchColName: "" });
 
     this.http

@@ -7,6 +7,6 @@ export class GridOptions{
     colNames?: Grid[];
     searchObject?: SearchObject={};
     datas?:any;
-    searchID?:number=1;
-
+    GridClassInstance ?:any
+    searchID?:number=1
   }

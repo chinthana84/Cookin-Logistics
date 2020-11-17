@@ -20,21 +20,22 @@ import { HttpClient } from "@angular/common/http";
 import { GridType } from "src/app/models/gridType.enum";
 import { environment } from "src/environments/environment";
 import { CommonService } from 'src/app/_shared/_services/common.service';
+import { IMyGrid } from 'src/app/models/wrapper.model';
 
 @Component({
   selector: "app-suppliers",
   templateUrl: "./suppliers.component.html",
   styleUrls: ["./suppliers.component.css"],
 })
-export class SuppliersComponent implements OnInit {
+export class SuppliersComponent implements OnInit,IMyGrid {
   searchID = 1;
   model: Supplier = {};
   edited: boolean = false;
 
-  searchObject: SearchObject = {};
+
   gridOption: GridOptions = {
-    colNames: [{ colName: "CompanyName" }],
     datas: {},
+    GridClassInstance:new Supplier()
   };
 
   constructor(
@@ -106,9 +107,24 @@ export class SuppliersComponent implements OnInit {
 
         this.toastr.success("ssssssssss");
 
- 
+
         this.commonService.redirectTo('suppliers')
+      },(error)=>{
+alert('ss')
       });
+
+
+//     this.faqService.getServers()
+//   .subscribe(
+//     (data) => {
+//         this.item = data.items;
+//         console.log(this.item);
+//         },
+//         (error) => {
+//         this.errorMessage= error.error_message;
+//         }
+//     );
+// });
 
     // this.toastr.success("ssssssssss")
     // console.log(form)
