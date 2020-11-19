@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  APIEndpoint: 'http://localhost/CookinLogisticsWebAPI/api'
+  APIEndpoint: 'http://localhost/CookinLogisticsWebAPI/api',
+  dataSaved :'Sucssfully data saved.',
+  APIerror :'Please contact IT Department'
 };
 
 /*

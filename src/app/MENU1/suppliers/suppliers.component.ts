@@ -27,7 +27,7 @@ import { IMyGrid } from 'src/app/models/wrapper.model';
   templateUrl: "./suppliers.component.html",
   styleUrls: ["./suppliers.component.css"],
 })
-export class SuppliersComponent implements OnInit,IMyGrid {
+export class SuppliersComponent implements OnInit, IMyGrid {
   searchID = 1;
   model: Supplier = {};
   edited: boolean = false;
@@ -35,7 +35,7 @@ export class SuppliersComponent implements OnInit,IMyGrid {
 
   gridOption: GridOptions = {
     datas: {},
-    GridClassInstance:new Supplier()
+    GridClassInstance: new Supplier()
   };
 
   constructor(
@@ -44,7 +44,7 @@ export class SuppliersComponent implements OnInit,IMyGrid {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
-    private commonService:CommonService
+    private commonService: CommonService
   ) {
     this.edited = false;
   }
@@ -67,7 +67,9 @@ export class SuppliersComponent implements OnInit,IMyGrid {
           .get<any>(`${environment.APIEndpoint}/supplier/GetByID/` + params.id)
           .subscribe((data) => {
             this.model = data;
-          });
+          }, (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror)
+        });
 
         console.log(this.model);
       } else {
@@ -85,7 +87,10 @@ export class SuppliersComponent implements OnInit,IMyGrid {
       .subscribe((data) => {
         console.log(data);
         this.gridOption.datas = data;
-      });
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
+    });
   }
 
   Supplier(item: Supplier) {
@@ -99,32 +104,37 @@ export class SuppliersComponent implements OnInit,IMyGrid {
     this.edited = true;
   }
 
+
+
   onSubmit(obj: Supplier) {
     this.http
       .post<any>(`${environment.APIEndpoint}/supplier`, obj, {})
       .subscribe((data) => {
         console.log(data);
 
-        this.toastr.success("ssssssssss");
+        if (data.IsValid == false) {
+
+          // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
+          //   alert("Yes clicked");
+          // }, function () {
+          //   alert("No clicked");
+          // })
+
+          //this.confirmDialogService.messageBox("Data saved")
+           this.confirmDialogService.messageListBox(data.ValidationMessages)
+        }
+        else {
+          this.toastr.success(environment.dataSaved);
+        //  this.confirmDialogService.messageBox(environment.dataSaved);
+          this.commonService.redirectTo('suppliers')
+        }
 
 
-        this.commonService.redirectTo('suppliers')
-      },(error)=>{
-alert('ss')
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
       });
 
-
-//     this.faqService.getServers()
-//   .subscribe(
-//     (data) => {
-//         this.item = data.items;
-//         console.log(this.item);
-//         },
-//         (error) => {
-//         this.errorMessage= error.error_message;
-//         }
-//     );
-// });
 
     // this.toastr.success("ssssssssss")
     // console.log(form)

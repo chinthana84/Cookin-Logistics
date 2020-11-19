@@ -8,7 +8,8 @@ import { ConfirmDialogService } from './confirm-dialog.service';
 })
 
 export class ConfirmDialogComponent implements OnInit {
-    message: any;
+    message: DialogMessage;
+
     constructor(
         private confirmDialogService: ConfirmDialogService
     ) { }
@@ -20,7 +21,21 @@ export class ConfirmDialogComponent implements OnInit {
         */
         this.confirmDialogService.getMessage().subscribe(message => {
             this.message = message;
+
         });
-      
+
+
     }
+}
+
+
+export class DialogMessage {
+  public type?: string = '';
+public msg?: string='';
+public msgList? :string[] =[];
+
+ noFn?: () => void ;
+ yesFn?: () => void;
+
+
 }
