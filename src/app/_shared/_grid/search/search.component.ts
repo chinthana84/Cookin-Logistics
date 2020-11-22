@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SearchObject } from '../gridModels/searchObject.model';
 import { GridService } from '../grid-service/grid.service';
 import { GridOptions } from '../gridModels/gridOption.model';
+import { Grid } from '../gridModels/grid.model';
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit {
   searchOptionsX: any = {};
 
   @Input()
-  search :any={}
+  search :SearchObject={}
 
   @Input()
   searchID: number;
@@ -28,10 +29,7 @@ export class SearchComponent implements OnInit {
   searchClicked: EventEmitter<any> = new EventEmitter<any>();
 
 
-  getPropertNames(){
 
-  return Object.keys(this.search);
-  }
 
 
   searchClick(obj: any, s: string) {
@@ -42,6 +40,8 @@ export class SearchComponent implements OnInit {
       pageNo: 1,
       searchColName: obj ,//this.searchColumn,
       searchText: this.searchText,
+      defaultSortColumnName:this.search.defaultSortColumnName,
+      girdId:this.search.girdId
 
     };
 
@@ -54,8 +54,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(Object.keys(this.search))
-     this.searchColumn = this.getPropertNames()[0];
+     this.searchColumn = this.search.colNames[0].colName;
   }
 
 }

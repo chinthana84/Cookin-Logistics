@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Categories } from 'src/app/models/categories.model';
 import { GridType } from 'src/app/models/gridType.enum';
+import { IMyGrid } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
@@ -15,17 +17,15 @@ import { environment } from 'src/environments/environment';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent implements OnInit {
-  searchID = 1;
+export class CategoryComponent implements OnInit,IMyGrid {
   edited: boolean = false
 
-  searchObject: SearchObject = {};
   gridOption: GridOptions = {
-    colNames: [{ colName: 'Company_Name' }],
-    datas: {}
+    datas: {},
+    GridClassInstance: new Categories()
   };
 
- constructor(    private commonService:CommonService,private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
+ constructor( config: NgbCarouselConfig,   private commonService:CommonService,private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService, private confirmDialogService: ConfirmDialogService
   ) {
 
 

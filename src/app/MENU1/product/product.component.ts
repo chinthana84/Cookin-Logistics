@@ -3,6 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Categories } from "src/app/models/categories.model";
+import { ProductGridDTO } from 'src/app/models/Grid/grid.model';
+
 import { GridType } from "src/app/models/gridType.enum";
 import {
   Product,
@@ -10,6 +12,7 @@ import {
   StorageAreas,
 } from "src/app/models/product.model";
 import { Supplier } from "src/app/models/supplier.model";
+import { IMyGrid } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from "src/app/_shared/confirm-dialog/confirm-dialog.service";
 import { GridOptions } from "src/app/_shared/_grid/gridModels/gridOption.model";
 import { SearchObject } from "src/app/_shared/_grid/gridModels/searchObject.model";
@@ -21,21 +24,28 @@ import { environment } from "src/environments/environment";
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.css"],
 })
-export class ProductComponent implements OnInit {
-  
+export class ProductComponent implements OnInit,IMyGrid {
+
   edited: boolean = false;
   model: Product = {};
   modelCategory: Categories[] = [];
   modelSupplier: Supplier[] = [];
   modelStorageAreas: StorageAreas[] = [];
 
-
   gridOption: GridOptions = {
-    colNames: [{ colName: "ProductName" }],
-    searchObject: new SearchObject(),
     datas: {},
-    searchID: 1
+    searchObject: {
+      girdId: GridType.Product
+      , defaultSortColumnName: "ProductName",
+      pageNo: 1,
+      searchColName: '',
+      colNames: [{ colName: "ProductName", colText: 'Product Name' },
+      { colName: "CompanyName", colText: 'Company Name' }
+      ]
+    }
   };
+
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -48,7 +58,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setPage({ pageNo: 1, searchColName: "" });
+    this.setPage(this.gridOption.searchObject);
 
     this.http
       .get<any>(`${environment.APIEndpoint}/common/GetAllSuppliers`)
@@ -91,14 +101,15 @@ export class ProductComponent implements OnInit {
   }
 
   setPage(obj: SearchObject) {
-    obj.girdId = GridType.Product;
-    obj.defaultSortColumnName = "ProductName";
-
-    this.http
-      .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
+     this.http
+      .post<ProductGridDTO>(`${environment.APIEndpoint}/grid`, obj, {})
       .subscribe((data) => {
         this.gridOption.datas = data;
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
       });
+
   }
 
   Action(obj: Product) {
@@ -118,23 +129,45 @@ export class ProductComponent implements OnInit {
     this.model.ProductStorages.push(obj);
   }
 
+  deleteStorageAeras(obj:ProductStorages)
+  {
+    this.model.ProductStorages=    this.model.ProductStorages.filter(item => item.ProductStorageId != obj.ProductStorageId);
+  }
+
   onSubmit(obj: Product) {
-    try {
+
       this.http
         .post<any>(`${environment.APIEndpoint}/Product`, obj, {})
         .subscribe((data) => {
-          console.log(data);
+          if (data.IsValid == false) {
 
-          this.toastr.success("ssssssssss");
-this.commonService.redirectTo('products');
+            // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
+            //   alert("Yes clicked");
+            // }, function () {
+            //   alert("No clicked");
+            // })
 
-        }, err => {
-          this.confirmDialogService.messageBox(err.Message)
+            //this.confirmDialogService.messageBox("Data saved")
+             this.confirmDialogService.messageListBox(data.ValidationMessages)
+          }
+          else {
+            this.toastr.success(environment.dataSaved);
+          //  this.confirmDialogService.messageBox(environment.dataSaved);
 
+          this.router.navigate(['products']);
+          this.setPage(this.gridOption.searchObject);
+
+    //  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //  this.router.onSameUrlNavigation = 'reload';
+    //  this.router.navigate(['products']);
+
+          }
+
+
+        }, (error) => {
+
+          this.confirmDialogService.messageBox(environment.APIerror)
         });
-    } catch (Error) {
-      this.confirmDialogService.messageBox("data saved")
 
-    }
   }
 }

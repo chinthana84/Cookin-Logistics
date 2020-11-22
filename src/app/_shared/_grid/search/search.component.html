@@ -3,9 +3,9 @@
       <div class="form-group">
         <div class="form-group">
           <select class="form-control"  [(ngModel)]="searchColumn" >
-              <option *ngFor="let x of this.getPropertNames();
-               let index = index" [value]="x"  >
-                {{x }}
+              <option *ngFor="let x of this.search.colNames;
+               let index = index" [value]="x.colName"  >
+                {{x.colText }}
               </option>
           </select>
       </div>

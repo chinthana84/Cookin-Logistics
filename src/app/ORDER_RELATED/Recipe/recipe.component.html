@@ -2,8 +2,11 @@
   <div class="container">
 
     <div *ngIf="!this.edited">
-      <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.GridClassInstance"   >
-      </app-search>
+      <app-search
+      (searchClicked)="setPage($event)"
+      [search]="this.gridOption.searchObject">
+
+    </app-search>
       <table class="table table-striped table-sm">
         <thead>
           <th>RecipeId</th>
@@ -37,24 +40,90 @@
         </tbody>
       </table>
 
-      <app-pager   (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
-      <br /><br />
+      <app-pager
+      (pagedClicked)="setPage($event)"
+      [pagerX]="gridOption"
+    ></app-pager>
+
+      <br />
     </div>
 
 
     <br />
-    {{this.modelRecipe.CourseId |json}}
+
     <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelRecipe)"  novalidate #heroForm="ngForm">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="RecipeName">RecipeName</label>
             <input  [(ngModel)]="this.modelRecipe.RecipeName" id="RecipeName" name="RecipeName"  type="text" class="form-control"
               placeholder="RecipeName" />
           </div>
         </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
+        <div class="col-md-6">
+
+          <div class="form-group">
+            <label for="Reference">Reference</label>
+            <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+
+          <div class="form-check mb-2 mr-sm-2">
+            <label class="form-check-label">
+              <label for="email" class="mr-sm-2">Email address:</label>
+            </label>
+          </div>
+
+          <div class="form-check mb-2 mr-sm-2">
+            <label class="form-check-label">
+              <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+            </label>
+          </div>
+          <div class="form-check mb-2 mr-sm-2">
+            <label class="form-check-label">
+              <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+            </label>
+          </div>
+          <div class="form-check mb-2 mr-sm-2">
+            <label class="form-check-label">
+              <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+            </label>
+          </div>
+          <input type="email" class="form-control mb-2 mr-sm-2" placeholder="Enter email" id="email">
+          <label for="pwd" class="mr-sm-2">Password:</label>
+          <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter password" id="pwd">
+          <div class="form-check mb-2 mr-sm-2">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox"> Remember me
+            </label>
+          </div>
+
+
+
+        <div class="col-md-1">
+          <div class="form-group">
+            <label for="Reference">Reference</label>
+            <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+          </div>
+        </div>
+        <div class="col-md-1">
+          <div class="form-group">
+            <label for="Reference">Reference</label>
+            <input  [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference"  type="text" class="form-control"
+              placeholder="Reference" />
+          </div>
+        </div>
       </div>
 
       <div class="row">

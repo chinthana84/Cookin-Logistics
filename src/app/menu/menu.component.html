@@ -1,0 +1,64 @@
+<nav  *ngIf="(isLoggedIn | async)" id="mainMenu" class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+  <a routerLink = "home" class="navbar-brand">
+    <img src="https://www.evolution.edu.au/wp-content/uploads/HIGH-Res_EHI_BlueOrange_CMYK.png" height="28" alt="CoolBrand">
+</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Level1</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink = "suppliers">Supplier</a>
+          <a class="dropdown-item" routerLink = "category">category</a>
+          <a class="dropdown-item" routerLink = "products">products</a>
+
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink = "recipes">Recipe</a>
+
+
+        </div>
+      </li>
+
+
+
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+
+        <a style="color: white;" class="nav-item nav-link"  [routerLink]="['/login']">Logout</a>
+
+    </form>
+  </div>
+</nav>
+
+
+
+
+<nav  *ngIf="(isLoggedIn | async)" aria-label="breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item">
+<a class="breadcrumb-text" href="#">Home</a>
+</li>
+<li
+*ngFor="let breadLink of displayBreadcrumbList"
+class="breadcrumb-item active"
+aria-current="page"
+>
+<a
+href="javascript:void(0)"
+[routerLink]="breadLink.url"
+class="breadcrumb-text"
+>{{ breadLink.name }}</a
+>
+</li>
+</ol>
+</nav>

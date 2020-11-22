@@ -25,7 +25,10 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css" ,
+              {
+                "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+              }
             ],
             "scripts": []
           },
@@ -88,6 +91,7 @@
             ],
             "styles": [
               "src/styles.css"
+
             ],
             "scripts": []
           }
@@ -118,6 +122,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Cookin-Logistics"
 }

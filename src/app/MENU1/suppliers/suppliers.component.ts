@@ -21,6 +21,7 @@ import { GridType } from "src/app/models/gridType.enum";
 import { environment } from "src/environments/environment";
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { IMyGrid } from 'src/app/models/wrapper.model';
+import { AuthenticationService } from 'src/app/MyServices/authentication.service';
 
 @Component({
   selector: "app-suppliers",
@@ -35,10 +36,20 @@ export class SuppliersComponent implements OnInit, IMyGrid {
 
   gridOption: GridOptions = {
     datas: {},
-    GridClassInstance: new Supplier()
+    searchObject: {
+      girdId: GridType.Supplier
+      , defaultSortColumnName: "CompanyName",
+      pageNo: 1,
+      searchColName: '',
+      colNames: [{ colName: "CompanyName", colText: 'Company Name' },
+      { colName: "ContactName", colText: 'Contact Name' }
+      ]
+    },
+    GridClassInstance: new Supplier(),
   };
 
   constructor(
+    private auth:AuthenticationService,
     private http: HttpClient,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -50,10 +61,9 @@ export class SuppliersComponent implements OnInit, IMyGrid {
   }
 
   ngOnInit() {
-    this.setPage({ pageNo: 1, searchColName: "" });
+  this.setPage(this.gridOption.searchObject);
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      console.log(params.id); // { order: "popular" }
 
       if (params.id == 0) {
         this.edited = true;
@@ -79,9 +89,6 @@ export class SuppliersComponent implements OnInit, IMyGrid {
   }
 
   setPage(obj: SearchObject) {
-    obj.girdId = GridType.Supplier;
-    obj.defaultSortColumnName = "CompanyName";
-
     this.http
       .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
       .subscribe((data) => {
@@ -126,7 +133,17 @@ export class SuppliersComponent implements OnInit, IMyGrid {
         else {
           this.toastr.success(environment.dataSaved);
         //  this.confirmDialogService.messageBox(environment.dataSaved);
-          this.commonService.redirectTo('suppliers')
+     //   this.router.navigate(['suppliers'], { relativeTo: this.activatedRoute.parent } );
+     this.router.navigate(['suppliers']);
+     this.setPage(this.gridOption.searchObject);
+    //  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    //  this.router.onSameUrlNavigation = 'reload';
+
+
+
+        // this.router.navigate("suppliers");
+          //this.commonService.redirectTo('suppliers')
+
         }
 
 

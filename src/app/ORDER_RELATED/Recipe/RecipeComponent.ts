@@ -2,11 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Recipe } from 'src/app/models/recipe.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
+import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
@@ -18,17 +20,29 @@ import { environment } from 'src/environments/environment';
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.css']
 })
-export class RecipeComponent implements OnInit,IMyGrid {
+export class RecipeComponent implements OnInit {
+
   edited: boolean = false;
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
 
+  gridOption: GridOptions = {
+    datas: {},
+    searchObject: {
+      girdId: GridType.Recipe
+      , defaultSortColumnName: "RecipeName",
+      pageNo: 1,
+      searchColName: '',
+      colNames: [{ colName: "RecipeName", colText: 'Recipe Name' },
+      { colName: "CourseName", colText: 'Course' },
+      { colName: "CuisineName", colText: 'CuisineName Name' },
+      { colName: "MocName", colText: 'MOC Name' },
+      { colName: "PrepName", colText: 'Pre Name' }
+      ]
+    }
+  };
 
-gridOption: GridOptions = {
-  
-  datas: {},
-  GridClassInstance:new RecipeGrid()
-};
+
 
   constructor(
     private http: HttpClient,
@@ -36,25 +50,14 @@ gridOption: GridOptions = {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private gridService : GridService
   ) {
     this.edited = true;
   }
 
-
-
-  setPage(obj: SearchObject): void {
-    obj.girdId = GridType.Recipe;
-    obj.defaultSortColumnName = "RecipeId";
-    this.http
-      .post<GridOptions>(`${environment.APIEndpoint}/grid`,obj, {})
-      .subscribe((data) => {
-        this.gridOption.datas = data;
-      });
-  }
-
   ngOnInit(): void {
-    this.setPage({ pageNo: 1, searchColName: "" });
+    this.setPage(this.gridOption.searchObject);
 
     this.http
       .get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
@@ -66,8 +69,6 @@ gridOption: GridOptions = {
       if (params.id == 0) {
         this.edited = true;
         this.modelRecipe = new Recipe();
-        // this.model.Category = new Categories();
-        // this.model.Supplier = new Supplier();
       } else if (params.id > 0) {
         this.edited = true;
         this.http
@@ -85,7 +86,13 @@ gridOption: GridOptions = {
 
   }
 
-
+  setPage(obj: SearchObject): void {
+    this.gridService.getGridData(obj).subscribe((data) =>{
+      this.gridOption.datas = data;
+    }, (error) => {
+          this.confirmDialogService.messageBox(environment.APIerror)
+    });
+ }
 
   Action(obj: Recipe) {
     if (obj == undefined) {
@@ -97,22 +104,16 @@ gridOption: GridOptions = {
     }
     this.edited = true;
   }
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => this.router.navigate([uri]));
-  }
+
   onSubmit(obj: Recipe) {
     try {
       this.http
         .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
         .subscribe((data) => {
-          console.log(data);
-
           this.toastr.success("ssssssssss");
 
-
-          this.commonService.redirectTo('recipes');
-
-
+          this.router.navigate(['products']);
+          this.setPage(this.gridOption.searchObject);
 
         }, err => {
           this.confirmDialogService.messageBox(err.Message);
@@ -120,7 +121,6 @@ gridOption: GridOptions = {
         });
     } catch (Error) {
       this.confirmDialogService.messageBox("data saved");
-
     }
   }
 

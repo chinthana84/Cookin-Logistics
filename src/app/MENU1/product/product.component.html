@@ -1,8 +1,11 @@
 <section class="section-content padding-y bg">
   <div class="container">
     <div *ngIf="!this.edited">
-      <app-search (searchClicked)="setPage($event)" [searchOptionsX]="gridOption.colNames" [searchID]="gridOption.searchID">
-      </app-search>
+      <app-search
+      (searchClicked)="setPage($event)"
+      [search]="this.gridOption.searchObject">
+
+    </app-search>
       <table class="table table-striped table-sm">
         <thead>
           <th>ProductId</th>
@@ -12,38 +15,71 @@
           <th>CategoryName</th>
 
           <th>
-            <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
+            <input
+              type="button"
+              value="New"
+              class="btn btn-primary"
+              (click)="Action(null)"
+            />
           </th>
         </thead>
         <tbody>
-          <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+          <tr
+            *ngFor="let item of gridOption.datas.pagedItems"
+            class="table-hover"
+          >
             <td>{{ item.ProductId }}</td>
             <td>{{ item.ProductName }}</td>
-            <td>{{ item.Supplier.CompanyName }}</td>
-            <td>{{ item.Supplier.ContactName }}</td>
-            <td>{{ item.Category.CategoryName }}</td>
+            <td>{{ item.CompanyName }}</td>
+            <td>{{ item.ContactName }}</td>
+            <td>{{ item.CategoryName }}</td>
 
             <td>
-              <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
+              <input
+                type="button"
+                value="Edit"
+                class="btn btn-primary"
+                (click)="Action(item)"
+              />
             </td>
+          </tr>
+
+          <tr *ngIf="this.gridOption.datas.pagedItems == 0">
+            <td class="datanotfound" colspan="6">Data not found</td>
           </tr>
         </tbody>
       </table>
 
-      <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+      <app-pager
+      (pagedClicked)="setPage($event)"
+      [pagerX]="gridOption"
+    ></app-pager>
       <br /><br />
     </div>
 
-    <form (ngSubmit)="onSubmit(model)"  *ngIf="this.edited" novalidate #heroForm="ngForm">
+    <form
+      (ngSubmit)="onSubmit(model)"
+      *ngIf="this.edited"
+      novalidate
+      #heroForm="ngForm"
+    >
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
             <label for="ProductName">ProductName</label>
-            <input id="ProductName" name="ProductName" [(ngModel)]="model.ProductName" type="text" class="form-control"
-              placeholder="ProductName" />
+            <input
+              id="ProductName"
+              name="ProductName"
+              [(ngModel)]="model.ProductName"
+              type="text"
+              class="form-control"
+              placeholder="ProductName"
+            />
           </div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+        </div>
         <div class="col-md-4"></div>
       </div>
 
@@ -52,11 +88,16 @@
           <div class="form-group">
             <label for="modelCategory">CategoryName</label>
 
-            <select    class="form-control" id="modelCategory"
-             name="modelCategory"
-
-             [(ngModel)]="this.model.CategoryId  ">
-              <option *ngFor="let i of this.modelCategory" [ngValue]="i.CategoryId">
+            <select
+              class="form-control"
+              id="modelCategory"
+              name="modelCategory"
+              [(ngModel)]="this.model.CategoryId"
+            >
+              <option
+                *ngFor="let i of this.modelCategory"
+                [ngValue]="i.CategoryId"
+              >
                 {{ i.CategoryName }}
               </option>
             </select>
@@ -67,83 +108,177 @@
           <div class="form-group">
             <label for="modelSupplier">CompanyName</label>
 
-            <select class="form-control" id="modelSupplier"
-            name="modelSupplier" [(ngModel)]="this.model.SupplierId">
-              <option *ngFor="let i of this.modelSupplier" [ngValue]="i.SupplierId">
+            <select
+              class="form-control"
+              id="modelSupplier"
+              name="modelSupplier"
+              [(ngModel)]="this.model.SupplierId"
+            >
+              <option
+                *ngFor="let i of this.modelSupplier"
+                [ngValue]="i.SupplierId"
+              >
                 {{ i.CompanyName }}
               </option>
             </select>
           </div>
         </div>
+
+        <div class="col-md-4">
+          <div class="form-check">
+            <input
+            name="s"
+              type="checkbox"
+              class="form-check-input"
+              id="exampleCheck1"
+              [(ngModel)]="this.model.Hrfood"
+            />
+            <label class="form-check-label" for="exampleCheck1"
+              >High rish food</label>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="Unit">Unit</label>
+            <input
+              id="Unit"
+              name="Unit"
+              [(ngModel)]="model.Unit"
+              type="text"
+              class="form-control"
+              placeholder="Unit"
+            />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="UnitPrice">UnitPrice</label>
+            <input
+              id="UnitPrice"
+              name="UnitPrice"
+              [(ngModel)]="model.UnitPrice"
+              type="text"
+              class="form-control"
+              placeholder="UnitPrice"
+            />
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="Yield">Yield</label>
+            <input
+              id="Yield"
+              name="Yield"
+              [(ngModel)]="model.Yield"
+              type="text"
+              class="form-control"
+              placeholder="Yield"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="Yield">Cost per</label>
+            <label  class="form-control" for="Yield">100% Yield Reqs.</label>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="Yield">{{this.model.Unit}}</label>
+            <label  class="form-control" for="Yield">{{100/this.model.Yield}}</label>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="Yield">{{(this.model.UnitPrice / this.model.Yield)*100}}</label>
+            <label  class="form-control" for="Yield">{{this.model.Unit}}</label>
+          </div>
+        </div>
       </div>
 
       <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="Unit">Unit</label>
-            <input id="Unit" name="Unit" [(ngModel)]="model.Unit" type="text" class="form-control" placeholder="Unit" />
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="UnitPrice">UnitPrice</label>
-            <input id="UnitPrice" name="UnitPrice" [(ngModel)]="model.UnitPrice" type="text" class="form-control"
-              placeholder="UnitPrice" />
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="Yield">Yield</label>
-            <input id="Yield" name="Yield" [(ngModel)]="model.Yield" type="text" class="form-control"
-              placeholder="Yield" />
-          </div>
-        </div>
-      </div>
+     <div class="col-md-6">
+       {{ this.model.ProductStorages |json}}
+      <table class="table table-striped table-sm">
+        <thead>
+          <th></th>
+          <th>Storage Area</th>
+          <th>
+            <input
+              (click)="AddStorageArea()"
+              type="button"
+              value="New"
+              class="btn btn-success"
+            />
 
+          </th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let i of this.model.ProductStorages; let index = index"
+            class="table-hover"
+          >
+
+            <td>
+              <i class="fas fa-trash-alt"></i>
+              <input
+                (click)="deleteStorageAeras(i)"
+                type="button"
+                value="Delete"
+                class="btn btn-primary"
+              />
+            </td>
+            <td>
+              <select
+                class="form-control"
+                id="modelStorageAreas"
+                name="modelStorageAreas{{ index }}"
+                [(ngModel)]="i.StoreId"
+              >
+                <option
+                  *ngFor="let i of this.modelStorageAreas"
+                  [ngValue]="i.StoreId"
+                >
+                  {{ i.StoreName }}
+                </option>
+              </select>
+            </td>
+            <td></td>
+          </tr>
+          <tr *ngIf="this.model.ProductStorages?.length == 0">
+            <td class="datanotfound" colspan="3">Data not found</td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+      </div>
+      <br />
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label for="ProductNotes">ProductNotes</label>
 
-            <textarea rows="5" id="ProductNotes" name="ProductNotes" [(ngModel)]="model.ProductNotes" type="text"
-              class="form-control" placeholder="ProductNotes"></textarea>
+            <textarea
+              rows="5"
+              id="ProductNotes"
+              name="ProductNotes"
+              [(ngModel)]="model.ProductNotes"
+              type="text"
+              class="form-control"
+              placeholder="ProductNotes"
+            ></textarea>
           </div>
         </div>
       </div>
 
-      <div class="row">
 
-        <table class="table table-striped table-sm">
-          <thead>
-            <th>StorageID</th>
-            <th>Storage arias</th>
-            <th>selection</th>
-            <th>
-              <input (click)="AddStorageArea()" type="button" value="New" class="btn   btn-success" />
-            </th>
-          </thead>
-          <tbody>
-
-            <tr *ngFor="let i of this.model.ProductStorages ; let index=index" class="table-hover">
-              <td>{{ i.StoreId ||0}}</td>
-
-
-              <td>
-                <input type="button" value="Edit" class="btn btn-primary" />
-              </td>
-              <td>
-                <select class="form-control" id="modelStorageAreas" name="modelStorageAreas{{index}}"
-                  [(ngModel)]="i.StoreId">
-                  <option *ngFor="let i of this.modelStorageAreas" [ngValue]="i.StoreId">
-                    {{ i.StoreName }}
-                  </option>
-                </select>
-
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

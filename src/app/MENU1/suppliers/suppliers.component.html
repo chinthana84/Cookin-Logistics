@@ -3,9 +3,9 @@
     <div *ngIf="!edited">
       <app-search
         (searchClicked)="setPage($event)"
-        [search]="this.gridOption.GridClassInstance"
+        [search]="this.gridOption.searchObject">
 
-      ></app-search>
+      </app-search>
       <table class="table table-striped table-sm">
         <thead>
           <th>Supplier_ID</th>

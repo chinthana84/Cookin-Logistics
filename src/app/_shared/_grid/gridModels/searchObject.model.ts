@@ -1,3 +1,5 @@
+import { Grid } from './grid.model';
+
 export class SearchObject {
   searchColName?: string;
   searchText?: string;
@@ -6,4 +8,6 @@ export class SearchObject {
   defaultSortColumnName?: string;
   passingId?: number;
   passingString?: string;
+  colNames?: Grid[];
+   
 }
