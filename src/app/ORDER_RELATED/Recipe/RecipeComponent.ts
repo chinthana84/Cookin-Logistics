@@ -78,7 +78,6 @@ export class RecipeComponent implements OnInit {
           )
           .subscribe((data) => {
             this.modelRecipe = data;
-            console.log(data);
           });
       } else {
         this.edited = false;

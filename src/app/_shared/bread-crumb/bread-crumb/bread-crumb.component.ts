@@ -11,7 +11,7 @@ export class BreadCrumbComponent implements OnInit {
   route: string = '';
   initialUrl: string = '';
   masterBreadcrumbList: Array<any>;
-  
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -41,7 +41,6 @@ export class BreadCrumbComponent implements OnInit {
     } else {
       this.route = 'Home';
     }
-    console.log(this.displayBreadcrumbList)
    });
   }
 

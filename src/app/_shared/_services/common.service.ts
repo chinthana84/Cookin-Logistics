@@ -8,14 +8,13 @@ import { AuthenticationService } from 'src/app/MyServices/authentication.service
 })
 export class CommonService {
 
-  constructor( private auth:AuthenticationService,   private http: HttpClient,
-    private router: Router,) { }
+  constructor(private auth: AuthenticationService,
+    private http: HttpClient,
+    private router: Router) { }
 
-  redirectTo(uri:string){
-console.log(uri)
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
-
- }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
 
 }

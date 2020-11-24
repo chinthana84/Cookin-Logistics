@@ -81,7 +81,6 @@ export class SuppliersComponent implements OnInit, IMyGrid {
             this.confirmDialogService.messageBox(environment.APIerror)
         });
 
-        console.log(this.model);
       } else {
         this.edited = false;
       }
@@ -92,7 +91,7 @@ export class SuppliersComponent implements OnInit, IMyGrid {
     this.http
       .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
       .subscribe((data) => {
-        console.log(data);
+       
         this.gridOption.datas = data;
       }, (error) => {
 
@@ -117,7 +116,6 @@ export class SuppliersComponent implements OnInit, IMyGrid {
     this.http
       .post<any>(`${environment.APIEndpoint}/supplier`, obj, {})
       .subscribe((data) => {
-        console.log(data);
 
         if (data.IsValid == false) {
 
@@ -154,7 +152,7 @@ export class SuppliersComponent implements OnInit, IMyGrid {
 
 
     // this.toastr.success("ssssssssss")
-    // console.log(form)
+
     // this.confirmDialogService.messageBox("data saved")
     // // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
     // //   alert("Yes clicked");
