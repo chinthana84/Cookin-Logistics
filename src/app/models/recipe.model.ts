@@ -28,4 +28,17 @@ export class Recipe {
   public     Moc?:RefTable
   public     Prep  ?:RefTable
 
+  public   RecipeDetails?: RecipeDetailsDTO[];
+
+}
+
+export class   RecipeDetailsDTO {
+  RecipeDetailId?: number=0;
+  RecipeId?: number=0;
+  ProductId?: number=0;
+  Quantity?: number=0;
+  Qpportion?: number=0;
+  Yield?: number=0;
+  RequiredQuantity?: number=0;
+  ProdNote?: string="";
 }

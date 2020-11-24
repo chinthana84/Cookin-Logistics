@@ -19,9 +19,19 @@ isLogged$:BehaviorSubject<boolean>;
   isLoggedIn : Observable<boolean>;
 
 
+
+
   ngOnInit(): void {
     this.setBreadcrumb();
     this.isLoggedIn = this.authentication.isLoggedIn();
+
+    this.authentication.isLoggedIn().subscribe(r=> {
+      if (r == false){
+        this.router.navigate(['login']);
+      }
+
+    })
+
 
 
 

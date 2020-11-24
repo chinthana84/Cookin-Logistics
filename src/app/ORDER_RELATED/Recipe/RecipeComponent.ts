@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
+import { Product } from 'src/app/models/product.model';
 import { Recipe } from 'src/app/models/recipe.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
@@ -94,6 +95,12 @@ export class RecipeComponent implements OnInit {
     });
  }
 
+
+ getUnit(id:number):string{
+  var p= this.modelWrapper.Products.filter( p=> p.ProductId==id)[0];
+  return "";
+ }
+
   Action(obj: Recipe) {
     if (obj == undefined) {
       this.router.navigate(["/recipes/edit"], { queryParams: { id: 0 } });
@@ -105,6 +112,16 @@ export class RecipeComponent implements OnInit {
     this.edited = true;
   }
 
+   PortionSize():number {
+    return    ( this.modelRecipe.YieldNumber/this.modelRecipe.StandardPortions );
+  }
+
+  RequiredYield():number {
+    var x=    ( this.modelRecipe.ReqPortions * this.modelRecipe.YieldNumber );
+   return x/this.modelRecipe.StandardPortions;
+
+  }
+
   onSubmit(obj: Recipe) {
     try {
       this.http
@@ -112,7 +129,7 @@ export class RecipeComponent implements OnInit {
         .subscribe((data) => {
           this.toastr.success("ssssssssss");
 
-          this.router.navigate(['products']);
+          this.router.navigate(['recipes']);
           this.setPage(this.gridOption.searchObject);
 
         }, err => {

@@ -11,6 +11,7 @@ import {
   ProductStorages,
   StorageAreas,
 } from "src/app/models/product.model";
+import { RefTable } from 'src/app/models/reftable.model';
 import { Supplier } from "src/app/models/supplier.model";
 import { IMyGrid } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from "src/app/_shared/confirm-dialog/confirm-dialog.service";
@@ -31,6 +32,7 @@ export class ProductComponent implements OnInit,IMyGrid {
   modelCategory: Categories[] = [];
   modelSupplier: Supplier[] = [];
   modelStorageAreas: StorageAreas[] = [];
+  modelProductUnits:RefTable[]=[];
 
   gridOption: GridOptions = {
     datas: {},
@@ -76,7 +78,11 @@ export class ProductComponent implements OnInit,IMyGrid {
       .subscribe((data) => {
         this.modelCategory = data;
       });
-
+this.http
+      .get<any>(`${environment.APIEndpoint}/common/GetAllProductionUnits`)
+      .subscribe((data) => {
+        this.modelProductUnits = data;
+      });
 
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
@@ -121,6 +127,33 @@ export class ProductComponent implements OnInit,IMyGrid {
       });
     }
     this.edited = true;
+  }
+
+  getUnit():string
+  {
+    console.log(this.model.ProdUnitId)
+    var x=  this.modelProductUnits.filter(b=> b.RefId ==this.model.ProdUnitId) ;
+   if (x[0] == undefined)
+   {
+     return ""
+   }
+   return x[0].RefDescription;
+  }
+
+  getCal1():string{
+    var x= (this.model.UnitPrice / this.model.Yield)*100;
+    if (isNaN(x)){
+      return "0"
+    }
+    return '$' + x.toFixed(2).toString();
+  }
+
+  getCal2():string{
+    var x=  100/this.model.Yield
+    if (isNaN(x)){
+      return "0"
+    }
+    return x.toFixed(2).toString();
   }
 
   AddStorageArea() {

@@ -4,11 +4,11 @@ import { Supplier } from './supplier.model';
 export class Product {
   public ProductId?: number = 0;
   public ProductName?: string;
-  public Unit?: string;
-  public UnitPrice?: number
+  public ProdUnitId?: Number=0;
+  public UnitPrice?: number=0;
   public ProductNotes?: string
-  public Yield?: number
-  public Hrfood?: boolean
+  public Yield?: number=0
+  public Hrfood?: boolean=false;
 
   public   CategoryId? :number=0
   public SupplierId?: number = 0;
