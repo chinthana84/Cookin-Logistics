@@ -10,6 +10,10 @@ export class Wrapper {
   public CuisneTypes?:RefTable[]=[];
   public ProdUnits?:RefTable[]=[];
   public Products?: Product []=[];
+
+  public StandradUnits?: RefTable []=[];
+  public YieldUnits?: RefTable []=[];
+
 }
 
 export interface IMyGrid {

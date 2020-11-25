@@ -88,13 +88,26 @@
                           <label class="form-check-label">
                             <input [(ngModel)]="this.modelRecipe.StandardPortions" id="Reference" name="Reference"
                               type="text" class="form-control" placeholder="Reference" />
+
+
+
                           </label>
+
+
                         </div>
 
                         <div class="col-md-4">
-                          <label class="form-check-label">
-                            <input readonly="true" type="text" class="form-control" value="portions" />
-                          </label>
+
+                          <div class="form-group">
+
+
+                            <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
+                              name="Courses">
+                              <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
+                                {{ i.RefDescription }}
+                              </option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <div class="row mt-2">
@@ -112,9 +125,12 @@
                         </div>
 
                         <div class="col-md-4">
-                          <label class="form-check-label">
-                            <input readonly="true" type="text" class="form-control" value="portions" />
-                          </label>
+                          <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
+                            name="Courses">
+                            <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
+                              {{ i.RefDescription }}
+                            </option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -133,12 +149,16 @@
                           </label>
                         </div>
                         <div class="col-md-6">
-                          <label class="form-check-label">
-                            <input [(ngModel)]="this.modelRecipe.YieldNumber" id="YieldNumber1" name="YieldNumber1xx"
-                            type="text" class="form-control" placeholder="YieldNumber" />
-                          </label>
+                          <select [(ngModel)]="this.modelRecipe.YieldUnitId" class="form-control" id="Courses"
+                          name="Courses">
+                          <option *ngFor="let i of this.modelWrapper.YieldUnits" [ngValue]="i.RefId">
+                            {{ i.RefDescription }}
+                          </option>
+                        </select>
                         </div>
                       </div>
+
+
 
                       <div class="row mt-2">
                         <div class="col-md-6">
@@ -172,7 +192,7 @@
                         </div>
                         <div class="col-md-6">
                           <label class="form-check-label">
-                            <input readonly="true" [(ngModel)]="this.modelRecipe.YieldUnit" id="YieldUnitxx"
+                            <input readonly="true" [(ngModel)]="this.modelRecipe.YieldUnitId" id="YieldUnitxx"
                               name="YieldUnitxx" type="text" class="form-control" placeholder="YieldUnit" />
                           </label>
                         </div>
@@ -291,9 +311,10 @@
                     " class="table-hover">
 
                     <td>
-                      <select   [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas" name="modelStorageAreas{{ index }}">
+                      <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
+                        name="modelStorageAreas{{ index }}">
                         <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
-                          {{ j.ProductName }}  
+                          {{ j.ProductName }}
                         </option>
                       </select>
 
@@ -301,7 +322,7 @@
                     <!-- this.booksByStoreID = this.books.filter(
                       book => book.store_id === this.store.id); -->
 
-                    <td>  {{this.getUnit(i.ProductId) }}</td>
+                    <td> {{this.getUnit(i.ProductId) }}</td>
                     <td>
                       <input [(ngModel)]="i.Qpportion" id="YieldUnit" name="Qpportion{{ index }}" type="text"
                         class="form-control" placeholder="YieldUnit" />
@@ -318,8 +339,8 @@
                       <input [(ngModel)]="i.ProdNote" id="YieldUnit" name="ProdNote{{ index }}" type="text"
                         class="form-control" placeholder="YieldUnit" />
                     </td>
-                    <td>         <input [(ngModel)]="i.Yield" id="YieldUnit" name="Yield{{ index }}" type="text"
-                      class="form-control" placeholder="YieldUnit" /></td>
+                    <td> <input [(ngModel)]="i.Yield" id="YieldUnit" name="Yield{{ index }}" type="text"
+                        class="form-control" placeholder="YieldUnit" /></td>
                     <td></td>
 
                     <!-- <td>

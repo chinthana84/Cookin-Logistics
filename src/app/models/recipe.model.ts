@@ -7,7 +7,8 @@ export class Recipe {
   public  StandardPortions?:number=0;
   public  ReqPortions?:number=0;
   public  YieldNumber?:number=0;
-  public  YieldUnit?:string=""
+  public  YieldUnitId?:number=0;
+  public  StandradUnitId?:number=0;
   public  PortionSize?:number=0;
   public  PortionUnit?:string=""
   public  Method?:string=""
@@ -15,7 +16,7 @@ export class Recipe {
   public  CuisineId?:number=0;
   public  PrepId ?:number=0;
   public  Reference?:string=""
-  public  StdUnits?:string=""
+
   public  Mocid?:number=0;
 
   public   KitchRec?:boolean=false;
@@ -27,6 +28,9 @@ export class Recipe {
   public     Cuisine?:RefTable
   public     Moc?:RefTable
   public     Prep  ?:RefTable
+
+  public   StandradUnit?:RefTable
+  public   YieldUnit?:RefTable
 
   public   RecipeDetails?: RecipeDetailsDTO[];
 
