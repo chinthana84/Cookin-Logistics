@@ -16,12 +16,11 @@
           <th>Fax</th>
 
           <th>
-            <input
-              type="button"
-              value="New"
-              class="btn btn-primary"
-              (click)="Supplier(null)"
-            />
+  
+<button  (click)="Supplier(null)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+          data-target="#edit">
+          <span class="fa fa-plus"></span></button>
+
           </th>
         </thead>
         <tbody>
@@ -38,12 +37,14 @@
           <td>{{ item.Fax }}</td>
 
           <td>
-            <input
-              type="button"
-              value="Edit"
-              class="btn btn-primary"
-              (click)="Supplier(item)"
-            />
+
+
+            <button  (click)="Supplier(item)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+            data-target="#edit">
+            <span class="fa fa-pencil-square-o"></span></button>
+
+
+
           </td>
         </tr>
         <tr *ngIf="this.gridOption.datas.pagedItems==0" >

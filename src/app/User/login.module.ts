@@ -18,7 +18,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule,
+    //NgbModule,
     RouterModule.forChild(routes),
   ],
   exports:[LoginComponent]

@@ -25,6 +25,7 @@ import { HomeComponent } from './User/home/home.component';
 import { LoaderService } from './MyServices/loader.service';
 import { LoaderInterceptor } from './Myinteceptors/loader.interceptor';
 import { LoaderComponent } from './loader/loader.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -39,17 +40,17 @@ import { LoaderComponent } from './loader/loader.component';
   ],
   imports: [
 
-
+ BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
 
     SharedModule,
-    CommonModule,
+
     FormsModule,
     ToastrModule.forRoot(),
     ConfirmDialogModule,
     OrderModule,
-    LoginModule,
+     LoginModule,
     NgbModule ,
 
      RouterModule.forRoot([
@@ -66,13 +67,12 @@ import { LoaderComponent } from './loader/loader.component';
       }
 
 
-   ]),
-
-     NgbModule
+   ]) 
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

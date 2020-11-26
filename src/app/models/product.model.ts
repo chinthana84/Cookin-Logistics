@@ -1,4 +1,5 @@
 import { Categories } from './categories.model';
+import { RefTable } from './reftable.model';
 import { Supplier } from './supplier.model';
 
 export class Product {
@@ -17,6 +18,8 @@ export class Product {
 
   public Supplier?: Supplier
   public Category?: Categories
+  public ProdUnit?: RefTable
+
 
   public    ProductStorages? :ProductStorages[] =[] ;
 }

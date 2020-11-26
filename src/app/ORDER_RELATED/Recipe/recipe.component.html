@@ -13,7 +13,12 @@
           <th>PrepName</th>
 
           <th>
-            <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
+
+
+<button  (click)="Action(null)"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+          data-target="#edit">
+          <span class="fa fa-plus"></span></button>
+
           </th>
         </thead>
         <tbody>
@@ -26,7 +31,14 @@
             <td>{{ item.PrepName }}</td>
 
             <td>
-              <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
+
+
+
+              <button (click)="Action(item)"   class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+              data-target="#edit">
+              <span class="fa fa-pencil-square-o"></span></button>
+
+
             </td>
           </tr>
           <tr *ngIf="this.gridOption.datas.pagedItems == 0">
@@ -50,7 +62,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Detaisl</a>
+                aria-selected="false">Details</a>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -66,7 +78,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="Reference">Reference</label>
-                    <input [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Reference" type="text"
+                    <input [(ngModel)]="this.modelRecipe.Reference" id="Reference" name="Referenceasdfsadf" type="text"
                       class="form-control" placeholder="Reference" />
                   </div>
                 </div>
@@ -87,7 +99,7 @@
                         <div class="col-md-4">
                           <label class="form-check-label">
                             <input [(ngModel)]="this.modelRecipe.StandardPortions" id="Reference" name="Reference"
-                              type="text" class="form-control" placeholder="Reference" />
+                              type="number" class="form-control" placeholder="Reference" />
 
 
 
@@ -102,7 +114,7 @@
 
 
                             <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
-                              name="Courses">
+                              name="Coursessafdf">
                               <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
                                 {{ i.RefDescription }}
                               </option>
@@ -120,13 +132,13 @@
                         <div class="col-md-4">
                           <label class="form-check-label">
                             <input [(ngModel)]="this.modelRecipe.ReqPortions" id="Reference" name="ReqPortions"
-                              type="text" class="form-control" placeholder="ReqPortions" />
+                              type="number" class="form-control" placeholder="ReqPortions" />
                           </label>
                         </div>
 
                         <div class="col-md-4">
                           <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
-                            name="Courses">
+                            name="Coursest">
                             <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
                               {{ i.RefDescription }}
                             </option>
@@ -145,16 +157,16 @@
                         <div class="col-md-6">
                           <label class="form-check-label">
                             <input [(ngModel)]="this.modelRecipe.YieldNumber" id="YieldNumber1" name="YieldNumber1"
-                              type="text" class="form-control" placeholder="YieldNumber" />
+                              type="number" class="form-control" placeholder="YieldNumber" />
                           </label>
                         </div>
                         <div class="col-md-6">
-                          <select [(ngModel)]="this.modelRecipe.YieldUnitId" class="form-control" id="Courses"
-                          name="Courses">
-                          <option *ngFor="let i of this.modelWrapper.YieldUnits" [ngValue]="i.RefId">
-                            {{ i.RefDescription }}
-                          </option>
-                        </select>
+                          <select [(ngModel)]="this.modelRecipe.YieldUnitId" (change)="onChangeYieldUnit()"
+                            class="form-control" id="Courses" name="Coursesssssssssssssssss">
+                            <option *ngFor="let i of this.modelWrapper.YieldUnits" [ngValue]="i.RefId">
+                              {{ i.RefDescription }}
+                            </option>
+                          </select>
                         </div>
                       </div>
 
@@ -169,10 +181,13 @@
                         </div>
                         <div class="col-md-6">
                           <label class="form-check-label">
-                            <input readonly="true" placeholder="Unit" [(ngModel)]="this.modelRecipe.YieldUnit"
-                              id="YieldUnitxxx" name="YieldUnitxxx" readonly="true"
-                              [(ngModel)]="this.modelRecipe.YieldUnit" type="text" class="form-control" />
+                            <input readonly="true" placeholder="Unit" id="YieldUnitxxx" name="YieldUnitxxx"
+                              readonly="true" [(ngModel)]="this.modelRecipe.SelectedYieldUnit" type="text"
+                              class="form-control" />
                           </label>
+
+
+
                         </div>
                       </div>
                     </div>
@@ -192,7 +207,7 @@
                         </div>
                         <div class="col-md-6">
                           <label class="form-check-label">
-                            <input readonly="true" [(ngModel)]="this.modelRecipe.YieldUnitId" id="YieldUnitxx"
+                            <input readonly="true" [value]="this.modelRecipe.SelectedYieldUnit" id="YieldUnitxx"
                               name="YieldUnitxx" type="text" class="form-control" placeholder="YieldUnit" />
                           </label>
                         </div>
@@ -294,14 +309,24 @@
                 <thead>
 
                   <th>Product</th>
+                  <th>Standard</th>
                   <th>Unit</th>
-                  <th>Qpportion</th>
-                  <th>Quantity</th>
-                  <th>RequiredQuantity</th>
-                  <th>ProdNote</th>
-                  <th>Yield</th>
+                  <th>UnitPrice $</th>
+                  <th>Yield%</th>
+                  <th>Required</th>
+                  <th>Cost</th>
+                  <th>Q.P.P.</th>
+                  <th>Ext. Price</th>
+                  <th>HR Food</th>
+                  <th>Prod Note</th>
                   <th>
-                    <input type="button" value="New" class="btn btn-success" />
+                   <button (click)="this.AddRecipeLine()"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+                    data-target="#edit">
+                    <span class="fa fa-plus"></span></button>
+
+
+                    
+
                   </th>
                 </thead>
                 <tbody>
@@ -309,59 +334,58 @@
                       let i of this.modelRecipe.RecipeDetails;
                       let index = index
                     " class="table-hover">
-
                     <td>
                       <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
-                        name="modelStorageAreas{{ index }}">
+                        name="modelStorageAreafgdfgfgs{{ index }}">
                         <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
                           {{ j.ProductName }}
                         </option>
                       </select>
+                    </td>
+
+                    <td>
+                      <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" type="number"
+                        class="form-control" placeholder="Quantity" />
+                    </td>
+                    <td>
+                      {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
+                    </td>
+                    <td>
+                      {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
+                    </td>
+                    <td>
+                      <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
+                        placeholder="Yield" />
+                    </td>
+                    <td>
+                      {{(i.Quantity * 100)/i.Yield}}
+
+                    <td>
+                      {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }}
+                    </td>
+                    <td>QPP</td>
+                    <td>Ext. Price</td>
+                    <td>{{ i.Product?.Hrfood }}</td>
+
+                    <td>
+                      <input [(ngModel)]="i.ProdNote" id="ProdNote" name="ProdNote{{ index }}" type="text"
+                        class="form-control" placeholder="ProdNote" />
+                    </td>
+
+                    <td>
+                      <button type="button" (click)="deleteRecipeDetails(i.RecipeDetailId)" class="btn btn-primary btn-sm"
+                      data-title="Edit" data-toggle="modal" data-target="#edit">
+                      <span class="fa fa-trash"></span>
+
+                    </button>
 
                     </td>
-                    <!-- this.booksByStoreID = this.books.filter(
-                      book => book.store_id === this.store.id); -->
 
-                    <td> {{this.getUnit(i.ProductId) }}</td>
-                    <td>
-                      <input [(ngModel)]="i.Qpportion" id="YieldUnit" name="Qpportion{{ index }}" type="text"
-                        class="form-control" placeholder="YieldUnit" />
-                    </td>
-                    <td>
-                      <input [(ngModel)]="i.Quantity" id="YieldUnit" name="Quantity{{ index }}" type="text"
-                        class="form-control" placeholder="YieldUnit" />
-                    </td>
-                    <td>
-                      <input [(ngModel)]="i.RequiredQuantity" id="YieldUnit" name="RequiredQuantity{{ index }}"
-                        type="text" class="form-control" placeholder="YieldUnit" />
-                    </td>
-                    <td>
-                      <input [(ngModel)]="i.ProdNote" id="YieldUnit" name="ProdNote{{ index }}" type="text"
-                        class="form-control" placeholder="YieldUnit" />
-                    </td>
-                    <td> <input [(ngModel)]="i.Yield" id="YieldUnit" name="Yield{{ index }}" type="text"
-                        class="form-control" placeholder="YieldUnit" /></td>
-                    <td></td>
 
-                    <!-- <td>
-                    <select
-                      class="form-control"
-                      id="modelStorageAreas"
-                      name="modelStorageAreas{{ index }}"
-                      [(ngModel)]="i.StoreId"
-                    >
-                      <option
-                        *ngFor="let i of this.modelStorageAreas"
-                        [ngValue]="i.StoreId"
-                      >
-                        {{ i.StoreName }}
-                      </option>
-                    </select>
-                  </td> -->
                   </tr>
-                  <!-- <tr *ngIf="this.model.ProductStorages?.length == 0">
-                    <td class="datanotfound" colspan="3">Data not found</td>
-                  </tr> -->
+                  <tr *ngIf="this.modelRecipe.RecipeDetails?.length == 0 || this.modelRecipe.RecipeDetails?.length == null  ">
+                    <td class="datanotfound" colspan="12">Data not found</td>
+                  </tr>
                 </tbody>
               </table>
             </div>

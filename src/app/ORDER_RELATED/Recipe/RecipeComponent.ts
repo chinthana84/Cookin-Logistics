@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Product } from 'src/app/models/product.model';
-import { Recipe } from 'src/app/models/recipe.model';
+import { Recipe, RecipeDetailsDTO } from 'src/app/models/recipe.model';
+import { RefTable } from 'src/app/models/reftable.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
@@ -52,7 +53,7 @@ export class RecipeComponent implements OnInit {
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
     private commonService: CommonService,
-    private gridService : GridService
+    private gridService: GridService
   ) {
     this.edited = true;
   }
@@ -60,25 +61,38 @@ export class RecipeComponent implements OnInit {
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.http
-      .get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-      .subscribe((data) => {
-        this.modelWrapper = data;
-      });
+
 
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
         this.modelRecipe = new Recipe();
+        this.modelRecipe.RecipeDetails=[]
+        this.http
+          .get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+          .subscribe((data) => {
+            this.modelWrapper = data;
+            // this.onChangeYieldUnit();
+          });
       } else if (params.id > 0) {
         this.edited = true;
-        this.http
-          .get<any>(
-            `${environment.APIEndpoint}/Recipe/GetByID/` + params.id
-          )
-          .subscribe((data) => {
-            this.modelRecipe = data;
-          });
+        let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
+        let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+        // .subscribe((data) => {
+        //   this.modelRecipe = data;
+        // });
+
+        forkJoin([a, b]).subscribe(results => {
+          // results[0] is our character
+          // results[1] is our character homeworld
+          this.modelRecipe = results[0]
+          this.modelWrapper = results[1];
+          console.log(this.modelRecipe)
+          this.onChangeYieldUnit();
+
+        });
+
+
       } else {
         this.edited = false;
       }
@@ -87,18 +101,18 @@ export class RecipeComponent implements OnInit {
   }
 
   setPage(obj: SearchObject): void {
-    this.gridService.getGridData(obj).subscribe((data) =>{
+    this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
-          this.confirmDialogService.messageBox(environment.APIerror)
+      this.confirmDialogService.messageBox(environment.APIerror)
     });
- }
+  }
 
 
- getUnit(id:number):string{
-  var p= this.modelWrapper.Products.filter( p=> p.ProductId==id)[0];
-  return "";
- }
+  getUnit(id: number): string {
+    var p = this.modelWrapper.Products.filter(p => p.ProductId == id)[0];
+    return "";
+  }
 
   Action(obj: Recipe) {
     if (obj == undefined) {
@@ -111,33 +125,67 @@ export class RecipeComponent implements OnInit {
     this.edited = true;
   }
 
-   PortionSize():number {
-    return    ( this.modelRecipe.YieldNumber/this.modelRecipe.StandardPortions );
+  PortionSize(): number {
+    let val = (this.modelRecipe.YieldNumber / this.modelRecipe.StandardPortions);
+    return isNaN(val) ? 0 : val
   }
 
-  RequiredYield():number {
-    var x=    ( this.modelRecipe.ReqPortions * this.modelRecipe.YieldNumber );
-   return x/this.modelRecipe.StandardPortions;
+  RequiredYield(): number {
+    var x = (this.modelRecipe.ReqPortions * this.modelRecipe.YieldNumber);
+    return isNaN(x / this.modelRecipe.StandardPortions) ? 0 : x / this.modelRecipe.StandardPortions;
 
   }
 
   onSubmit(obj: Recipe) {
-    try {
-      this.http
-        .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
-        .subscribe((data) => {
-          this.toastr.success("ssssssssss");
 
+
+    this.http
+      .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
+      .subscribe((data) => {
+        if (data.IsValid == false) {
+          this.confirmDialogService.messageListBox(data.ValidationMessages)
+        }
+        else {
+          this.toastr.success(environment.dataSaved);
           this.router.navigate(['recipes']);
           this.setPage(this.gridOption.searchObject);
+        }
+      }, (error) => {
 
-        }, err => {
-          this.confirmDialogService.messageBox(err.Message);
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+  }
 
-        });
-    } catch (Error) {
-      this.confirmDialogService.messageBox("data saved");
+  public onChangeYieldUnit(): void {
+
+    let x = this.modelWrapper.YieldUnits.filter(b => b.RefId == this.modelRecipe.YieldUnitId)
+
+    if (x[0] == undefined) {
+
+      this.modelRecipe.SelectedYieldUnit = "NO";
+    } else {
+      this.modelRecipe.SelectedYieldUnit = x[0].RefDescription;
+
     }
   }
 
+  public AddRecipeLine(): void {
+    var obj = new RecipeDetailsDTO();
+    obj.RecipeId = this.modelRecipe.RecipeId;
+    this.modelRecipe.RecipeDetails.push(obj);
+  }
+
+
+  getProductObject(i: number): Product {
+    let x = this.modelWrapper.Products.filter(b => b.ProductId == i)
+    return x[0];
+  }
+
+  deleteRecipeDetails(i : number):void{
+    this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+  }
+
 }
+
+
+

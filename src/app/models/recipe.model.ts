@@ -1,3 +1,4 @@
+import { Product } from './product.model';
 import { RefTable } from './reftable.model';
 
 export class Recipe {
@@ -29,10 +30,14 @@ export class Recipe {
   public     Moc?:RefTable
   public     Prep  ?:RefTable
 
-  public   StandradUnit?:RefTable
-  public   YieldUnit?:RefTable
+  public   StandradUnit?:RefTable;
+  public   YieldUnit?:RefTable;
 
   public   RecipeDetails?: RecipeDetailsDTO[];
+
+
+  //Addtional properties
+  public SelectedYieldUnit?:string=""
 
 }
 
@@ -45,4 +50,6 @@ export class   RecipeDetailsDTO {
   Yield?: number=0;
   RequiredQuantity?: number=0;
   ProdNote?: string="";
+
+  public   Product?:Product;
 }

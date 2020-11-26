@@ -10,8 +10,7 @@ import {ConfirmDialogService} from './confirm-dialog.service';
         ConfirmDialogComponent
     ],
     imports: [
- 
-        CommonModule
+         CommonModule
     ],
     exports: [
         ConfirmDialogComponent
