@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SuppliersComponent } from './MENU1/suppliers/suppliers.component';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './_shared/Shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
@@ -39,35 +39,30 @@ import { BrowserModule } from '@angular/platform-browser';
     LoaderComponent
   ],
   imports: [
-
- BrowserModule,
+    BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-
     SharedModule,
-
     FormsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
     ConfirmDialogModule,
     OrderModule,
-     LoginModule,
-    NgbModule ,
-
-     RouterModule.forRoot([
-      {path:'',component:LoginComponent},
-      {path:'home',component:HomeComponent},
+    LoginModule,
+    NgbModule,
+    RouterModule.forRoot([
+      { path: '', component: LoginComponent },
+      { path: 'home', component: HomeComponent },
       {
-         path: 'suppliers',  component: SuppliersComponent,  children:[{path:'edit',component:SuppliersComponent}]
+        path: 'suppliers', component: SuppliersComponent, children: [{ path: 'edit', component: SuppliersComponent }]
 
-      },{
-        path: 'category',  component: CategoryComponent,  children:[{path:'edit',component:SuppliersComponent}]
+      }, {
+        path: 'category', component: CategoryComponent, children: [{ path: 'edit', component: SuppliersComponent }]
       }
-      ,{
-        path: 'products',  component: ProductComponent,  children:[{path:'edit',component:ProductComponent}]
+      , {
+        path: 'products', component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
-
-
-   ]) 
+    ])
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

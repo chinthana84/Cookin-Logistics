@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -12,7 +13,7 @@ export class HomeComponent implements OnInit {
   images =[]
 
 
-  constructor(config: NgbCarouselConfig) { config.interval = 2000;
+  constructor(  private router: Router,config: NgbCarouselConfig) { config.interval = 2000;
     config.wrap = true;
     config.keyboard = false;
     config.pauseOnHover = false; }
@@ -22,6 +23,10 @@ export class HomeComponent implements OnInit {
   this.images[0]='https://evolution.edu.au/images/banners/shutterstock_548661166.jpg'
   this.images[1]='https://www.evolution.edu.au/images/reinaldoclassfront1.jpg'
   this.images[2]='https://www.evolution.edu.au/images/rsa_rcg.png'
+  }
+
+  loadpage(p:string){
+    this.router.navigate([p]);
   }
 
 }

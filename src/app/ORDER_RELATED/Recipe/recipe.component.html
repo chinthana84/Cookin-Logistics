@@ -1,6 +1,6 @@
 <section class="section-content padding-y bg">
   <div class="container">
-    <div *ngIf="!this.edited">
+    <div id="safsdf" *ngIf="!this.edited">
       <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject">
       </app-search>
       <table class="table table-striped table-sm">
@@ -19,7 +19,9 @@
           data-target="#edit">
           <span class="fa fa-plus"></span></button>
 
+
           </th>
+
         </thead>
         <tbody>
           <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
@@ -41,7 +43,7 @@
 
             </td>
           </tr>
-          <tr *ngIf="this.gridOption.datas.pagedItems == 0">
+          <tr class="" *ngIf="this.gridOption.datas.pagedItems == 0">
             <td class="datanotfound" colspan="7">Data not found</td>
           </tr>
         </tbody>
@@ -320,12 +322,12 @@
                   <th>HR Food</th>
                   <th>Prod Note</th>
                   <th>
-                   <button (click)="this.AddRecipeLine()"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+                   <button type="button" (click)="this.AddRecipeLine()"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
                     data-target="#edit">
                     <span class="fa fa-plus"></span></button>
 
 
-                    
+
 
                   </th>
                 </thead>
