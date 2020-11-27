@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+
 import { ToastrService } from 'ngx-toastr';
 import { Categories } from 'src/app/models/categories.model';
 import { GridType } from 'src/app/models/gridType.enum';
@@ -37,7 +37,7 @@ export class CategoryComponent implements OnInit, IMyGrid {
 
 
   constructor(private gridService: GridService,
-    config: NgbCarouselConfig,
+   
     private commonService: CommonService,
     private http: HttpClient, private router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,

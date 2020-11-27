@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers:[NgbCarouselConfig]
+  providers:[ ]
 })
 export class HomeComponent implements OnInit {
   images =[]
 
 
-  constructor(  private router: Router,config: NgbCarouselConfig) { config.interval = 2000;
-    config.wrap = true;
-    config.keyboard = false;
-    config.pauseOnHover = false; }
+  constructor(  private router: Router) {   }
 
   ngOnInit(): void {
 

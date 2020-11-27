@@ -20,7 +20,7 @@ import { LoginModule } from './User/login.module';
 import { MenuComponent } from './menu/menu.component';
 
 import { LoginComponent } from './User/login/login.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { HomeComponent } from './User/home/home.component';
 import { LoaderService } from './MyServices/loader.service';
 import { LoaderInterceptor } from './Myinteceptors/loader.interceptor';
@@ -49,7 +49,7 @@ import { BrowserModule } from '@angular/platform-browser';
     ConfirmDialogModule,
     OrderModule,
     LoginModule,
-    NgbModule,
+    
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
       { path: 'home', component: HomeComponent },
