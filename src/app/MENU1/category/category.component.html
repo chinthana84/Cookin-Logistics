@@ -35,7 +35,7 @@
       <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
       <br /><br />
     </div>
- 
+
       <form (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
       <div class="form-group">
         <label for="CategoryName">Category Name</label>
