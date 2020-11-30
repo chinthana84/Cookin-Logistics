@@ -8,6 +8,10 @@
     background-repeat: no-repeat;
   }
 
+body{
+  background-color: #f5f5f5;
+}
+
   .datanotfound
   {
 color: red;

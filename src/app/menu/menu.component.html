@@ -1,7 +1,7 @@
-<nav  *ngIf="(isLoggedIn | async)" id="mainMenu" class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav  *ngIf="(isLoggedIn | async)" id="mainMenu" class="border border-secondary navbar navbar-expand-lg navbar-dark bg-primary">
 
   <a routerLink = "home" class="navbar-brand">
-    <img src="https://www.evolution.edu.au/wp-content/uploads/HIGH-Res_EHI_BlueOrange_CMYK.png" height="28" alt="CoolBrand">
+    <img src="https://lms.evolution.pageculinaire.com.au/pluginfile.php/1/theme_lambda/logo/1595549093/evolution_new.png" height="28" alt="CoolBrand">
 </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -12,11 +12,13 @@
 
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Level1</a>
+        <a class="nav-link dropdown-toggle"
+        data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+        aria-expanded="false">Ref</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" routerLink = "suppliers">Supplier</a>
-          <a class="dropdown-item" routerLink = "category">category</a>
-          <a class="dropdown-item" routerLink = "products">products</a>
+          <a class="dropdown-item" routerLink = "category">Category</a>
+          <a class="dropdown-item" routerLink = "products">Products</a>
 
         </div>
       </li>
@@ -24,7 +26,7 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipes</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" routerLink = "recipes">Recipe</a>
-
+          <a class="dropdown-item" routerLink = "orders">Orders</a>
 
         </div>
       </li>
@@ -43,7 +45,7 @@
 
 
 
-<nav  *ngIf="(isLoggedIn | async)" aria-label="breadcrumb">
+<nav class="mt-1  border-secondary" *ngIf="(isLoggedIn | async)" aria-label="breadcrumb">
 <ol class="breadcrumb">
 <li class="breadcrumb-item">
 <a class="breadcrumb-text" href="#">Home</a>

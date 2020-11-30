@@ -15,7 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule,
     FormsModule,ReactiveFormsModule
   ],
-  exports:[SearchComponent,PagerComponent,BreadCrumbComponent],
-  providers:[GridService]
+  exports:[SearchComponent,PagerComponent,BreadCrumbComponent]
+  , providers:[GridService]
 })
 export class SharedModule { }

@@ -53,10 +53,9 @@
 
       <br />
     </div>
-    <div *ngIf="1==1">
 
 
-    </div>
+
     <div class="row mt-2">
       <div class="col-md-12">
         <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelRecipe)" novalidate #heroForm="ngForm">
@@ -328,10 +327,6 @@
                    <button type="button" (click)="this.AddRecipeLine()"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
                     data-target="#edit">
                     <span class="fa fa-plus"></span></button>
-
-
-
-
                   </th>
                 </thead>
                 <tbody>

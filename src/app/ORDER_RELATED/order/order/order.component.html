@@ -1,0 +1,105 @@
+
+<section class="section-content padding-y bg">
+  <div class="container">
+    <div id="safsdf" *ngIf="!this.edited">
+
+
+
+<app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
+
+<table class="table table-striped table-sm">
+  <thead>
+    <th>OrderId</th>
+    <th>Student Numbers</th>
+    <th>ReqStudent Numbers</th>
+    <th>Assessment</th>
+    <th>
+      <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover">
+      <td>{{ item.OrderId }}</td>
+      <td>{{ item.StudentNumbers }}</td>
+      <td>{{ item.ReqStudentNumbers }}</td>
+      <td> <input [(ngModel)]="item.IsAssessment" name="IsAssessment{index}" type="checkbox" class="form-check-input"
+          id="IsAssessment{index}" readonly="true" /></td>
+      <td>
+        <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
+      </td>
+    </tr>
+    <tr *ngIf="this.gridOption.datas.pagedItems==0">
+      <td class="datanotfound" colspan="7">Data not found</td>
+    </tr>
+  </tbody>
+</table>
+
+<app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+
+</div>
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <form *ngIf="this.edited"  novalidate #heroForm="ngForm">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Header</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">Details</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="StudentNumbers">StudentNumbers</label>
+                <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers" name="StudentNumbers" type="text"
+                  class="form-control" placeholder="StudentNumbers" />
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+
+          <table class="table table-striped table-sm">
+            <thead>
+
+              <th>Product</th>
+              <th>Standard</th>
+              <th>Unit</th>
+              <th>UnitPrice $</th>
+              <th>Yield%</th>
+              <th>Required</th>
+              <th>Cost</th>
+              <th>Q.P.P.</th>
+              <th>Ext. Price</th>
+              <th>HR Food</th>
+              <th>Prod Note</th>
+              <th>
+               <button type="button"   class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+                data-target="#edit">
+                <span class="fa fa-plus"></span></button>
+              </th>
+            </thead>
+            <tbody>
+             
+            </tbody>
+          </table>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+</section>
+

@@ -4,15 +4,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecipeComponent } from "./Recipe/RecipeComponent";
 import { SharedModule } from '../_shared/Shared.module';
 import { CommonModule } from '@angular/common';
+import { OrderComponent } from './order/order/order.component';
 
 const routes: Routes = [
   {
-    path: 'recipes', component: RecipeComponent, children: [{ path: 'edit', component: RecipeComponent }]
+    path: 'recipes', component: RecipeComponent
+    , children: [{ path: 'edit', component: RecipeComponent }]
+  },
+  {
+    path: 'orders', component: OrderComponent
+    , children: [{ path: 'edit', component: OrderComponent }]
+
   }
 ];
 
 @NgModule({
-  declarations: [RecipeComponent],
+  declarations: [RecipeComponent, OrderComponent],
   imports: [
     CommonModule,
     FormsModule,
