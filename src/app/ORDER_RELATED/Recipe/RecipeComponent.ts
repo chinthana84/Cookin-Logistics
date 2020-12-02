@@ -17,7 +17,7 @@ import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.mode
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
 
- 
+
 @Component({
   selector: 'app-order',
   templateUrl: './recipe.component.html',
@@ -138,8 +138,6 @@ export class RecipeComponent implements OnInit {
   }
 
   onSubmit(obj: Recipe) {
-
-
     this.http
       .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
       .subscribe((data) => {

@@ -10,6 +10,8 @@ export class ProductGridDTO
 export   class OrdersGridDTO
 {
     public   OrderId?: number=0;
+
+    public OrderDescription?:string="";
     public   StudentNumbers?:number=0;
     public   ReqStudentNumbers?:number=0;
     public   PractTitle?:string=""

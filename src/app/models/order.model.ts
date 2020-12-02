@@ -1,5 +1,8 @@
+import { Product } from './product.model';
+
 export class Order {
   public   OrderId?: number=0;
+  public OrderDescription?:string="";
   public   StudentNumbers?:number=0;
   public   ReqStudentNumbers?:number=0;
   public   PractTitle?:string=""
@@ -7,4 +10,21 @@ export class Order {
   public   IsService?:Boolean=false;
   public   IsTheory?:Boolean=false;
   public   IsPractical?:Boolean=false;
+
+  public   OrderDetails?: OrderDetails[];
+}
+
+export class OrderDetails
+{
+    public   OrderDetailsId?: number=0;
+    public   OrderId ?: number=0;
+    public   ProductId?: number=0;
+    public   Quantity ?: number=0;
+    public  Qps?: number=0;
+    public   Discount?: number=0;
+    public   Yield ?: number=0;
+    public    RequiredQuantity ?: number=0;
+
+    public   Order?: Order;
+    public   Product?: Product;
 }

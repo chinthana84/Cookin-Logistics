@@ -15,9 +15,9 @@
           <th>
 
 
-<button  (click)="Action(null)"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-          data-target="#edit">
-          <span class="fa fa-plus"></span></button>
+            <button (click)="Action(null)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+              data-target="#edit">
+              <span class="fa fa-plus"></span></button>
 
 
           </th>
@@ -36,9 +36,9 @@
 
 
 
-              <button (click)="Action(item)"   class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-              data-target="#edit">
-              <span class="fa fa-pencil-square-o"></span></button>
+              <button (click)="Action(item)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+                data-target="#edit">
+                <span class="fa fa-pencil-square-o"></span></button>
 
 
             </td>
@@ -324,9 +324,9 @@
                   <th>HR Food</th>
                   <th>Prod Note</th>
                   <th>
-                   <button type="button" (click)="this.AddRecipeLine()"  class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
-                    data-target="#edit">
-                    <span class="fa fa-plus"></span></button>
+                    <button type="button" (click)="this.AddRecipeLine()" class="btn btn-primary btn-xs"
+                      data-title="Edit" data-toggle="modal" data-target="#edit">
+                      <span class="fa fa-plus"></span></button>
                   </th>
                 </thead>
                 <tbody>
@@ -373,17 +373,18 @@
                     </td>
 
                     <td>
-                      <button type="button" (click)="deleteRecipeDetails(i.RecipeDetailId)" class="btn btn-primary btn-sm"
-                      data-title="Edit" data-toggle="modal" data-target="#edit">
-                      <span class="fa fa-trash"></span>
+                      <button type="button" (click)="deleteRecipeDetails(i.RecipeDetailId)"
+                        class="btn btn-primary btn-sm" data-title="Edit" data-toggle="modal" data-target="#edit">
+                        <span class="fa fa-trash"></span>
 
-                    </button>
+                      </button>
 
                     </td>
 
 
                   </tr>
-                  <tr *ngIf="this.modelRecipe.RecipeDetails?.length == 0 || this.modelRecipe.RecipeDetails?.length == null  ">
+                  <tr
+                    *ngIf="this.modelRecipe.RecipeDetails?.length == 0 || this.modelRecipe.RecipeDetails?.length == null  ">
                     <td class="datanotfound" colspan="12">Data not found</td>
                   </tr>
                 </tbody>
