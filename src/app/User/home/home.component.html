@@ -14,30 +14,27 @@
           <div class="row">
             <div class="col-md-4">
               <div class="card-body border border-primary">
- <a class="card-title text-center" (click)="this.loadpage('suppliers')">
-                <img class="card-img-top"
-
-                src="https://cdn.iconscout.com/icon/premium/png-256-thumb/supplier-8-899150.png"
-                alt="Card image cap">
-                Supplier </a>
+                <a class="card-title text-center" (click)="this.loadpage('suppliers')">
+                  <img class="card-img-top"
+                    src="https://cdn.iconscout.com/icon/premium/png-256-thumb/supplier-8-899150.png"
+                    alt="Card image cap">
+                  Supplier </a>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card-body border border-primary">
-<a (click)="this.loadpage('category')">
-                <img class="card-img-top"
-  src="https://static.thenounproject.com/png/2426188-200.png"
-                alt="Card image cap">
-                Category </a>
+                <a (click)="this.loadpage('category')">
+                  <img class="card-img-top" src="https://static.thenounproject.com/png/2426188-200.png"
+                    alt="Card image cap">
+                  Category </a>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card-body border border-primary">
-<a (click)="this.loadpage('products')">
-                <img class="card-img-top"
-                src="https://image.flaticon.com/icons/png/512/43/43777.png"
-                alt="Card image cap">
-                Products </a>
+                <a (click)="this.loadpage('products')">
+                  <img class="card-img-top" src="https://image.flaticon.com/icons/png/512/43/43777.png"
+                    alt="Card image cap">
+                  Products </a>
               </div>
             </div>
           </div>
@@ -55,14 +52,19 @@
             <div class="col-md-4">
               <div class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('recipes')">
-                  <img class="card-img-top"
-
-                  src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-25.jpg"
-                  alt="Card image cap">
+                  <img class="card-img-top" src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-25.jpg"
+                    alt="Card image cap">
                   Recipe </a>
               </div>
             </div>
-
+            <div class="col-md-4">
+              <div class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpage('orders')">
+                  <img class="card-img-top" src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-25.jpg"
+                    alt="Card image cap">
+                 Lession Order </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,43 +76,35 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-         Not implemented
+          Tutor-Time
         </div>
-        <!--
-    <a class="dropdown-item" routerLink = "suppliers">Supplier</a>
-    <a class="dropdown-item" routerLink = "category">category</a>
-    <a class="dropdown-item" routerLink = "products">products</a> -->
-
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
               <div class="card-body border border-primary">
- <a class="card-title text-center" (click)="this.loadpage('suppliers')">
-                <img class="card-img-top"
-
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAPFBMVEX///8AAAATExPo6OgXFxfq6uoYGBjl5eXf398SEhILCwvs7OwaGhri4uLc3Nzu7u4dHR3ExMQiIiLKysrXGbjPAAAGQ0lEQVR4nO2d6bLaMAyF6yyEsJe+/7sWCIHE8aITvGXmfH/b8fhgyZJjyffPH0IIIYQQQgghhBBCCCGEEEIIIYQQQgghhJCyuNyvUcY93vdRxoW5KHVoI4zbKaUuEcaFeQhU6lQHH/dcqTIk7tWL5hh43LofBs5uqPvDMBF1COuLrRrHzSzxoj4cQhpq9x03r6HuJxNRt3ASu2Y6cMZV/JhoYENttXGzSbwojUBBo9bHzWWoC4GPHbULMG7XLwfOInG/nEeQuDj3wYy+qPngh1998WgeNr0vGkz0zW+r2FnHTWyodoHq9Isvmk00g0SjD45U63fU1rDJfEloqDYffHNYm6O2zmET+qLDRAf6dYbauX84lcxQnSY6sCpodCf/wElW0WOiAysSOEuY0MZNINFrou+poNvNMlUzE91QhQLhBK6rpANHlijwwZEd4ou1Iw7qxDXUu3wiSAJ3RYa9R9QHTkVJDdWeqhkI/LlkQb0DJiNM4CRh4sMt9Cev5XTEW8KDXjKdVhJ+Pj9ajC+zv0xIEDSg8frIJjpwhKbkM1TTiT6zQNBvPAkcNNY9gYm+p4WsojNoQHtzn0wgaKiOU780VRsEJjLRgRbZUa0JnOtEv+CUVCDoP5V5FaGf6ZbQRAcgAzOe+q9Q2Ike6A0ThCQuDRXarmKnamZqKGjoEgtL1cxACZxmZtBuvEvugyPrE7gCUzUzRyTlqr6GCq1+lVEg6E27USLkwenDxJx6RQKH7cKZBYJR7XXqxyJpVhMdaJFT/8NQsZNJpjAxB4tsf2/I/w5fiLQKZOs/KOQ/F7GCT+RbR9WonThSlOCDI9Ltv3r6rFRi7jAxpxaF/mo4D8okWo5c2ZDkmdV44JVILMlEB47eWVffE71fYlOcQL8vVtNPFj6JpYSJOe5cpZp/k3FLzJ+qmXElcJX+0cklsTwfHGmthroQ6JKY4m5iLbabKYNAu8QINeMBMQcNo0CbxHJSNTMmX7QINEss1wdH6sXZwSrQJLHMMDFHT+AcAh8StX/sNyBQN1SnQH0VyzfRgeNElEfgXGLwtpRofH3RK3AqsewwMWc89QsEfiWWmqqZGXxRJPCxdq//thUfHGlvYoGDxJJTNTP1/SC/4T319w354Mg/sb4nf3NPF6c7AWvYHKrsfYYozyKEXiqxeeym/Tn3lDGGkmahxGYIF5vyxLGcUiSxGUP+hlbxWycjCBgfgarfjC9OTxdeic0kLz1sZBXnnS8eic38hBiifzE6ep2MU2Kj3wZswFCXtWoOiQuBG/BFU3OWVeJSoCo+aJi/e1skGgUWHjTOlks2o8TG8r009ysKLuyFQAaJNoElJ3Cu7rOFRLvAB4WeFd2dL5pEp8BCffHsyV5mEj0Ciwwa/vKvSRruE2gsuc2MpJTrs4p+gaq4BO4sqgN6SxQJLMwXpW0FL4mWQL+gpKAhalIeJUoFqoKCBtIgCdW1lWKoZ6gx5B/SaFtG0IDa606d4QrVJbGAVfS8ZaHxPBpBdfr5D1NnSOC7zhuSmHkVIR/83A+2iKFWWSVClfqTJj2oIzynoa7vX8NaNLMlcLJUbRQ4vwC9Ijtwru+oUGvPok5mA74oT9WU8dlILGhkSOB+f8ui8KABhQlL/+ARaUVJnd1ALa7WOhmohy3tqR8LE3YfKjaBW5OqmcHeu0lmqNhxyf3LFxk0IBP1dr7UyM+VxlCxMOGvNsRbNCMDpWqiJuUr9GpRdEOFTvTCkmbo1F9FXkXoRC8up8TapeMmcMivDZRTQr4Y97024M09qJzS3m2zJLInit9NBEua5Qlc9A+M0rcv0aJ0YQKX4go81vulIl9Mc8IQ+OKqJmVJ0EiUtnkNdWWTsr9dOtlHft9b0Gur7j2GmvIQ7DTUH5qUne3Sab+4OQz1p+4z1xsbie+hrBJ/7HyxH82SX7RZfPHnzheLL+a4ZjP6YoC3LMwJXJZPwgZDDdJ9Zip7yHQXvPw7M2H6BxcJXL5qRc0Xg72rpvlizqvu2SoGfE9mftLIekU6kRj0hdjpqT9zPUasv7v2MdT81RjvoBH82bF22FFLaDJ5GWqEhwJeCVwZNd+XSG9Z1Pl9cCTW3yG93gswUUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhJAZ/wHPlT459rIQ3AAAAABJRU5ErkJggg=="
-                alt="Card image cap">
-                Not implemented </a>
+                <a class="card-title text-center" (click)="this.loadpage('tutor')">
+                  <img class="card-img-top"
+                    src="https://static.thenounproject.com/png/510086-200.png"
+                    alt="Card image cap">
+                 Tutor</a>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card-body border border-primary">
-<a (click)="this.loadpage('category')">
-                <img class="card-img-top"
-                src="data:image/png;base64,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"
-
-                alt="Card image cap">
-                Not implemented </a>
+                <a (click)="this.loadpage('category')">
+                  <img class="card-img-top"
+                    src="data:image/png;base64,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"
+                    alt="Card image cap">
+                  Not implemented </a>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card-body border border-primary">
-<a (click)="this.loadpage('products')">
-                <img class="card-img-top"
-                src="data:image/png;base64,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"
-
-                alt="Card image cap">
-                Not implemented </a>
+                <a (click)="this.loadpage('products')">
+                  <img class="card-img-top"
+                    src="data:image/png;base64,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"
+                    alt="Card image cap">
+                  Not implemented </a>
               </div>
             </div>
 
@@ -121,40 +115,35 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          Not implemented
+       Venues-Session
         </div>
 
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
               <div class="card-body border border-primary">
-                <a class="card-title text-center" (click)="this.loadpage('recipes')">
+                <a class="card-title text-center" (click)="this.loadpage('venue')">
+                  <img class="card-img-top" src="https://static.thenounproject.com/png/223135-200.png"
+                     alt="Card image cap">
+                  Venue </a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-body border border-primary">
+                <a (click)="this.loadpage('products')">
                   <img class="card-img-top"
-
-                src="data:image/png;base64,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"
-
-                  alt="Card image cap">
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAPFBMVEX///8AAAATExPo6OgXFxfq6uoYGBjl5eXf398SEhILCwvs7OwaGhri4uLc3Nzu7u4dHR3ExMQiIiLKysrXGbjPAAAGQ0lEQVR4nO2d6bLaMAyF6yyEsJe+/7sWCIHE8aITvGXmfH/b8fhgyZJjyffPH0IIIYQQQgghhBBCCCGEEEIIIYQQQgghhJCyuNyvUcY93vdRxoW5KHVoI4zbKaUuEcaFeQhU6lQHH/dcqTIk7tWL5hh43LofBs5uqPvDMBF1COuLrRrHzSzxoj4cQhpq9x03r6HuJxNRt3ASu2Y6cMZV/JhoYENttXGzSbwojUBBo9bHzWWoC4GPHbULMG7XLwfOInG/nEeQuDj3wYy+qPngh1998WgeNr0vGkz0zW+r2FnHTWyodoHq9Isvmk00g0SjD45U63fU1rDJfEloqDYffHNYm6O2zmET+qLDRAf6dYbauX84lcxQnSY6sCpodCf/wElW0WOiAysSOEuY0MZNINFrou+poNvNMlUzE91QhQLhBK6rpANHlijwwZEd4ou1Iw7qxDXUu3wiSAJ3RYa9R9QHTkVJDdWeqhkI/LlkQb0DJiNM4CRh4sMt9Cev5XTEW8KDXjKdVhJ+Pj9ajC+zv0xIEDSg8frIJjpwhKbkM1TTiT6zQNBvPAkcNNY9gYm+p4WsojNoQHtzn0wgaKiOU780VRsEJjLRgRbZUa0JnOtEv+CUVCDoP5V5FaGf6ZbQRAcgAzOe+q9Q2Ike6A0ThCQuDRXarmKnamZqKGjoEgtL1cxACZxmZtBuvEvugyPrE7gCUzUzRyTlqr6GCq1+lVEg6E27USLkwenDxJx6RQKH7cKZBYJR7XXqxyJpVhMdaJFT/8NQsZNJpjAxB4tsf2/I/w5fiLQKZOs/KOQ/F7GCT+RbR9WonThSlOCDI9Ltv3r6rFRi7jAxpxaF/mo4D8okWo5c2ZDkmdV44JVILMlEB47eWVffE71fYlOcQL8vVtNPFj6JpYSJOe5cpZp/k3FLzJ+qmXElcJX+0cklsTwfHGmthroQ6JKY4m5iLbabKYNAu8QINeMBMQcNo0CbxHJSNTMmX7QINEss1wdH6sXZwSrQJLHMMDFHT+AcAh8StX/sNyBQN1SnQH0VyzfRgeNElEfgXGLwtpRofH3RK3AqsewwMWc89QsEfiWWmqqZGXxRJPCxdq//thUfHGlvYoGDxJJTNTP1/SC/4T319w354Mg/sb4nf3NPF6c7AWvYHKrsfYYozyKEXiqxeeym/Tn3lDGGkmahxGYIF5vyxLGcUiSxGUP+hlbxWycjCBgfgarfjC9OTxdeic0kLz1sZBXnnS8eic38hBiifzE6ep2MU2Kj3wZswFCXtWoOiQuBG/BFU3OWVeJSoCo+aJi/e1skGgUWHjTOlks2o8TG8r009ysKLuyFQAaJNoElJ3Cu7rOFRLvAB4WeFd2dL5pEp8BCffHsyV5mEj0Ciwwa/vKvSRruE2gsuc2MpJTrs4p+gaq4BO4sqgN6SxQJLMwXpW0FL4mWQL+gpKAhalIeJUoFqoKCBtIgCdW1lWKoZ6gx5B/SaFtG0IDa606d4QrVJbGAVfS8ZaHxPBpBdfr5D1NnSOC7zhuSmHkVIR/83A+2iKFWWSVClfqTJj2oIzynoa7vX8NaNLMlcLJUbRQ4vwC9Ijtwru+oUGvPok5mA74oT9WU8dlILGhkSOB+f8ui8KABhQlL/+ARaUVJnd1ALa7WOhmohy3tqR8LE3YfKjaBW5OqmcHeu0lmqNhxyf3LFxk0IBP1dr7UyM+VxlCxMOGvNsRbNCMDpWqiJuUr9GpRdEOFTvTCkmbo1F9FXkXoRC8up8TapeMmcMivDZRTQr4Y97024M09qJzS3m2zJLInit9NBEua5Qlc9A+M0rcv0aJ0YQKX4go81vulIl9Mc8IQ+OKqJmVJ0EiUtnkNdWWTsr9dOtlHft9b0Gur7j2GmvIQ7DTUH5qUne3Sab+4OQz1p+4z1xsbie+hrBJ/7HyxH82SX7RZfPHnzheLL+a4ZjP6YoC3LMwJXJZPwgZDDdJ9Zip7yHQXvPw7M2H6BxcJXL5qRc0Xg72rpvlizqvu2SoGfE9mftLIekU6kRj0hdjpqT9zPUasv7v2MdT81RjvoBH82bF22FFLaDJ5GWqEhwJeCVwZNd+XSG9Z1Pl9cCTW3yG93gswUUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhJAZ/wHPlT459rIQ3AAAAABJRU5ErkJggg=="
+                    alt="Card image cap">
                   Not implemented </a>
               </div>
             </div>
             <div class="col-md-4">
               <div class="card-body border border-primary">
-<a (click)="this.loadpage('products')">
-                <img class="card-img-top"
-                src="data:image/png;base64,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"
-
-                alt="Card image cap">
-                Not implemented </a>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card-body border border-primary">
-<a (click)="this.loadpage('products')">
-                <img class="card-img-top"
-                src="data:image/png;base64,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"
-
-                alt="Card image cap">
-                Not implemented </a>
+                <a (click)="this.loadpage('products')">
+                  <img class="card-img-top"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAPFBMVEX///8AAAATExPo6OgXFxfq6uoYGBjl5eXf398SEhILCwvs7OwaGhri4uLc3Nzu7u4dHR3ExMQiIiLKysrXGbjPAAAGQ0lEQVR4nO2d6bLaMAyF6yyEsJe+/7sWCIHE8aITvGXmfH/b8fhgyZJjyffPH0IIIYQQQgghhBBCCCGEEEIIIYQQQgghhJCyuNyvUcY93vdRxoW5KHVoI4zbKaUuEcaFeQhU6lQHH/dcqTIk7tWL5hh43LofBs5uqPvDMBF1COuLrRrHzSzxoj4cQhpq9x03r6HuJxNRt3ASu2Y6cMZV/JhoYENttXGzSbwojUBBo9bHzWWoC4GPHbULMG7XLwfOInG/nEeQuDj3wYy+qPngh1998WgeNr0vGkz0zW+r2FnHTWyodoHq9Isvmk00g0SjD45U63fU1rDJfEloqDYffHNYm6O2zmET+qLDRAf6dYbauX84lcxQnSY6sCpodCf/wElW0WOiAysSOEuY0MZNINFrou+poNvNMlUzE91QhQLhBK6rpANHlijwwZEd4ou1Iw7qxDXUu3wiSAJ3RYa9R9QHTkVJDdWeqhkI/LlkQb0DJiNM4CRh4sMt9Cev5XTEW8KDXjKdVhJ+Pj9ajC+zv0xIEDSg8frIJjpwhKbkM1TTiT6zQNBvPAkcNNY9gYm+p4WsojNoQHtzn0wgaKiOU780VRsEJjLRgRbZUa0JnOtEv+CUVCDoP5V5FaGf6ZbQRAcgAzOe+q9Q2Ike6A0ThCQuDRXarmKnamZqKGjoEgtL1cxACZxmZtBuvEvugyPrE7gCUzUzRyTlqr6GCq1+lVEg6E27USLkwenDxJx6RQKH7cKZBYJR7XXqxyJpVhMdaJFT/8NQsZNJpjAxB4tsf2/I/w5fiLQKZOs/KOQ/F7GCT+RbR9WonThSlOCDI9Ltv3r6rFRi7jAxpxaF/mo4D8okWo5c2ZDkmdV44JVILMlEB47eWVffE71fYlOcQL8vVtNPFj6JpYSJOe5cpZp/k3FLzJ+qmXElcJX+0cklsTwfHGmthroQ6JKY4m5iLbabKYNAu8QINeMBMQcNo0CbxHJSNTMmX7QINEss1wdH6sXZwSrQJLHMMDFHT+AcAh8StX/sNyBQN1SnQH0VyzfRgeNElEfgXGLwtpRofH3RK3AqsewwMWc89QsEfiWWmqqZGXxRJPCxdq//thUfHGlvYoGDxJJTNTP1/SC/4T319w354Mg/sb4nf3NPF6c7AWvYHKrsfYYozyKEXiqxeeym/Tn3lDGGkmahxGYIF5vyxLGcUiSxGUP+hlbxWycjCBgfgarfjC9OTxdeic0kLz1sZBXnnS8eic38hBiifzE6ep2MU2Kj3wZswFCXtWoOiQuBG/BFU3OWVeJSoCo+aJi/e1skGgUWHjTOlks2o8TG8r009ysKLuyFQAaJNoElJ3Cu7rOFRLvAB4WeFd2dL5pEp8BCffHsyV5mEj0Ciwwa/vKvSRruE2gsuc2MpJTrs4p+gaq4BO4sqgN6SxQJLMwXpW0FL4mWQL+gpKAhalIeJUoFqoKCBtIgCdW1lWKoZ6gx5B/SaFtG0IDa606d4QrVJbGAVfS8ZaHxPBpBdfr5D1NnSOC7zhuSmHkVIR/83A+2iKFWWSVClfqTJj2oIzynoa7vX8NaNLMlcLJUbRQ4vwC9Ijtwru+oUGvPok5mA74oT9WU8dlILGhkSOB+f8ui8KABhQlL/+ARaUVJnd1ALa7WOhmohy3tqR8LE3YfKjaBW5OqmcHeu0lmqNhxyf3LFxk0IBP1dr7UyM+VxlCxMOGvNsRbNCMDpWqiJuUr9GpRdEOFTvTCkmbo1F9FXkXoRC8up8TapeMmcMivDZRTQr4Y97024M09qJzS3m2zJLInit9NBEua5Qlc9A+M0rcv0aJ0YQKX4go81vulIl9Mc8IQ+OKqJmVJ0EiUtnkNdWWTsr9dOtlHft9b0Gur7j2GmvIQ7DTUH5qUne3Sab+4OQz1p+4z1xsbie+hrBJ/7HyxH82SX7RZfPHnzheLL+a4ZjP6YoC3LMwJXJZPwgZDDdJ9Zip7yHQXvPw7M2H6BxcJXL5qRc0Xg72rpvlizqvu2SoGfE9mftLIekU6kRj0hdjpqT9zPUasv7v2MdT81RjvoBH82bF22FFLaDJ5GWqEhwJeCVwZNd+XSG9Z1Pl9cCTW3yG93gswUUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhJAZ/wHPlT459rIQ3AAAAABJRU5ErkJggg=="
+                    alt="Card image cap">
+                  Not implemented </a>
               </div>
             </div>
           </div>

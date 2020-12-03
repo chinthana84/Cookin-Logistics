@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.module';
 import { CategoryComponent } from './MENU1/category/category.component';
 import { ProductComponent } from './MENU1/product/product.component';
- 
+
 import { OrderModule } from './ORDER_RELATED/order.module';
 import { LoginModule } from './User/login.module';
 import { MenuComponent } from './menu/menu.component';
@@ -25,8 +25,10 @@ import { HomeComponent } from './User/home/home.component';
 import { LoaderService } from './MyServices/loader.service';
 import { LoaderInterceptor } from './Myinteceptors/loader.interceptor';
 import { LoaderComponent } from './loader/loader.component';
-
-
+import { CommonModule } from '@angular/common';
+import { TutorsTimetableModule } from './tutors-timetable/tutors-timetable.module';
+import { VenueComponent } from './Venus-Sessions/venue/venue.component';
+import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
 
 
 @NgModule({
@@ -36,19 +38,13 @@ import { LoaderComponent } from './loader/loader.component';
     CategoryComponent,
     ProductComponent,
     MenuComponent,
-    LoaderComponent
+    LoaderComponent,
+    VenueComponent
+
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot(),
-    ConfirmDialogModule,
-    OrderModule,
-    LoginModule,
+    CommonModule,
 
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
@@ -62,7 +58,20 @@ import { LoaderComponent } from './loader/loader.component';
       , {
         path: 'products', component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
-    ])
+    ]),
+
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
+    ConfirmDialogModule,
+    OrderModule,
+    LoginModule,
+    TutorsTimetableModule,
+    VenueSessionModule
+
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

@@ -1,26 +1,144 @@
-<app-confirm-dialog></app-confirm-dialog>
-<div class="container mt-2 ">
-  <app-menu></app-menu>
-</div>
+<div class="wrapper">
+  <div class="sidebar" data-image="../assets/img/sidebar-5.jpg">
+    <!--
+  Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-<div  class="container mt-2 ">
-  <div id="xx" class="container mt-2" style="background-color: white;">
+  Tip 2: you can also add an image using data-image tag
+-->
+    <div class="sidebar-wrapper">
+      <div class="logo">
+        <img
+          src="https://lms.evolution.pageculinaire.com.au/pluginfile.php/1/theme_lambda/logo/1595549093/evolution_new.png"
+          height="28" alt="CoolBrand">
 
-    <app-loader></app-loader>
-    <br />
-    <router-outlet></router-outlet>
+      </div>
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home">
+            <i class="nc-icon nc-chart-pie-35"></i>
+            <p>Home</p>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"> <i class="nc-icon nc-chart-pie-35"></i>Ref</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="suppliers">Supplier</a>
+            <a class="dropdown-item" routerLink="category">Category</a>
+            <a class="dropdown-item" routerLink="products">Products</a>
 
-  </div>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"><i class="nc-icon nc-chart-pie-35"></i>Recipes</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="recipes">Recipe</a>
+            <a class="dropdown-item" routerLink="orders">Orders</a>
 
-</div>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"><i class="nc-icon nc-chart-pie-35"></i>Tutor-Time</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="tutor">Tutor</a>
 
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"><i class="nc-icon nc-chart-pie-35"></i>Venues-Sessions</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="venue">Venue</a>
 
-
-<div class="container">
-  <div class="row">
-    <div class="col text-center">
-      <a class="align-middle" href="https://www.evolution.edu.au/">© 2019 Evolution Hospitality Institute
-      </a>
+          </div>
+        </li>
+        <li class="nav-item active active-pro">
+          <a class="nav-link active" href="#">
+            <i class="nc-icon nc-alien-33"></i>
+            <p>Admin</p>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
+  <div class="main-panel">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+          <nav class="mt-1  border-secondary" *ngIf="(isLoggedIn | async)" aria-label="breadcrumb">
+            <ol class="breadcrumb" style="background-color: white;">
+              <li class="breadcrumb-item">
+                <a class="breadcrumb-text" href="#">Home</a>
+              </li>
+              <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
+                <a href="javascript:void(0)" [routerLink]="breadLink.url"
+                  class="breadcrumb-text">{{ breadLink.name }}</a>
+              </li>
+            </ol>
+          </nav>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/login']">
+                <span class="no-icon">Log out</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="content">
+      <div class="container-fluid   rounded" style="background-color:white;">
+        <br />
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container-fluid">
+        <nav>
+          <ul class="footer-menu">
+            <li>
+              <a href="#">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Company
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Portfolio
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                Blog
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-center">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+            <a href="#">abcd</a>, made with love for a better web
+          </p>
+        </nav>
+      </div>
+    </footer>
+  </div>
 </div>
+
+
+
+<app-confirm-dialog></app-confirm-dialog>
+
+
+
+<app-loader></app-loader>

@@ -1,0 +1,123 @@
+<div *ngIf="!edited">
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"> </app-search>
+  <table class="table table-striped table-sm">
+    <thead>
+      <th>KitchenCode</th>
+      <th>KitchenName</th>
+      <th>
+
+        <button (click)="Action(null)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+          data-target="#edit">
+          <span class="fa fa-plus"></span></button>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+        <td>{{ item.KitchenCode }}</td>
+        <td>{{ item.KitchenName }}</td>
+        <td>
+
+          <button (click)="Action(item)" class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal"
+            data-target="#edit">
+            <span class="fa fa-pencil-square-o"></span></button>
+        </td>
+      </tr>
+      <tr *ngIf="this.gridOption.datas.pagedItems==0">
+        <td class="datanotfound" colspan="3">Data not found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+  <br /><br />
+</div>
+
+<form (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="KitchenCode">KitchenCode</label>
+        <input id="KitchenCode" name="KitchenCode" [(ngModel)]="model.KitchenCode" type="text" class="form-control"
+          placeholder="KitchenCode" />
+      </div>
+
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="KitchenName">KitchenName</label>
+        <input id="KitchenName" name="KitchenName" [(ngModel)]="model.KitchenName" type="text" class="form-control"
+          placeholder="KitchenName" />
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsSinglePhase" name="IsSinglePhase" type="checkbox"
+          class="form-check-input" id="BarRec" />
+        <label class="form-check-label" for="IsSinglePhase"> SinglePhase</label>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsWaterSupply" name="IsWaterSupply" type="checkbox"
+          class="form-check-input" id="BarRec" />
+        <label class="form-check-label" for="IsWaterSupply">  WaterSupply</label>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsThreephase" name="IsThreephase" type="checkbox"
+          class="form-check-input" id="BarRec" />
+        <label class="form-check-label" for="IsThreephase">  Threephase</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsWashupfacilities" name="IsWashupfacilities" type="checkbox"
+          class="form-check-input" id="IsWashupfacilities" />
+        <label class="form-check-label" for="IsWashupfacilities">   Washupfacilities</label>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsGas" name="IsGas" type="checkbox"
+          class="form-check-input" id="IsGas" />
+        <label class="form-check-label" for="IsGas">   Gas</label>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-check">
+        <input [(ngModel)]="this.model.IsWhiteboard" name="IsWhiteboard" type="checkbox"
+          class="form-check-input" id="IsWhiteboard" />
+        <label class="form-check-label" for="IsWhiteboard">   Whiteboard</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <label for="Decription">Decription</label>
+      <textarea rows="5" id="Decription" name="ProductNotes" [(ngModel)]="model.Decription" type="text"
+        class="form-control" placeholder="Decription"></textarea>
+    </div>
+  </div>
+
+
+
+
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
