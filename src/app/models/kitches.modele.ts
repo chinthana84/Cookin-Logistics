@@ -4,7 +4,7 @@ export class Kitchens {
   public KitchenName?: string = ""
   public IsWhiteboard?: Boolean = false;
   public IsThreephase?: Boolean = false;
-  public Capacity?: Boolean = false;
+  public Capacity?: number=0;
   public IsSinglePhase?: Boolean = false;
   public IsGas?: Boolean = false;
   public IsElectric?: Boolean = false;

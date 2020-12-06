@@ -9,5 +9,9 @@ export class SearchObject {
   passingId?: number;
   passingString?: string;
   colNames?: Grid[];
-   
+
+
+  saveID?:number=0;
+  SavedDBColumn?:string="";
+
 }

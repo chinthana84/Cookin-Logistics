@@ -1,197 +1,195 @@
+<div id="safsdf" *ngIf="!this.edited">
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
 
-    <div id="safsdf" *ngIf="!this.edited">
-      <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
+  <table class="table table-bordered">
+    <thead>
+      <th>Description</th>
+      <th>Student Numbers</th>
+      <th>ReqStudent Numbers</th>
+      <th>Assessment</th>
+      <th>
+        <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover">
+        <td>{{ item.OrderDescription }}</td>
+        <td>{{ item.StudentNumbers }}</td>
+        <td>{{ item.ReqStudentNumbers }}</td>
+        <td> <input [(ngModel)]="item.IsAssessment" name="IsAssessment{index}" type="checkbox" disabled
+              id="IsAssessment{index}" /></td>
+        <td>
+          <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
+        </td>
+      </tr>
+      <tr *ngIf="this.gridOption.datas.pagedItems==0">
+        <td class="datanotfound" colspan="7">Data not found</td>
+      </tr>
+    </tbody>
+  </table>
 
-      <table class="table table-striped table-sm">
-        <thead>
-          <th>Description</th>
-          <th>Student Numbers</th>
-          <th>ReqStudent Numbers</th>
-          <th>Assessment</th>
-          <th>
-            <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
-          </th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover">
-            <td>{{ item.OrderDescription }}</td>
-            <td>{{ item.StudentNumbers }}</td>
-            <td>{{ item.ReqStudentNumbers }}</td>
-            <td> <input [(ngModel)]="item.IsAssessment" name="IsAssessment{index}" type="checkbox" disabled
-                class="form-check-input" id="IsAssessment{index}" /></td>
-            <td>
-              <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
-            </td>
-          </tr>
-          <tr *ngIf="this.gridOption.datas.pagedItems==0">
-            <td class="datanotfound" colspan="7">Data not found</td>
-          </tr>
-        </tbody>
-      </table>
+  <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+</div>
 
-      <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
-    </div>
+<div class="row mt-2">
+  <div class="col-md-12">
+    <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelOrder)" novalidate #heroForm="ngForm">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Header</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false">Details</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-    <div class="row mt-2">
-      <div class="col-md-12">
-        <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelOrder)" novalidate #heroForm="ngForm">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Header</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-                aria-selected="false">Details</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="OrderDescription">Order Description</label>
-                    <input [(ngModel)]="this.modelOrder.OrderDescription" id="OrderDescription" name="OrderDescription"
-                      type="text" class="form-control" placeholder="OrderDescription" />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="StudentNumbers">Topic</label>
-                    <input [(ngModel)]="this.modelOrder.PractTitle" id="PractTitle" name="PractTitle" type="text"
-                      class="form-control" placeholder="PractTitle" />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-header">Quantity Yield</div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="StudentNumbers">StudentNumbers</label>
-                            <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers"
-                              name="StudentNumbers" type="text" class="form-control" placeholder="StudentNumbers" />
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="ReqStudentNumbers">ReqStudentNumbers</label>
-                            <input [(ngModel)]="this.modelOrder.ReqStudentNumbers" id="ReqStudentNumbers"
-                              name="ReqStudentNumbers" type="text" class="form-control"
-                              placeholder="ReqStudentNumbers" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-header">Quantity Yield</div>
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <div class="form-check">
-                              <input [(ngModel)]="this.modelOrder.IsAssessment" name="KitchRec" type="checkbox"
-                                class="form-check-input" id="IsAssessment" />
-                              <label class="form-check-label" for="exampleCheck1"> Assessment</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <div class="form-check">
-                              <input [(ngModel)]="this.modelOrder.IsPractical" name="KitchRec" type="checkbox"
-                                class="form-check-input" id="IsPractical" />
-                              <label class="form-check-label" for="IsPractical"> Practical</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <div class="form-check">
-                              <input [(ngModel)]="this.modelOrder.IsService" name="KitchRec" type="checkbox"
-                                class="form-check-input" id="IsService" />
-                              <label class="form-check-label" for="IsService"> Service</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-group">
-                            <div class="form-check">
-                              <input [(ngModel)]="this.modelOrder.IsTheory" name="IsTheory" type="checkbox"
-                                class="form-check-input" id="IsTheory" />
-                              <label class="form-check-label" for="IsTheory"> Theory</label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="OrderDescription">Order Description</label>
+                <input [(ngModel)]="this.modelOrder.OrderDescription" id="OrderDescription" name="OrderDescription"
+                  type="text" class="form-control" placeholder="OrderDescription" />
               </div>
             </div>
-
-
-
-
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-              <table class="table table-striped table-sm">
-                <thead>
-                  <th>Product</th>
-                  <th>Unit</th>
-                  <th>Quantity</th>
-                  <th>Yield</th>
-                  <th>
-                    <button (click)="this.AddOrderLine(null)" type="button" class="btn btn-primary btn-xs"
-                      data-title="Edit" data-toggle="modal" data-target="#edit">
-                      <span class="fa fa-plus"></span></button>
-                  </th>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
-                    <td>
-                      <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
-                        name="modelStorageAreafgdfgfgs{{ index }}">
-                        <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
-                          {{ j.ProductName }}
-                        </option>
-                      </select>
-                    </td>
-
-                    <td> {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}</td>
-                    <td> <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" type="number"
-                        class="form-control" placeholder="Quantity" /></td>
-
-                    <td> <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number"
-                        class="form-control" placeholder="Yield" /></td>
-
-                        <td>
-                          <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId)" class="btn btn-primary btn-sm">
-                          <span class="fa fa-trash"></span>
-                        </button>
-                        </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="StudentNumbers">Topic</label>
+                <input [(ngModel)]="this.modelOrder.PractTitle" id="PractTitle" name="PractTitle" type="text"
+                  class="form-control" placeholder="PractTitle" />
+              </div>
             </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Submit</button>
           </div>
-        </form>
-      </div>
-    </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">Quantity Yield</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="StudentNumbers">StudentNumbers</label>
+                        <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers" name="StudentNumbers"
+                          type="text" class="form-control" placeholder="StudentNumbers" />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="ReqStudentNumbers">ReqStudentNumbers</label>
+                        <input [(ngModel)]="this.modelOrder.ReqStudentNumbers" id="ReqStudentNumbers"
+                          name="ReqStudentNumbers" type="text" class="form-control" placeholder="ReqStudentNumbers" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
- 
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">.........</div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <label>
+                          <input [(ngModel)]="this.modelOrder.IsAssessment" name="KitchRec" type="checkbox"
+                            class="form-check-input" id="IsAssessment" />
+                           Assessment</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input [(ngModel)]="this.modelOrder.IsPractical" name="KitchRec" type="checkbox"
+                            class="form-check-input" id="IsPractical" />
+                          <label class="form-check-label" for="IsPractical"> Practical</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input [(ngModel)]="this.modelOrder.IsService" name="KitchRec" type="checkbox"
+                            class="form-check-input" id="IsService" />
+                          <label class="form-check-label" for="IsService"> Service</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input [(ngModel)]="this.modelOrder.IsTheory" name="IsTheory" type="checkbox"
+                            class="form-check-input" id="IsTheory" />
+                          <label class="form-check-label" for="IsTheory"> Theory</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+          <table class="table table-bordered">
+            <thead>
+              <th>Product</th>
+              <th>Unit</th>
+              <th>Quantity</th>
+              <th>Yield</th>
+              <th>
+                <button (click)="this.AddOrderLine(null)" type="button" class="btn btn-primary btn-xs" data-title="Edit"
+                  data-toggle="modal" data-target="#edit">
+                  <span class="fa fa-plus"></span></button>
+              </th>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
+                <td>
+                  <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
+                    name="modelStorageAreafgdfgfgs{{ index }}">
+                    <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
+                      {{ j.ProductName }}
+                    </option>
+                  </select>
+                </td>
+
+                <td> {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}</td>
+                <td> <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" type="number"
+                    class="form-control" placeholder="Quantity" /></td>
+
+                <td> <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
+                    placeholder="Yield" /></td>
+
+                <td>
+                  <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId)" class="btn btn-primary btn-sm">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+          <button type="button" (click)="router.navigate(['orders']);" class="btn btn-primary back_button"> <span
+              class="fa fa-arrow-left"></span> </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

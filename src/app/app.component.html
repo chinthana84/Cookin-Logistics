@@ -82,7 +82,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link" [routerLink]="['/login']">
-                <span class="no-icon">Log out</span>
+                <span class="no-icon">Log out- [Admin]</span>
               </a>
             </li>
           </ul>
@@ -91,10 +91,13 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="content">
-      <div class="container-fluid   rounded" style="background-color:white;">
-        <br />
+    <div class="content ">
+      <div class="container-fluid   rounded p-3" style="background-color:white;">
+
+        <app-confirm-dialog></app-confirm-dialog>
+        <app-loader></app-loader>
         <router-outlet></router-outlet>
+
       </div>
     </div>
     <footer class="footer">
@@ -102,22 +105,22 @@
         <nav>
           <ul class="footer-menu">
             <li>
-              <a href="#">
+              <a routerLink="home">
                 Home
               </a>
             </li>
             <li>
-              <a href="#">
+              <a routerLink="home">
                 Company
               </a>
             </li>
             <li>
-              <a href="#">
+              <a routerLink="home">
                 Portfolio
               </a>
             </li>
             <li>
-              <a href="#">
+              <a routerLink="home">
                 Blog
               </a>
             </li>
@@ -127,18 +130,10 @@
             <script>
               document.write(new Date().getFullYear())
             </script>
-            <a href="#">abcd</a>, made with love for a better web
+            <a routerLink="home">abcd</a>, made with love for a better web
           </p>
         </nav>
       </div>
     </footer>
   </div>
 </div>
-
-
-
-<app-confirm-dialog></app-confirm-dialog>
-
-
-
-<app-loader></app-loader>

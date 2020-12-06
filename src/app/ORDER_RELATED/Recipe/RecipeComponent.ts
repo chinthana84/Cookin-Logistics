@@ -16,6 +16,7 @@ import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./recipe.component.css']
 })
 export class RecipeComponent implements OnInit {
-
+  private subs = new SubSink();
   edited: boolean = false;
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
@@ -49,7 +50,7 @@ export class RecipeComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
+    public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
@@ -64,26 +65,22 @@ export class RecipeComponent implements OnInit {
 
 
 
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink =   this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
         this.modelRecipe = new Recipe();
         this.modelRecipe.RecipeDetails=[]
-        this.http
+        this.subs.sink =   this.http
           .get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
           .subscribe((data) => {
             this.modelWrapper = data;
-            // this.onChangeYieldUnit();
           });
       } else if (params.id > 0) {
         this.edited = true;
         let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-        // .subscribe((data) => {
-        //   this.modelRecipe = data;
-        // });
 
-        forkJoin([a, b]).subscribe(results => {
+        this.subs.sink =   forkJoin([a, b]).subscribe(results => {
           // results[0] is our character
           // results[1] is our character homeworld
           this.modelRecipe = results[0]
@@ -138,7 +135,7 @@ export class RecipeComponent implements OnInit {
   }
 
   onSubmit(obj: Recipe) {
-    this.http
+    this.subs.sink =  this.http
       .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {

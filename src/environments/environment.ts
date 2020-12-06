@@ -4,11 +4,13 @@
 
 export const environment = {
   production: false,
-   APIEndpoint: 'http://localhost/CookinLogisticsWebAPI/api',
- //  APIEndpoint: 'http://fmwebhosting.australiaeast.cloudapp.azure.com/apicore/api',
+  APIEndpoint: 'http://localhost/CookinLogisticsWebAPI/api',
+  //APIEndpoint: 'http://fmwebhosting.australiaeast.cloudapp.azure.com/apicore/api',
   dataSaved :'Sucssfully data saved.',
-  APIerror :'Please contact IT Department'
+  APIerror :'Please contact IT Department',
+  RptAPI :'http://fmwebhosting.australiaeast.cloudapp.azure.com/CookRPT/'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

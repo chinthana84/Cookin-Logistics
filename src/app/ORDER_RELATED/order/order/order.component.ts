@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -14,19 +14,18 @@ import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit,OnDestroy {
+  private subs = new SubSink();
   edited: boolean = false;
   modelOrder: Order = {};
-
-
   modelWrapper: Wrapper = {};
-
 
   gridOption: GridOptions = {
     datas: {},
@@ -40,17 +39,21 @@ export class OrderComponent implements OnInit {
     }
   };
   constructor(private http: HttpClient,
-    private router: Router,
+    public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
     private commonService: CommonService,
     private gridService: GridService) { }
 
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink =   this.activatedRoute.queryParams.subscribe((params) => {
 
       if (params.id == 0) {
         this.edited = true;
@@ -58,7 +61,7 @@ export class OrderComponent implements OnInit {
         this.modelOrder = new Order();
         this.modelOrder.OrderDetails = [];
 
-        this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
+        this.subs.sink =     this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
 
       } else if (params.id > 0) {
         this.edited = true;
@@ -66,7 +69,7 @@ export class OrderComponent implements OnInit {
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
 
-        forkJoin([a, b]).subscribe(results => {
+        this.subs.sink =      forkJoin([a, b]).subscribe(results => {
           this.modelOrder = results[0]
           this.modelWrapper = results[1];
         });
@@ -80,7 +83,7 @@ export class OrderComponent implements OnInit {
 
 
   setPage(obj: SearchObject): void {
-    this.gridService.getGridData(obj).subscribe((data) => {
+    this.subs.sink =    this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
@@ -116,7 +119,7 @@ export class OrderComponent implements OnInit {
   }
 
   onSubmit(obj: Order) {
-    this.http
+    this.subs.sink =    this.http
       .post<any>(`${environment.APIEndpoint}/Order/Save`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {

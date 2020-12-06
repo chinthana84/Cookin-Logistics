@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
@@ -12,14 +12,16 @@ import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent implements OnInit, IMyGrid {
+export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
   edited: boolean = false;
+  private subs = new SubSink();
   model: Categories = {};
 
   gridOption: GridOptions = {
@@ -37,26 +39,29 @@ export class CategoryComponent implements OnInit, IMyGrid {
 
 
   constructor(private gridService: GridService,
-   
+
     private commonService: CommonService,
-    private http: HttpClient, private router: Router,
+    private http: HttpClient, public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService
   ) {
     this.edited = false
   }
+  ngOnDestroy(): void {
+   this.subs.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink =  this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
 
         this.model = new Categories();
       } else if (params.id > 0) {
         this.edited = true;
-        this.http
+        this.subs.sink =  this.http
           .get<any>(`${environment.APIEndpoint}/Common/GetCategoryByID/` + params.id)
           .subscribe((data) => {
             this.model = data;
@@ -70,7 +75,7 @@ export class CategoryComponent implements OnInit, IMyGrid {
   }
 
   setPage(obj: SearchObject) {
-    this.gridService.getGridData(obj).subscribe((data) => {
+    this.subs.sink =    this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
@@ -89,7 +94,7 @@ export class CategoryComponent implements OnInit, IMyGrid {
 
   onSubmit(obj: Categories) {
 
-    this.http
+    this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Category`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {

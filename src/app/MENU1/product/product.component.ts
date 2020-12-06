@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Categories } from "src/app/models/categories.model";
@@ -19,13 +19,15 @@ import { GridOptions } from "src/app/_shared/_grid/gridModels/gridOption.model";
 import { SearchObject } from "src/app/_shared/_grid/gridModels/searchObject.model";
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from "src/environments/environment";
+import { SubSink } from 'subsink/dist/subsink';
 
 @Component({
   selector: "app-product",
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.css"],
 })
-export class ProductComponent implements OnInit, IMyGrid {
+export class ProductComponent implements OnInit, IMyGrid, OnDestroy {
+  private subs = new SubSink();
 
   edited: boolean = false;
   model: Product = {};
@@ -47,74 +49,59 @@ export class ProductComponent implements OnInit, IMyGrid {
     }
   };
 
-
   constructor(
     private http: HttpClient,
-    private router: Router,
+    public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
-    private commonService: CommonService
+    public commonService: CommonService
   ) {
     this.edited = false;
+  }
+
+  // Unsubscribe when the component dies
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.http
-      .get<any>(`${environment.APIEndpoint}/common/GetAllSuppliers`)
-      .subscribe((data) => {
-        this.modelSupplier = data;
-      });
-
-    this.http
-      .get<any>(`${environment.APIEndpoint}/common/GetAllStorageAreas`)
-      .subscribe((data) => {
-        this.modelStorageAreas = data;
-      });
-    this.http
-      .get<any>(`${environment.APIEndpoint}/product/GetAllCategory`)
-      .subscribe((data) => {
-        this.modelCategory = data;
-      });
-    this.http
-      .get<any>(`${environment.APIEndpoint}/common/GetAllProductionUnits`)
-      .subscribe((data) => {
-        this.modelProductUnits = data;
-      });
-
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
         this.model = new Product();
         this.model.Category = new Categories();
         this.model.Supplier = new Supplier();
+        this.loadRef();
       } else if (params.id > 0) {
         this.edited = true;
-        this.http
-          .get<any>(
-            `${environment.APIEndpoint}/Product/GetProductByID/` + params.id
-          )
-          .subscribe((data) => {
-            this.model = data;
-          });
-      } else {
-        this.edited = false;
-      }
+        this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Product/GetProductByID/` + params.id).subscribe((data) => { this.model = data; });
+        this.loadRef();
+      } else { this.edited = false; }
     });
   }
 
-  setPage(obj: SearchObject) {
-    this.http
-      .post<ProductGridDTO>(`${environment.APIEndpoint}/grid`, obj, {})
-      .subscribe((data) => {
-        this.gridOption.datas = data;
-      }, (error) => {
+  loadRef() {
+    this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/common/GetAllSuppliers`)
+      .subscribe((data) => { this.modelSupplier = data; });
 
+    this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/common/GetAllStorageAreas`)
+      .subscribe((data) => { this.modelStorageAreas = data; });
+
+    this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/product/GetAllCategory`)
+      .subscribe((data) => { this.modelCategory = data; });
+
+    this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/common/GetAllProductionUnits`)
+      .subscribe((data) => { this.modelProductUnits = data; });
+  }
+
+  setPage(obj: SearchObject) {
+    this.subs.sink = this.http.post<ProductGridDTO>(`${environment.APIEndpoint}/grid`, obj, {})
+      .subscribe((data) => { this.gridOption.datas = data; }, (error) => {
         this.confirmDialogService.messageBox(environment.APIerror)
       });
-
   }
 
   Action(obj: Product) {
@@ -163,39 +150,20 @@ export class ProductComponent implements OnInit, IMyGrid {
   }
 
   onSubmit(obj: Product) {
-
-    this.http
+    this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Product`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {
-
-          // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
-          //   alert("Yes clicked");
-          // }, function () {
-          //   alert("No clicked");
-          // })
-
-          //this.confirmDialogService.messageBox("Data saved")
           this.confirmDialogService.messageListBox(data.ValidationMessages)
         }
         else {
           this.toastr.success(environment.dataSaved);
-          //  this.confirmDialogService.messageBox(environment.dataSaved);
-
           this.router.navigate(['products']);
           this.setPage(this.gridOption.searchObject);
-
-          //  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          //  this.router.onSameUrlNavigation = 'reload';
-          //  this.router.navigate(['products']);
-
         }
-
-
       }, (error) => {
-
         this.confirmDialogService.messageBox(environment.APIerror)
       });
-
   }
+
 }

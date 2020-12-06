@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { SearchObject } from "src/app/_shared/_grid/gridModels/searchObject.model";
 import { GridOptions } from "src/app/_shared/_grid/gridModels/gridOption.model";
 import {
@@ -22,36 +22,36 @@ import { environment } from "src/environments/environment";
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { IMyGrid } from 'src/app/models/wrapper.model';
 import { AuthenticationService } from 'src/app/MyServices/authentication.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: "app-suppliers",
   templateUrl: "./suppliers.component.html",
   styleUrls: ["./suppliers.component.css"],
 })
-export class SuppliersComponent implements OnInit, IMyGrid {
-  searchID = 1;
+export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
+  private subs = new SubSink();
   model: Supplier = {};
   edited: boolean = false;
-
 
   gridOption: GridOptions = {
     datas: {},
     searchObject: {
       girdId: GridType.Supplier
+      ,SavedDBColumn:"SupplierID"
       , defaultSortColumnName: "CompanyName",
       pageNo: 1,
       searchColName: '',
       colNames: [{ colName: "CompanyName", colText: 'Company Name' },
       { colName: "ContactName", colText: 'Contact Name' }
       ]
-    },
-    GridClassInstance: new Supplier(),
+    }
   };
 
   constructor(
-    private auth:AuthenticationService,
+    private auth: AuthenticationService,
     private http: HttpClient,
-    private router: Router,
+    public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
@@ -61,26 +61,18 @@ export class SuppliersComponent implements OnInit, IMyGrid {
   }
 
   ngOnInit() {
-  this.setPage(this.gridOption.searchObject);
+    this.setPage(this.gridOption.searchObject);
 
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink =  this.activatedRoute.queryParams.subscribe((params) => {
 
       if (params.id == 0) {
         this.edited = true;
-
         this.model = new Supplier();
       } else if (params.id > 0) {
         this.edited = true;
-        //'this.model = this.pieces.filter(i => i.Supplier_ID == params.id)[0]
-
-        this.http
+        this.subs.sink = this.http
           .get<any>(`${environment.APIEndpoint}/supplier/GetByID/` + params.id)
-          .subscribe((data) => {
-            this.model = data;
-          }, (error) => {
-            this.confirmDialogService.messageBox(environment.APIerror)
-        });
-
+          .subscribe((data) => { this.model = data; }, (error) => { this.confirmDialogService.messageBox(environment.APIerror) });
       } else {
         this.edited = false;
       }
@@ -88,15 +80,11 @@ export class SuppliersComponent implements OnInit, IMyGrid {
   }
 
   setPage(obj: SearchObject) {
-    this.http
-      .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
-      .subscribe((data) => {
-       
-        this.gridOption.datas = data;
-      }, (error) => {
-
-        this.confirmDialogService.messageBox(environment.APIerror)
-    });
+    this.subs.sink = this.http .post<any>(`${environment.APIEndpoint}/grid`, obj, {})
+    .subscribe((data) => {
+      this.gridOption.datas = data;
+      this.gridOption.searchObject.saveID=0;
+    }, (error) => {  this.confirmDialogService.messageBox(environment.APIerror)  });
   }
 
   Supplier(item: Supplier) {
@@ -110,55 +98,24 @@ export class SuppliersComponent implements OnInit, IMyGrid {
     this.edited = true;
   }
 
-
-
   onSubmit(obj: Supplier) {
-    this.http
-      .post<any>(`${environment.APIEndpoint}/supplier`, obj, {})
-      .subscribe((data) => {
-
+    this.subs.sink = this.http
+      .post<any>(`${environment.APIEndpoint}/supplier`, obj, {}).subscribe((data) => {
         if (data.IsValid == false) {
-
-          // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
-          //   alert("Yes clicked");
-          // }, function () {
-          //   alert("No clicked");
-          // })
-
-          //this.confirmDialogService.messageBox("Data saved")
-           this.confirmDialogService.messageListBox(data.ValidationMessages)
+          this.confirmDialogService.messageListBox(data.ValidationMessages)
         }
         else {
           this.toastr.success(environment.dataSaved);
-        //  this.confirmDialogService.messageBox(environment.dataSaved);
-     //   this.router.navigate(['suppliers'], { relativeTo: this.activatedRoute.parent } );
-     this.router.navigate(['suppliers']);
-     this.setPage(this.gridOption.searchObject);
-    //  this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    //  this.router.onSameUrlNavigation = 'reload';
-
-
-
-        // this.router.navigate("suppliers");
-          //this.commonService.redirectTo('suppliers')
-
+          this.router.navigate(['suppliers']);
+          this.gridOption.searchObject.saveID=data.SavedID;
+          this.setPage(this.gridOption.searchObject);
         }
-
-
       }, (error) => {
-
         this.confirmDialogService.messageBox(environment.APIerror)
       });
+  }
 
-
-    // this.toastr.success("ssssssssss")
-
-    // this.confirmDialogService.messageBox("data saved")
-    // // this.confirmDialogService.confirmThis("Are you sure to delete?", function () {
-    // //   alert("Yes clicked");
-    // // }, function () {
-    // //   alert("No clicked");
-    // // })
-    //    this.router.navigate(['/suppliers'] );
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

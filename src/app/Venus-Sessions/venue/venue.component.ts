@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GridType } from 'src/app/models/gridType.enum';
@@ -10,14 +10,16 @@ import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
+import { SubSink } from 'subsink';
+
 
 @Component({
   selector: 'app-venue',
   templateUrl: './venue.component.html',
   styleUrls: ['./venue.component.css']
 })
-export class VenueComponent implements OnInit {
-  edited: boolean = false;
+export class VenueComponent implements OnInit ,OnDestroy {
+   edited: boolean = false;
 
   model: Kitchens = {};
 
@@ -39,17 +41,18 @@ export class VenueComponent implements OnInit {
   constructor(private gridService: GridService,
 
     private commonService: CommonService,
-    private http: HttpClient, private router: Router,
+    private http: HttpClient, public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService
   ) {
     this.edited = false
   }
+  ngOnDestroy(): void {
+    }
 
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
-
-    this.activatedRoute.queryParams.subscribe((params) => {
+ this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
 
@@ -70,7 +73,7 @@ export class VenueComponent implements OnInit {
   }
 
   setPage(obj: SearchObject) {
-    this.gridService.getGridData(obj).subscribe((data) => {
+     this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)

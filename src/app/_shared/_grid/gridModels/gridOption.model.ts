@@ -9,4 +9,6 @@ export class GridOptions{
     datas?:any;
     GridClassInstance ?:any
     searchID?:number=1
+
+
   }
