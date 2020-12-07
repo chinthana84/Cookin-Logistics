@@ -19,7 +19,7 @@ export class CommonService {
   }
 
   goCNN(url) {
-    window.open(`${environment.RptAPI}/${url}.aspx`, '_blank');
+    window.open(`${environment.RptAPI}/${url}`, '_blank');
   }
 
 }

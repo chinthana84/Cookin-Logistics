@@ -40,7 +40,7 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
 
   constructor(private gridService: GridService,
 
-    private commonService: CommonService,
+    public commonService: CommonService,
     private http: HttpClient, public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService

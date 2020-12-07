@@ -4,38 +4,45 @@
   <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject">
 
   </app-search>
-  <table class="table table-bordered">
-    <thead>
-      <th>Company Name</th>
-      <th>Contact Name</th>
-      <th>Title</th>
-      <th>Phone</th>
-      <th>Fax</th>
-      <th>
-        <button (click)="Supplier(null)" class="btn btn-primary">
-         <span class="fa fa-plus"></span></button>
+  <div class="table-wrap" style="height: 710px;">
+    <table class="table table-bordered">
+      <thead>
+        <th>Company Name</th>
+        <th>Contact Name</th>
+        <th>Title</th>
+        <th>Phone</th>
+        <th>Fax</th>
+        <th>
+          <button (click)="Supplier(null)" class="btn btn-primary ">
+           <span class="fa fa-plus"></span></button>
 
-      </th>
-    </thead>
-    <tbody>
+        </th>
+      </thead>
+      <tbody>
 
-      <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
-        <td>{{ item.CompanyName }}</td>
-        <td>{{ item.ContactName }}</td>
-        <td>{{ item.ContactTitle }}</td>
-        <td>{{ item.Phone }}</td>
-        <td>{{ item.Fax }}</td>
+        <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+          <td>{{ item.CompanyName }}</td>
+          <td>{{ item.ContactName }}</td>
+          <td>{{ item.ContactTitle }}</td>
+          <td>{{ item.Phone }}</td>
+          <td>{{ item.Fax }}</td>
 
-        <td>
-          <button (click)="Supplier(item)" class="btn btn-primary" >
-            <span class="fa fa-pencil-square-o"></span></button>
-        </td>
-      </tr>
-      <tr *ngIf="this.gridOption.datas.pagedItems==0">
-        <td class="datanotfound" colspan="7">Data not found</td>
-      </tr>
-    </tbody>
-  </table>
+          <td>
+            <button (click)="Supplier(item)" class="btn btn-primary btn-sm " >
+          Edit</button>
+
+
+
+
+          </td>
+        </tr>
+        <tr *ngIf="this.gridOption.datas.pagedItems==0">
+          <td class="datanotfound" colspan="7">Data not found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 
   <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
   <br /><br />

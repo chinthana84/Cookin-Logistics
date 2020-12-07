@@ -1,6 +1,6 @@
 
-@import url('ss/css/light-bootstrap-dashboard.css');
-@import url('ss/css/demo.css');
+  @import url('ss/css/light-bootstrap-dashboard.css');
+
 /* You can add global styles to this file, and also import other style files */
 .masthead {
     height: 100vh;
@@ -29,6 +29,7 @@ font-size: 10;
     min-width: 80px;
     max-width: 80px;
 }
+
 
 
 
