@@ -1,0 +1,178 @@
+<form novalidate #heroForm="ngForm">
+
+  <div class="row mt-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="RecipeName">Processing Year</label>
+        <select [(ngModel)]="selectedYear" class="form-control" id="modelStorsageAreas"
+          name="fmodelsafStorageAreafgdfgfgs ">
+          <option *ngFor="let j of this.firstMondayList" [(value)]="j.FirstMondayId">
+            {{ j.FirstMondayDate   }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="RecipeName">Weeks</label>
+        <select (change)="getWeeksData()" [(ngModel)]="selectedWeekID" class="form-control" id="modelStoraffgeAdfgreas"
+          name="modelStorageAreafgdfffffgfgsfff ">
+          <option *ngFor="let j of this.weekList  ;let index = index" [(value)]="j.WeekId">
+            {{ j.WeekName   }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered ">
+        <thead>
+
+          <th>Date</th>
+          <th>Tutor</th>
+          <th>Venue</th>
+          <th>Session</th>
+          <th>Class</th>
+          <th>Order</th>
+          <th>Students</th>
+          <th>
+            <button (click)="this.AddNewLine(null)" type="button" class="btn btn-primary btn-xs" data-title="Edit"
+              data-toggle="modal" data-target="#edit">
+              <span class="fa fa-plus"></span></button>
+          </th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of model ;  let index = index" class="table-hover">
+            <td>
+              <!-- <input name="ReqDate{{ index }}" type="date"  [ngModel]="item.ReqDate | date:'yyyy-MM-dd'"
+                 (ngModelChange)="item.ReqDate = $event"> -->
+
+              <select [(ngModel)]="item.ReqDate" class="form-control" id="Tutors" name="ReqDateReqDate{{ index }}">
+                <option *ngFor="let j of this.weekDays" [ngValue]="j">
+                  {{ j   }}
+                </option>
+              </select>
+
+            </td>
+            <td>
+              <select [(ngModel)]="item.TutorId" class="form-control" id="Tutors" name="Tutors{{ index }}">
+                <option *ngFor="let j of this.modelWrapper.Tutors" [ngValue]="j.TutorId">
+                  {{ j.FirstName   }}
+                </option>
+              </select>
+            </td>
+
+            <td>
+
+              <select [(ngModel)]="item.KitchenId" class="form-control" id="Venues" name="Venues{{ index }}">
+                <option *ngFor="let j of this.modelWrapper.Venues" [ngValue]="j.KitchenId">
+                  {{ j.KitchenName   }}
+                </option>
+              </select>
+            </td>
+
+            <td>
+
+              <select [(ngModel)]="item.TimeId" class="form-control" id="Sessions" name="Sessions{{ index }}">
+                <option *ngFor="let j of this.modelWrapper.Sessions" [ngValue]="j.TimeId">
+                  {{ j.TimeDescription   }}
+                </option>
+              </select>
+            </td>
+
+            <td>
+
+              <select [(ngModel)]="item.ClassId" class="form-control" id="Sessions" name="Classes{{ index }}">
+                <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
+                  {{ j.Name   }}
+                </option>
+              </select>
+            </td>
+            <td>
+
+              <select [(ngModel)]="item.OrderId" class="form-control" id="Sessions" name="Orders{{ index }}">
+                <option *ngFor="let j of this.modelWrapper.Orders" [ngValue]="j.OrderId">
+                  {{ j.OrderDescription   }}
+                </option>
+              </select>
+            </td>
+            <td>
+              <input id="Students{{ index }}" name="Students{{ index }}" [(ngModel)]="item.Students" type="text"
+                class="form-control" placeholder="Students" />
+              </td>
+
+            <td>
+              <button (click)="this.saveLine(item)" type="button" class="btn btn-primary" data-title="Edit"
+                data-toggle="modal" data-target="#edit">
+                <span class="fa fa-save"></span></button>
+                <button (click)="this.deleteLine(item)"   type="button" class="btn btn-warning " data-title="Edit"
+                data-toggle="modal" data-target="#edit">
+                <span class="fa fa-trash"></span></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <table class="table table-bordered ">
+        <thead>
+          <th>Venue</th>
+          <th>Use</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of summaryWrapper.Venues ;  let index = index" class="table-hover">
+            <td>{{item.MyProperty1}}
+            </td>
+            <td>
+              {{item.MyProperty2}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-4">
+      <table class="table table-bordered ">
+        <thead>
+          <th>Name</th>
+          <th>Use</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of summaryWrapper.Tutors ;  let index = index" class="table-hover">
+            <td>{{item.MyProperty1}}
+            </td>
+            <td>
+              {{item.MyProperty2}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-4">
+      <table class="table table-bordered ">
+        <thead>
+          <th>Sessions</th>
+          <th>Hours</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of summaryWrapper.Hours ;  let index = index" class="table-hover">
+            <td>{{item.MyProperty1}}
+            </td>
+            <td>
+              {{item.MyProperty2}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</form>

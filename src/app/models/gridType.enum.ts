@@ -5,5 +5,7 @@ export enum GridType {
   Recipe = 4,
   Order = 5,
   Tutor = 6,
-  Kitchen=7
+  Kitchen = 7,
+  Class = 8,
+  Weeks=9
 }

@@ -29,6 +29,10 @@ import { CommonModule } from '@angular/common';
 import { TutorsTimetableModule } from './tutors-timetable/tutors-timetable.module';
 import { VenueComponent } from './Venus-Sessions/venue/venue.component';
 import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
+import { QuliClassUniModule } from './Quals-Classes-Units/quli-class-uni.module';
+import { OrderTotalsModule } from './Order-Totals/order-totals.module';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+
 
 
 @NgModule({
@@ -70,8 +74,9 @@ import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
     OrderModule,
     LoginModule,
     TutorsTimetableModule,
-    VenueSessionModule
-
+    VenueSessionModule,
+    QuliClassUniModule,
+    OrderTotalsModule
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

@@ -54,6 +54,26 @@
 
           </div>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"><i class="nc-icon nc-chart-pie-35"></i>Class-Quli-Unit</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" routerLink="classes">Class</a>
+
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false"><i class="nc-icon nc-chart-pie-35"></i>Requitions Summary</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item"
+            [routerLink]="['Search']" [queryParams]="{selectedYear:'0',selectedWeekID:0}" >Weeks</a>
+
+
+          </div>
+        </li>
+
         <li class="nav-item active active-pro">
           <a class="nav-link active" href="#">
             <i class="nc-icon nc-alien-33"></i>

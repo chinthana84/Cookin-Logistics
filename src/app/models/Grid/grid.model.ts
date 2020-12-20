@@ -20,3 +20,24 @@ export   class OrdersGridDTO
     public   IsTheory?:Boolean=false;
     public   IsPractical?:Boolean=false;
 }
+
+export   class ClassGridDTO
+{
+    public   ClassId?:number=0;
+    public   ClassCode?:string="";
+    public   Name?:string="";
+    public   ClassMatsAcc ?:string="";
+    public   ClassContactHrs?:number=0;
+    public  ClassMinAttend ?:number=0;
+    public  ClassHrsPerWk ?:number=0;
+    public ClassCohort?:number=0;
+}
+
+
+export   class VwWeekGridDTO
+{
+    public WeekId?:number=0;
+    public  WeekNo? :number=0;
+    public  WeekName ?:string="";
+}
+
