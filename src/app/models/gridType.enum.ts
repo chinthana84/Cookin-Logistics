@@ -7,5 +7,6 @@ export enum GridType {
   Tutor = 6,
   Kitchen = 7,
   Class = 8,
-  Weeks=9
+  Weeks = 9,
+  Units=10
 }

@@ -10,7 +10,6 @@ export class ProductGridDTO
 export   class OrdersGridDTO
 {
     public   OrderId?: number=0;
-
     public OrderDescription?:string="";
     public   StudentNumbers?:number=0;
     public   ReqStudentNumbers?:number=0;
@@ -33,11 +32,17 @@ export   class ClassGridDTO
     public ClassCohort?:number=0;
 }
 
-
 export   class VwWeekGridDTO
 {
     public WeekId?:number=0;
     public  WeekNo? :number=0;
     public  WeekName ?:string="";
+}
+
+export class VwUnitsDTO
+{
+    public   UnitId?:number=0;
+    public    UnitCode?:string="";
+    public   UnitTitle?:string="";
 }
 
