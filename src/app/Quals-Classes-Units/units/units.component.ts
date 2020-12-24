@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { GridType } from 'src/app/models/gridType.enum';
-import { PcsDTO, UnitElementsDTO, UnitsDTO } from 'src/app/models/Units.model';
+import { PcsDTO, RangeNotesDTO, UnitElementsDTO, UnitsDTO } from 'src/app/models/Units.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
@@ -22,8 +22,6 @@ export class UnitsComponent implements OnInit {
   model = new UnitsDTO();
 
   edited: boolean = false;
-  selectedElementID: number = 0;
-  selectedPCs: PcsDTO[];
 
 
   gridOption: GridOptions = {
@@ -59,7 +57,6 @@ export class UnitsComponent implements OnInit {
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
-
         this.model = new UnitsDTO();
       } else if (params.id > 0) {
         this.edited = true;
@@ -67,8 +64,21 @@ export class UnitsComponent implements OnInit {
           .get<any>(`${environment.APIEndpoint}/Common/GetUnitByID/` + params.id)
           .subscribe((data) => {
             this.model = data;
-           this.selectedElementID=0;
-           this.selectedPCs=[];
+
+            this.model.UnitElements.forEach(element => {
+
+              element.ElemntGUID=this.newGuid();
+
+              element.Pcs.forEach(e1 => {
+                  e1.PCsGuid=this.newGuid();
+
+                  e1.RangeNotes.forEach(e2 => {
+                    e2.RangeGUID=this.newGuid();
+
+                  });
+              });
+
+            });
 
           }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror)
@@ -98,9 +108,8 @@ export class UnitsComponent implements OnInit {
   }
 
   AddElement() {
-
-
     let obj = new UnitElementsDTO();
+    obj.ElemntGUID=this.newGuid();
 
     if (this.model.UnitElements === undefined) {
       this.model.UnitElements = [];
@@ -108,53 +117,76 @@ export class UnitsComponent implements OnInit {
     this.model.UnitElements.push(obj);
   }
 
-  LoadPCs(id: number) {
-    this.selectedElementID = id;
-    // this.model.UnitElements.forEach(element => {
-    //   element.Pcs.forEach(e => {
-    //     this.selectedPCs.push(e)
-    //   });
-
-    // });
-
-
-    if (this.selectedPCs === undefined) {
-      this.selectedPCs = [];
-    }
-    else {
-
-
-
-      this.model.UnitElements.forEach(element => {
-        if (element.UnitelementId === this.selectedElementID) {
-          this.selectedPCs=element.Pcs;
-        }
-      });
-
-      this.selectedPCs = this.selectedPCs.filter(item => item.UnitelementId == this.selectedElementID);
-    }
-
-  }
-
-  AddPcs() {
-    debugger
-    if (this.selectedPCs === undefined) {
-      this.selectedPCs = [];
-      let obj = new PcsDTO;
-      obj.UnitelementId = this.selectedElementID;
-      this.selectedPCs.push(obj);
-    } else {
-      let obj = new PcsDTO;
-      obj.UnitelementId = this.selectedElementID;
-      this.selectedPCs.push(obj);
-    }
-
-    this.model.UnitElements.forEach(element => {
-      if (element.UnitelementId === this.selectedElementID) {
-        element.Pcs=this.selectedPCs;
-      }
+  public newGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0,
+      v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
   }
+
+  AddPcs(pc: PcsDTO[],elementId:number)
+  {
+
+    if (pc===undefined){
+      let pcx:PcsDTO[]=[];
+      pc=pcx;
+    }
+    let obj = new PcsDTO;
+    obj.PCsGuid=this.newGuid();
+    obj.UnitelementId=elementId;
+    pc.push(obj);
+  }
+
+  AddPcsInit(ele: UnitElementsDTO, elementId:number)
+  {
+    let pcx:PcsDTO[]=[];
+    let obj = new PcsDTO;
+    obj.UnitelementId=elementId;
+    obj.PCsGuid=this.newGuid();
+    pcx.push(obj);
+    ele.Pcs=pcx;
+  }
+
+  AddRangeInit(pc: PcsDTO, pcid:number)
+  {
+    let pcx:RangeNotesDTO[]=[];
+    let obj = new RangeNotesDTO;
+    obj.RangeGUID=this.newGuid();
+    obj.Elpcid=pcid;
+    pcx.push(obj);
+    pc.RangeNotes=pcx;
+
+
+  }
+
+  AddRangeNotes(rn: RangeNotesDTO[],pcID:number)
+  {
+    let obj = new RangeNotesDTO;
+    obj.RangeGUID=this.newGuid();
+    obj.Elpcid=pcID;
+    rn.push(obj);
+  }
+
+  // AddPcs() {
+  //   debugger
+  //   if (this.selectedPCs === undefined) {
+  //     this.selectedPCs = [];
+  //     let obj = new PcsDTO;
+  //     obj.UnitelementId = this.selectedElementID;
+  //     this.selectedPCs.push(obj);
+  //   } else {
+  //     let obj = new PcsDTO;
+  //     obj.UnitelementId = this.selectedElementID;
+  //     this.selectedPCs.push(obj);
+  //   }
+
+  //   this.model.UnitElements.forEach(element => {
+  //     if (element.UnitelementId === this.selectedElementID) {
+  //       element.Pcs=this.selectedPCs;
+  //     }
+  //   });
+  // }
 
   onSubmit(obj: UnitsDTO) {
 

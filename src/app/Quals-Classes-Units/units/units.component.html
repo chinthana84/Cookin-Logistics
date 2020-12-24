@@ -31,132 +31,238 @@
 </div>
 
 
-<form (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="UnitCode">UnitCode</label>
-        <input id="UnitCode" name="UnitCode" [(ngModel)]="model.UnitCode" type="text" class="form-control"
-          placeholder="UnitCode" />
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div class="form-group">
-        <label for="UnitTitle">UnitTitle</label>
-        <input id="UnitTitle" name="UnitTitle" [(ngModel)]="model.UnitTitle" type="text" class="form-control"
-          placeholder="UnitTitle" />
-      </div>
-    </div>
-  </div>
+<form  (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
+<ul class="nav nav-tabs" *ngIf="edited">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home">Genaral</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#menu1">Reference</a>
+  </li>
+</ul>
 
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="UnitCrval">Credits</label>
-        <input id="UnitCrval" name="UnitCrval" [(ngModel)]="model.UnitCrval" type="text" class="form-control"
-          placeholder="Credits" />
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="UnitLevel">Level</label>
-        <input id="UnitLevel" name="UnitLevel" [(ngModel)]="model.UnitLevel" type="text" class="form-control"
-          placeholder="Level" />
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group">
-        <label for="UnitVersion">Version No</label>
-        <input id="UnitVersion" name="UnitVersion" [(ngModel)]="model.UnitVersion" type="text" class="form-control"
-          placeholder="Version No" />
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="form-group">
-        <label for="UnitRange">Unit Range Notes</label>
-        <textarea id="UnitRange" rows="5" name="UnitRange" [(ngModel)]="model.UnitRange" type="text" class="form-control"
-          placeholder="Unit Range Notes" ></textarea>
+
+  <div class="tab-content">
+  <div id="home" class="  tab-pane active">
+    <div class="row mt-2">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="UnitCode">UnitCode</label>
+          <input id="UnitCode" name="UnitCode" numeric [(ngModel)]="model.UnitCode" type="text" class="form-control"
+            placeholder="UnitCode" />
         </div>
+      </div>
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="UnitTitle">UnitTitle</label>
+          <input id="UnitTitle" name="UnitTitle" [(ngModel)]="model.UnitTitle" type="text" class="form-control"
+            placeholder="UnitTitle" />
         </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered ">
-        <thead>
-          <th>ElementNo</th>
-          <th>ElementName</th>
-          <th>
-
-            <button type="button" (click)="AddElement()" class="btn btn-primary  ">
-              <span class="fa fa-plus"></span></button>
-          </th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of this.model.UnitElements; let index = index" class="table-hover">
-            <td>
-              <input id="ElementNo" name="ElementNo{{index}}" [(ngModel)]="item.ElementNo" type="text" class="form-control"
-              placeholder="ElementNo" /> </td>
-            <td>
-
-              <input id="ElementName" name="ElementName{{index}}" [(ngModel)]="item.ElementName" type="text" class="form-control"
-              placeholder="ElementName" />
-            </td>
-            <td>
-              <button type="button" (click)="LoadPCs(item.UnitelementId)" class="btn btn-primary save_button"> Select </button>
-
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-bordered ">
-        <thead>
-          <th>PC No</th>
-          <th>PC Text</th>
-          <th>
-
-            <button type="button" (click)="AddPcs()" class="btn btn-primary  ">
-              <span class="fa fa-plus"></span></button>
-          </th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of this.selectedPCs;
-                  let indexx = index" class="table-hover">
-            <td>
-              <input id="Pcnum" name="Pcnum{{indexx}}" [(ngModel)]="item.Pcnum" type="text" class="form-control"
-              placeholder="Pcnum" /> </td>
-            <td>
-
-              <input id="Pctext" name="Pctext{{indexx}}" [(ngModel)]="item.Pctext" type="text" class="form-control"
-              placeholder="Pctext" />
-            </td>
-            <td>
-              <button type="button"   class="btn btn-primary save_button"> Select </button>
-
-            </td>
-          </tr>
-
-        </tbody>
-      </table>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="UnitCrval">Credits</label>
+          <input id="UnitCrval" name="UnitCrval" numeric [(ngModel)]="model.UnitCrval" type="text" class="form-control"
+            placeholder="Credits" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="UnitLevel">Level</label>
+          <input id="UnitLevel" name="UnitLevel" numeric [(ngModel)]="model.UnitLevel" type="text" class="form-control"
+            placeholder="Level" />
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="UnitVersion">Version No</label>
+          <input id="UnitVersion" name="UnitVersion" numeric [(ngModel)]="model.UnitVersion" type="text"
+            class="form-control" placeholder="Version No" />
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="UnitRange">Unit Range Notes</label>
+          <textarea id="UnitRange" rows="5" name="UnitRange" [(ngModel)]="model.UnitRange" type="text"
+            class="form-control" placeholder="Unit Range Notes"></textarea>
+        </div>
+      </div>
+    </div>
+
   </div>
+  <div id="menu1" class="container-fluid tab-pane fade mt-2">
+    <div class="row " *ngIf="!this.model.UnitElements.length ">
+      <div class="col-md-12">
+        <button type="button" (click)="AddElement()" class="btn btn-primary  ">
+          <span class="fa fa-plus"></span></button>
+      </div>
+    </div>
+
+      <div id="accordion    ">
+
+        <div class="card mb-1 " *ngFor="let item of this.model.UnitElements; let index =index">
+          <div class="card-header">
+
+            <div class="row">
+              <div class="col-md-1">
+                <a class="card-link" data-toggle="collapse" href="#el{{item.UnitelementId}}">
+                  Element
+                </a>
+              </div>
+              <div class="col-md-1">
+                 
+                 <input id="ElementNo" name="ElementNo{{item.ElemntGUID}}" numeric [(ngModel)]="item.ElementNo" type="text"
+                  class="form-control" placeholder="ElementNo" />
+              </div>
+              <div class="col-md-8">
+                <input id="ElementName" name="ElementName{{item.ElemntGUID}}" [(ngModel)]="item.ElementName" type="text"
+                  class="form-control" placeholder="ElementName" />
+              </div>
+
+              <div class="col-md-1">
+                <button type="button" (click)="AddElement()" class="btn btn-primary  ">
+                  <span class="fa fa-plus"></span></button>
+
+              </div>
+
+
+            </div>
+          </div>
+
+          <div id="el{{item.UnitelementId}}" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
+              <div class="row" *ngIf="item.Pcs.length==0 ">
+                <div class="col-md-12">
+                  <button type="button" (click)="AddPcsInit(item,undefined,item.UnitelementId)" class="btn btn-primary  ">
+                    Add Criteria</button>
+                </div>
+              </div>
+
+
+              <div id="accordionxx">
+
+                <div class="card mb-1" *ngFor="let itemPC of item.Pcs; let indexPC = index">
+                  <div class="card-header">
+
+                    <div class="row">
+                      <div class="col-md-1">
+                        <a class="card-link" data-toggle="collapse" href="#pc{{itemPC.Elpcid}}">
+                          Criteria
+                        </a>
+                      </div>
+                      <div class="col-md-1">
+                        <input id="Pcnum" numeric decimals="2" name="{{index}}Pcnum{{itemPC.PCsGuid}}"
+                          [(ngModel)]="itemPC.Pcnum" type="text" class="form-control" placeholder="Pcnum" />
+                      </div>
+                      <div class="col-md-9">
+                        <input id="Pctext" name="{{index}}Pctext{{itemPC.PCsGuid }}" [(ngModel)]="itemPC.Pctext" type="text"
+                          class="form-control" placeholder="Pctext" />
+                      </div>
+
+                        <div class="col-md-1">
+                          <button type="button" (click)="AddPcs(item.Pcs,item.UnitelementId)" class="btn btn-primary  ">
+                            <span class="fa fa-plus"></span></button>
+                        </div>
+
+                    </div>
+                  </div>
+                  <div id="pc{{itemPC.Elpcid}}" class="collapse show" data-parent="#accordionxx">
+                    <div class="card-body">
+
+                      <div id="accordionyy">
+
+                        <div class="card mb-1">
+
+                          <div class="card-header">
+                            Range <button *ngIf=" itemPC.RangeNotes.length==0 " type="button"
+                              (click)="AddRangeInit(itemPC,undefined,itemPC.Elpcid)" class="btn btn-primary  ">
+                              Add Range Notes</button>
+                          </div>
+                          <div class="card-body" *ngIf=" itemPC.RangeNotes.length>0 ">
+
+                            <table class="table table-bordered ">
+                              <thead>
+                                <th>Range Text</th>
+                                <th>Judge Text</th>
+                                <th>
+
+                                </th>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let itemRN of itemPC.RangeNotes; let indexRN = index" class="table-hover">
+                                  <td>
+                                    <input id="RangeText" name="{{indexPC}}RangeText{{itemRN.RangeGUID}}"
+                                      [(ngModel)]="itemRN.RangeText" type="text" class="form-control"
+                                      placeholder="RangeText" />
+                                  </td>
+                                  <td>
+                                    <input id="Pctext" name="{{indexPC}}JudgeText{{itemRN.RangeGUID}}"
+                                      [(ngModel)]="itemRN.JudgeText" type="text" class="form-control"
+                                      placeholder="JudgeText" />
+                                  </td>
+                                  <td>
+                                    <button type="button" (click)="AddRangeNotes(itemPC.RangeNotes,itemRN.Elpcid)"
+                                      class="btn btn-primary  ">
+                                      <span class="fa fa-plus"></span></button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
 
   <div class="btn-group">
     <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
     <button type="button" (click)="router.navigate(['units']);" class="btn btn-primary back_button"> <span
         class="fa fa-arrow-left"></span> </button>
   </div>
+
+
+
+
+
+
+
+
 </form>
-<pre>{{this.model | json}} </pre>
-<br />
-{{this.selectedElementID | json}}<br />
-{{this.selectedPCs | json}}<br />
+

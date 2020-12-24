@@ -6,16 +6,17 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { PagerComponent } from './_grid/pager/pager.component';
 import { BreadCrumbComponent } from './bread-crumb/bread-crumb/bread-crumb.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { NumericDirective } from './directive/numeric.directive';
 
 
 @NgModule({
-  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent   ],
+  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,NumericDirective   ],
   imports: [
 
     CommonModule,
     FormsModule,ReactiveFormsModule
   ],
-  exports:[SearchComponent,PagerComponent,BreadCrumbComponent]
+  exports:[SearchComponent,PagerComponent,BreadCrumbComponent,NumericDirective]
   , providers:[GridService]
 })
 export class SharedModule { }
