@@ -45,4 +45,11 @@ export class VwUnitsDTO
     public    UnitCode?:string="";
     public   UnitTitle?:string="";
 }
+export class vw_GetUserGridDTO
+{
+    public   UserId?:number=0;
+    public    UserName?:string="";
+}
+ 
+
 

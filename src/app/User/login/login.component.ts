@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Login } from 'src/app/models/Security.model';
 import { AuthenticationService } from 'src/app/MyServices/authentication.service';
+import { CommonService } from 'src/app/_shared/_services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -9,18 +11,38 @@ import { AuthenticationService } from 'src/app/MyServices/authentication.service
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router,    private authentication: AuthenticationService) {
-    this.authentication.logout();
 
-   }
+  constructor(
+    private router: Router,
+    private securityService: CommonService,
+    private activatedRoute: ActivatedRoute
+  ) {}
+  loginViewModel: Login;
+  Login(): void {
+    this.securityService.Login(this.loginViewModel).subscribe(
 
-  ngOnInit( ): void {
-    this.authentication.logout();
+      (item) => {
+        // if (this.activatedRoute.snapshot.queryParams.returnUrl) {
+        //   this.router.navigateByUrl(
+        //     this.activatedRoute.snapshot.queryParams.returnUrl
+        //   );
+        // } else {
+        //   //this.router.navigate(["Home", { name: item.userName }]);
+        //   this.router.navigate(['/home'] );
+        // }
+     
+        this.securityService.securityModel=item;
+        console.log(item)
+        this.router.navigate(['home'] );
+      },
+      (error) => {
+        console.log(error)
+        alert("invalid username or password");
+      }
+    );
   }
-
-  login(){
-    this.authentication.login();
-    this.router.navigate(['/home'] );
+  ngOnInit(): void {
+    this.loginViewModel = { UserName: "", Password: "" };
   }
 
 }

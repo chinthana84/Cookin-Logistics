@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from './MyServices/authentication.service';
+import * as $ from 'jquery'
+import { SecurityModel } from './models/Security.model';
+import { CommonService } from './_shared/_services/common.service';
 
 @Component({
   selector: 'app-root',
@@ -19,24 +22,56 @@ export class AppComponent {
 isLogged$:BehaviorSubject<boolean>;
 
 
-constructor(private router: Router,private authentication: AuthenticationService) { }
+constructor(private router: Router,private authentication: AuthenticationService,private commonServie:CommonService) {
+
+}
 isLoggedIn : Observable<boolean>;
 
+securityModel: SecurityModel;
 
-
+currentObj: SecurityModel
 
 ngOnInit(): void {
+
   this.setBreadcrumb();
-  this.isLoggedIn = this.authentication.isLoggedIn();
+  if  ( this.securityModel == undefined){
+    this.securityModel=new SecurityModel();
+    this.commonServie.Login({ UserName: "admin", Password: "123456" }).subscribe(r=>{
 
-  this.authentication.isLoggedIn().subscribe(r=> {
-    if (r == false){
-      this.router.navigate(['login']);
-    }
 
+    });
+  }
+  else{
+  this.securityModel= this.commonServie.securityModel;
+  }
+
+
+
+
+  this.commonServie.currentSecurityObject.subscribe(r=> {
+    this.currentObj=r;
   })
 
+  // this.isLoggedIn = this.authentication.isLoggedIn();
 
+  // this.authentication.isLoggedIn().subscribe(r=> {
+  //   if (r == false){
+  //     this.router.navigate(['login']);
+  //   }
+
+  // })
+
+  // $(document).ready(function () {
+    // $("#sidebar").mCustomScrollbar({
+    //     theme: "minimal"
+    // });
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar, #content').toggleClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+// });
 
 
 }
