@@ -6,11 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { SharedModule } from '../_shared/Shared.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 const routes: Routes = [
   {
     path: 'login',  component: LoginComponent
+  },
+  {
+    path: 'changepw',  component: ChangePasswordComponent
   },
   {
     path: 'admin',  component: AdminComponent,
@@ -19,7 +23,7 @@ const routes: Routes = [
  ];
 
 @NgModule({
-  declarations: [ LoginComponent, HomeComponent, AdminComponent],
+  declarations: [ LoginComponent, HomeComponent, AdminComponent, ChangePasswordComponent],
   imports: [
  CommonModule,
     FormsModule,

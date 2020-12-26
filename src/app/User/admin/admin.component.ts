@@ -62,6 +62,7 @@ export class AdminComponent implements OnInit {
         this.modelUserDetails = new UserDetailsDTO();
       } else if (params.id > 0) {
         this.edited = true;
+        this.newUser=false;
         this.subs.sink=    this.http
           .get<any>(`${environment.APIEndpoint}/User/GetUserRightsByUserID/` + params.id)
           .subscribe((data) => {
@@ -72,6 +73,7 @@ export class AdminComponent implements OnInit {
           });
       } else {
         this.edited = false;
+        this.newUser=false;
       }
     });
   }

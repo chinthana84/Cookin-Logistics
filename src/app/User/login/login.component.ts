@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
     private securityService: CommonService,
     private activatedRoute: ActivatedRoute
   ) {}
+
+
   loginViewModel: Login;
   Login(): void {
     this.securityService.Login(this.loginViewModel).subscribe(
@@ -30,9 +32,19 @@ export class LoginComponent implements OnInit {
         //   //this.router.navigate(["Home", { name: item.userName }]);
         //   this.router.navigate(['/home'] );
         // }
-     
+        sessionStorage.setItem(
+          "username",
+          this.loginViewModel.UserName
+        )
+
+        sessionStorage.setItem(
+          "pw",
+          this.loginViewModel.Password
+        )
+
+
         this.securityService.securityModel=item;
-        console.log(item)
+
         this.router.navigate(['home'] );
       },
       (error) => {
@@ -43,6 +55,15 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loginViewModel = { UserName: "", Password: "" };
+    // sessionStorage.setItem(
+    //   "username",
+    //  ""
+    // )
+
+    // sessionStorage.setItem(
+    //   "pw",
+    //   ""
+    // )
   }
 
 }

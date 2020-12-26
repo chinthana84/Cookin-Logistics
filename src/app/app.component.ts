@@ -5,6 +5,8 @@ import { AuthenticationService } from './MyServices/authentication.service';
 import * as $ from 'jquery'
 import { SecurityModel } from './models/Security.model';
 import { CommonService } from './_shared/_services/common.service';
+import { CheckboxControlValueAccessor } from '@angular/forms';
+
 
 @Component({
   selector: 'app-root',
@@ -33,10 +35,13 @@ currentObj: SecurityModel
 
 ngOnInit(): void {
 
+
   this.setBreadcrumb();
   if  ( this.securityModel == undefined){
     this.securityModel=new SecurityModel();
-    this.commonServie.Login({ UserName: "admin", Password: "123456" }).subscribe(r=>{
+   let u = sessionStorage.getItem("username")
+   let pw = sessionStorage.getItem("pw")
+    this.commonServie.Login({ UserName:u, Password:pw}).subscribe(r=>{
 
 
     });
@@ -46,11 +51,10 @@ ngOnInit(): void {
   }
 
 
-
-
   this.commonServie.currentSecurityObject.subscribe(r=> {
     this.currentObj=r;
   })
+
 
   // this.isLoggedIn = this.authentication.isLoggedIn();
 
@@ -72,6 +76,54 @@ ngOnInit(): void {
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
 // });
+
+
+}
+
+getUsername(){
+  return sessionStorage.getItem("username")
+}
+
+CheckAccess(path:string){
+  debugger;
+  if (path==="suppliers" && this.currentObj.Supplier==true){
+    return "suppliers";
+  }
+  else if(path=="category" && this.currentObj.Category==true)
+  {
+    return "category";
+  }
+  else if(path=="products" && this.currentObj.Product==true){
+    return "products";
+  }
+  else if(path=="recipes" && this.currentObj.Recipe==true){
+    return "recipes";
+  }
+  else if(path=="orders" && this.currentObj.Order==true){
+    return "orders";
+  }
+  else if(path=="tutor" && this.currentObj.Tutor==true){
+    return "tutor";
+  }
+  else if(path=="venue" && this.currentObj.Venue==true){
+    return "venue";
+  }
+  else if(path=="classes" && this.currentObj.Classs==true){
+    return "classes";
+  }
+   else if(path=="Search" && this.currentObj.Weeks==true){
+    return "Search";
+  }
+   else if(path=="changepw" && this.currentObj.ChangePW==true){
+    return "changepw";
+  }
+   else if(path=="admin" && this.currentObj.UserAccess==true){
+    return "admin";
+  }
+ else{
+    return "home";
+  }
+
 
 
 }

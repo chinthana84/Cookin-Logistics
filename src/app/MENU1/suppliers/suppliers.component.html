@@ -1,9 +1,5 @@
 <div *ngIf="!edited">
-
-
-  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject">
-
-  </app-search>
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
   <div class="table-wrap" style="height: 710px;">
     <table class="table table-bordered">
       <thead>
@@ -14,8 +10,7 @@
         <th>Fax</th>
         <th>
           <button (click)="Supplier(null)" class="btn btn-primary ">
-           <span class="fa fa-plus"></span></button>
-
+            <span class="fa fa-plus"></span></button>
         </th>
       </thead>
       <tbody>
@@ -26,14 +21,9 @@
           <td>{{ item.ContactTitle }}</td>
           <td>{{ item.Phone }}</td>
           <td>{{ item.Fax }}</td>
-
           <td>
-            <button (click)="Supplier(item)" class="btn btn-primary btn-sm " >
-          Edit</button>
-
-
-
-
+            <button (click)="Supplier(item)" class="btn btn-primary btn-sm ">
+              Edit</button>
           </td>
         </tr>
         <tr *ngIf="this.gridOption.datas.pagedItems==0">
@@ -42,13 +32,13 @@
       </tbody>
     </table>
   </div>
-
-
   <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
-  <br /><br />
 </div>
 
 <form (ngSubmit)="onSubmit(model)" *ngIf="edited" novalidate #heroForm="ngForm">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
@@ -69,7 +59,6 @@
     </div>
   </div>
 
-
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
@@ -85,6 +74,7 @@
         <input id="Phone" name="Phone" [(ngModel)]="model.Phone" type="text" class="form-control" placeholder="Phone" />
       </div>
     </div>
+
     <div class="col-md-3">
       <div class="form-group">
         <label for="Fax">Fax</label>
@@ -93,10 +83,9 @@
     </div>
   </div>
 
-
   <div class="btn-group">
     <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
-    <button type="button" (click)="router.navigate(['suppliers']);" class="btn btn-primary back_button"> <span class="fa fa-arrow-left"></span> </button>
+    <button type="button" (click)="router.navigate(['suppliers']);" class="btn btn-primary back_button"> <span
+        class="fa fa-arrow-left"></span> </button>
   </div>
-
 </form>
