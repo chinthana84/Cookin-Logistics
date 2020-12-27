@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { SharedModule } from '../_shared/Shared.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { RefTableDataComponent } from './ref-table-data/ref-table-data.component';
 
 
 const routes: Routes = [
@@ -19,11 +20,14 @@ const routes: Routes = [
   {
     path: 'admin',  component: AdminComponent,
      children: [{ path: 'edit', component: AdminComponent }]
+  },
+  {
+    path: 'ref',  component: RefTableDataComponent
   }
  ];
 
 @NgModule({
-  declarations: [ LoginComponent, HomeComponent, AdminComponent, ChangePasswordComponent],
+  declarations: [ LoginComponent, HomeComponent, AdminComponent, ChangePasswordComponent, RefTableDataComponent],
   imports: [
  CommonModule,
     FormsModule,

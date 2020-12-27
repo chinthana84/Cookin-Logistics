@@ -1,0 +1,46 @@
+<div class="row mt-3">
+  <div class="col-md-12">
+    <div class="form-group">
+      <label for="Unit">Table Name</label>
+      <select (change)="changeWebsite($event)" class="form-control" [(ngModel)]="selectedValue" id="Unit"
+        name="UnitXXX">
+        <option [ngValue]=""> </option>
+        <option *ngFor="let x of this.modelDistinct">
+          {{ x}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <table class="table table-bordered ">
+    <thead>
+      <th>ID</th>
+      <th>RefDescription</th>
+      <th>
+        <button (click)="addRef()" class="btn btn-primary  ">
+          <span class="fa fa-plus"></span></button>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of this.model;let i=index;" class="table-hover">
+        <td>{{item.RefId}}</td>
+        <td>
+
+          <input id="RefDescription{{i}}" name="RefDescription{{i}}" [(ngModel)]="item.RefDescription" type="text" class="form-control"
+            placeholder="RefDescription" />
+
+
+        </td>
+
+        <td>
+
+          <button (click)="saveRef(item)" class="btn btn-primary  ">
+            Save</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

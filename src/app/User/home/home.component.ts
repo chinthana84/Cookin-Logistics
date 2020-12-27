@@ -12,7 +12,7 @@ import { CommonService } from 'src/app/_shared/_services/common.service';
 })
 export class HomeComponent implements OnInit {
   images =[]
-
+  currentObj: SecurityModel
 
 
   ngOnInit(): void {
@@ -21,6 +21,13 @@ export class HomeComponent implements OnInit {
   this.images[0]='https://evolution.edu.au/images/banners/shutterstock_548661166.jpg'
   this.images[1]='https://www.evolution.edu.au/images/reinaldoclassfront1.jpg'
   this.images[2]='https://www.evolution.edu.au/images/rsa_rcg.png'
+
+  this.securityService.currentSecurityObject.subscribe(r=> {
+    this.currentObj=r;
+
+  });
+
+
   }
 
   loadpage(p:string){

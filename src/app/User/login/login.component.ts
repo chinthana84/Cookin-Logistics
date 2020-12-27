@@ -24,26 +24,7 @@ export class LoginComponent implements OnInit {
     this.securityService.Login(this.loginViewModel).subscribe(
 
       (item) => {
-        // if (this.activatedRoute.snapshot.queryParams.returnUrl) {
-        //   this.router.navigateByUrl(
-        //     this.activatedRoute.snapshot.queryParams.returnUrl
-        //   );
-        // } else {
-        //   //this.router.navigate(["Home", { name: item.userName }]);
-        //   this.router.navigate(['/home'] );
-        // }
-        sessionStorage.setItem(
-          "username",
-          this.loginViewModel.UserName
-        )
-
-        sessionStorage.setItem(
-          "pw",
-          this.loginViewModel.Password
-        )
-
-
-        this.securityService.securityModel=item;
+              this.securityService.securityModel=item;
 
         this.router.navigate(['home'] );
       },
@@ -55,15 +36,6 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loginViewModel = { UserName: "", Password: "" };
-    // sessionStorage.setItem(
-    //   "username",
-    //  ""
-    // )
-
-    // sessionStorage.setItem(
-    //   "pw",
-    //   ""
-    // )
   }
 
 }

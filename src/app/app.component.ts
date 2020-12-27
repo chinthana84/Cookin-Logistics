@@ -24,7 +24,8 @@ export class AppComponent {
 isLogged$:BehaviorSubject<boolean>;
 
 
-constructor(private router: Router,private authentication: AuthenticationService,private commonServie:CommonService) {
+constructor(private router: Router,private authentication: AuthenticationService,
+  public commonServie:CommonService) {
 
 }
 isLoggedIn : Observable<boolean>;
@@ -35,16 +36,15 @@ currentObj: SecurityModel
 
 ngOnInit(): void {
 
-
   this.setBreadcrumb();
   if  ( this.securityModel == undefined){
     this.securityModel=new SecurityModel();
    let u = sessionStorage.getItem("username")
    let pw = sessionStorage.getItem("pw")
-    this.commonServie.Login({ UserName:u, Password:pw}).subscribe(r=>{
+   if (u !=null){
+    this.commonServie.Login({ UserName:u, Password:pw}).subscribe(r=>{  });
+   }
 
-
-    });
   }
   else{
   this.securityModel= this.commonServie.securityModel;
@@ -53,29 +53,22 @@ ngOnInit(): void {
 
   this.commonServie.currentSecurityObject.subscribe(r=> {
     this.currentObj=r;
-  })
+
+  });
 
 
-  // this.isLoggedIn = this.authentication.isLoggedIn();
-
-  // this.authentication.isLoggedIn().subscribe(r=> {
-  //   if (r == false){
-  //     this.router.navigate(['login']);
-  //   }
-
-  // })
-
-  // $(document).ready(function () {
+   $(document).ready(function () {
     // $("#sidebar").mCustomScrollbar({
     //     theme: "minimal"
     // });
+
 
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
-// });
+  });
 
 
 }
@@ -85,7 +78,7 @@ getUsername(){
 }
 
 CheckAccess(path:string){
-  debugger;
+
   if (path==="suppliers" && this.currentObj.Supplier==true){
     return "suppliers";
   }
@@ -110,6 +103,9 @@ CheckAccess(path:string){
   }
   else if(path=="classes" && this.currentObj.Classs==true){
     return "classes";
+  }
+  else if(path=="units" && this.currentObj.Unit==true){
+    return "units";
   }
    else if(path=="Search" && this.currentObj.Weeks==true){
     return "Search";

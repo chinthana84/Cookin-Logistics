@@ -6,17 +6,17 @@ import { Login } from 'src/app/models/Security.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent implements OnInit {
-
+  private subs = new SubSink();
 
 
   model:Login={}
-  subs: any;
 
   constructor(
     private commonService: CommonService,

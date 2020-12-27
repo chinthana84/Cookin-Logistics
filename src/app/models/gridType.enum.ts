@@ -9,5 +9,6 @@ export enum GridType {
   Class = 8,
   Weeks = 9,
   Units = 10,
-  UserAdmin=11
+  UserAdmin = 11,
+  RefTable =12
 }

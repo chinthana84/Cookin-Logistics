@@ -27,15 +27,13 @@ export class CommonService {
   private _securityModel: SecurityModel;
 
 
-  // private messageSource = new BehaviorSubject('default message');
-  // currentMessage = this.messageSource.asObservable();
   private _securityModel2 = new BehaviorSubject<SecurityModel>(new SecurityModel());
   currentSecurityObject = this._securityModel2.asObservable();
-
 
   get securityModel() {
     return this._securityModel;
   }
+
   set securityModel(value: SecurityModel) {
     this._securityModel = value;
   }
@@ -43,9 +41,13 @@ export class CommonService {
   public logout() {
     this._securityModel=new   SecurityModel();
     sessionStorage.removeItem("todoBearerToken");
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("pw");
+    this.router.navigate(['login']);
   }
 
   public Login(userForm: Login): Observable<SecurityModel> {
+  
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -68,11 +70,22 @@ export class CommonService {
               "todoBearerToken",
               this.securityModel.BearerToken
             );
+            sessionStorage.setItem(
+              "username",
+              userForm.UserName
+            )
+
+            sessionStorage.setItem(
+              "pw",
+              userForm.Password
+            )
           } else {
             this.securityModel=new SecurityModel();
           }
         })
       );
   }
+
+
 
 }

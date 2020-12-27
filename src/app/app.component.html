@@ -1,6 +1,6 @@
 <div class="wrapper">
   <!-- Sidebar  -->
-  <nav id="sidebar">
+  <nav *ngIf="this.currentObj.IsAuthenticated" id="sidebar">
     <div class="sidebar-header">
       <h3>Cookin ERP </h3>
     </div>
@@ -103,7 +103,11 @@
             <a [ngClass]="{'norights': !this.currentObj.UserAccess}" routerLink="{{this.CheckAccess('admin')}}"  >User Access</a>
 
           </li>
+          <li>
 
+            <a routerLink="ref"  >Ref Tables</a>
+
+          </li>
         </ul>
       </li>
     </ul>
@@ -113,7 +117,7 @@
   <!-- Page Content  -->
   <div id="content">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav *ngIf="this.currentObj.IsAuthenticated" class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
 
         <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -144,7 +148,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#" [routerLink]="['/login']">Log out- {{getUsername()}}</a>
+              <a class="nav-link" href="#"  (click)="this.commonServie.logout()" >Log out- {{getUsername()}}</a>
             </li>
           </ul>
         </div>
