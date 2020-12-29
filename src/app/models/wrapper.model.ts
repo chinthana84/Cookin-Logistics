@@ -4,9 +4,11 @@ import { Class } from './ClassDTO';
 import { Kitchens } from './kitches.modele';
 import { Order } from './order.model';
 import { Product } from './product.model';
+import { Recipe } from './recipe.model';
 import { RefTable } from './reftable.model';
 import { Timeslots } from './Timeslots.model';
 import { Tutor } from './tutor.model';
+import { UnitsDTO } from './Units.model';
 
 export class Wrapper {
   public Courses?: RefTable[]=[];
@@ -24,6 +26,11 @@ export class Wrapper {
   public Sessions?:Timeslots[]=[];
   public Classes?:Class[]=[];
   public Orders?:Order[]=[];
+
+  public   Recipes?:Recipe[]=[];
+
+  public units?:UnitsDTO[]=[];
+  public cookModules?:RefTable[]=[];
 
 }
 

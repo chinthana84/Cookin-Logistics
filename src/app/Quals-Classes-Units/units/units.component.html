@@ -17,7 +17,7 @@
         <td>
 
           <button (click)="Action(item)" class="btn btn-primary  ">
-            <span class="fa fa-pencil-square-o"></span></button>
+            <span class="fa fa-edit"></span></button>
         </td>
       </tr>
       <tr *ngIf="this.gridOption.datas.pagedItems==0">
@@ -41,23 +41,21 @@
   </li>
 </ul>
 
-
-
   <div class="tab-content">
   <div id="home" class="  tab-pane active">
     <div class="row mt-2">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="UnitCode">UnitCode</label>
+          <label for="UnitCode">Unit Code</label>
           <input id="UnitCode" name="UnitCode" numeric [(ngModel)]="model.UnitCode" type="text" class="form-control"
-            placeholder="UnitCode" />
+            placeholder="Unit Code" />
         </div>
       </div>
       <div class="col-md-8">
         <div class="form-group">
-          <label for="UnitTitle">UnitTitle</label>
+          <label for="UnitTitle">Unit Title</label>
           <input id="UnitTitle" name="UnitTitle" [(ngModel)]="model.UnitTitle" type="text" class="form-control"
-            placeholder="UnitTitle" />
+            placeholder="Unit Title" />
         </div>
       </div>
     </div>
@@ -66,21 +64,30 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="UnitCrval">Credits</label>
-          <input id="UnitCrval" name="UnitCrval" numeric [(ngModel)]="model.UnitCrval" type="text" class="form-control"
+          <input id="UnitCrval" name="UnitCrval"   [(ngModel)]="model.UnitCrval"
+          (ngModelChange)="model.UnitCrval = $event === null ? 0 : $event"
+          type="number" numeric
+          class="form-control"
             placeholder="Credits" />
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label for="UnitLevel">Level</label>
-          <input id="UnitLevel" name="UnitLevel" numeric [(ngModel)]="model.UnitLevel" type="text" class="form-control"
+          <input id="UnitLevel" name="UnitLevel"
+           [(ngModel)]="model.UnitLevel"
+           (ngModelChange)="model.UnitLevel = $event === null ? 0 : $event"
+           type="number"    numeric
+           class="form-control"
             placeholder="Level" />
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label for="UnitVersion">Version No</label>
-          <input id="UnitVersion" name="UnitVersion" numeric [(ngModel)]="model.UnitVersion" type="text"
+          <input id="UnitVersion" name="UnitVersion" numeric [(ngModel)]="model.UnitVersion"
+          (ngModelChange)="model.UnitVersion = $event === null ? 0 : $event"
+          type="number" numeric   maxlength="3"
             class="form-control" placeholder="Version No" />
         </div>
       </div>
@@ -117,8 +124,10 @@
                 </a>
               </div>
               <div class="col-md-1">
-                 
-                 <input id="ElementNo" name="ElementNo{{item.ElemntGUID}}" numeric [(ngModel)]="item.ElementNo" type="text"
+
+                 <input id="ElementNo" name="ElementNo{{item.ElemntGUID}}"
+                 (ngModelChange)="model.ElementNo = $event === null ? 0 : $event"
+                  numeric [(ngModel)]="item.ElementNo" type="number"
                   class="form-control" placeholder="ElementNo" />
               </div>
               <div class="col-md-8">
@@ -159,7 +168,9 @@
                       </div>
                       <div class="col-md-1">
                         <input id="Pcnum" numeric decimals="2" name="{{index}}Pcnum{{itemPC.PCsGuid}}"
-                          [(ngModel)]="itemPC.Pcnum" type="text" class="form-control" placeholder="Pcnum" />
+                          [(ngModel)]="itemPC.Pcnum" type="number"
+                          (ngModelChange)="model.Pcnum = $event === null ? 0 : $event"
+                          class="form-control" placeholder="Pcnum" />
                       </div>
                       <div class="col-md-9">
                         <input id="Pctext" name="{{index}}Pctext{{itemPC.PCsGuid }}" [(ngModel)]="itemPC.Pctext" type="text"
@@ -244,18 +255,13 @@
 
 
 
-
-
-
-
-
-
-
   <div class="btn-group">
     <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
     <button type="button" (click)="router.navigate(['units']);" class="btn btn-primary back_button"> <span
         class="fa fa-arrow-left"></span> </button>
   </div>
+
+  <!-- <pre>{{model |json}}</pre> -->
 
 
 

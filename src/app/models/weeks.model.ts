@@ -5,3 +5,10 @@ export class Weeks {
 }
 
 
+export class GetWeekDaysDTO
+{
+    public  dtm?:Date
+    public   dispalyValue ?:string
+}
+
+

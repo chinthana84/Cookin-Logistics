@@ -19,7 +19,7 @@ export class OrderDetails
     public   OrderDetailsId?: number=0;
     public   OrderId ?: number=0;
     public   ProductId?: number=0;
-    public   Quantity ?: number=0;
+    public   Quantity  : number=0;
     public  Qps?: number=0;
     public   Discount?: number=0;
     public   Yield ?: number=0;

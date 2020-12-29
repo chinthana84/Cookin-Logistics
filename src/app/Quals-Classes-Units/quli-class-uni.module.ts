@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ClassesComponent } from './classes/classes.component';
 import { SharedModule } from '../_shared/Shared.module';
 import { UnitsComponent } from './units/units.component';
+import { QulificatonComponent } from './qulificaton/qulificaton.component';
 
 const routes: Routes = [
   {
@@ -13,11 +14,15 @@ const routes: Routes = [
   {
     path: 'units',  component: UnitsComponent , children: [{ path: 'edit', component: UnitsComponent }]
   }
+  ,
+  {
+    path: 'quli',  component: QulificatonComponent , children: [{ path: 'edit', component: QulificatonComponent }]
+  }
  ];
 
 
 @NgModule({
-  declarations: [ ClassesComponent, UnitsComponent],
+  declarations: [ ClassesComponent, UnitsComponent, QulificatonComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -10,7 +10,7 @@ import { VwWeekGridDTO } from 'src/app/models/Grid/grid.model';
 import { RequitioinStatisticWrapper } from 'src/app/models/requ-statitics.model';
 
 import { RequistionSummary } from 'src/app/models/RequisitionSummary.model';
-import { Weeks } from 'src/app/models/weeks.model';
+import { GetWeekDaysDTO, Weeks } from 'src/app/models/weeks.model';
 import { Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
@@ -31,7 +31,7 @@ export class WeekComponent implements OnInit {
   modelWrapper: Wrapper = {};
   gridmodel: VwWeekGridDTO = {};
   summaryWrapper :RequitioinStatisticWrapper={};
-  weekDays= new Array();
+  weekDays :GetWeekDaysDTO[]=[];
 
   selectedYear:number=0;
   selectedWeekID:number=0;

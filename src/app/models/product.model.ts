@@ -8,7 +8,7 @@ export class Product {
   public ProdUnitId?: Number=0;
   public UnitPrice?: number=0;
   public ProductNotes?: string
-  public Yield?: number=0
+  public Yield?: number=0;
   public Hrfood?: boolean=false;
 
   public   CategoryId? :number=0

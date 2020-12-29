@@ -18,7 +18,7 @@
 
           <button (click)="Action(item)" class="btn btn-primary " data-title="Edit" data-toggle="modal"
             data-target="#edit">
-            <span class="fa fa-pencil-square-o"></span></button>
+            <span class="fa fa-edit"></span></button>
         </td>
       </tr>
       <tr *ngIf="this.gridOption.datas.pagedItems==0">
@@ -35,24 +35,27 @@
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
-        <label for="KitchenCode">KitchenCode</label>
+        <label for="KitchenCode">Kitchen Code</label>
         <input id="KitchenCode" name="KitchenCode" [(ngModel)]="model.KitchenCode" type="text" class="form-control"
-          placeholder="KitchenCode" />
+          placeholder="Kitchen Code" />
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="form-group">
-        <label for="KitchenName">KitchenName</label>
+        <label for="KitchenName">Kitchen Name</label>
         <input id="KitchenName" name="KitchenName" [(ngModel)]="model.KitchenName" type="text" class="form-control"
-          placeholder="KitchenName" />
+          placeholder="Kitchen Name" />
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="form-group">
         <label for="Capacity">Capacity</label>
-        <input id="Capacity" name="Capacity" [(ngModel)]="model.Capacity" type="text" class="form-control"
+        <input id="Capacity" name="Capacity" [(ngModel)]="model.Capacity"
+        (ngModelChange)="model.Capacity = $event === null ? 0 : $event"
+        type="number" numeric decimals="2" maxlength="10"
+        class="form-control"
           placeholder="Capacity" />
       </div>
    </div>
@@ -63,7 +66,7 @@
       <div class="form-check">
         <label> <input [(ngModel)]="this.model.IsSinglePhase" name="IsSinglePhase" type="checkbox"
             class="form-check-input" id="BarRec" />
-          SinglePhase</label>
+          Single Phase</label>
       </div>
     </div>
 
@@ -71,7 +74,7 @@
       <div class="form-check">
         <label> <input [(ngModel)]="this.model.IsWaterSupply" name="IsWaterSupply" type="checkbox"
             class="form-check-input" id="BarRec" />
-          WaterSupply</label>
+          Water Supply</label>
       </div>
     </div>
 
@@ -79,7 +82,7 @@
       <div class="form-check">
         <label> <input [(ngModel)]="this.model.IsThreephase" name="IsThreephase" type="checkbox"
             class="form-check-input" id="BarRec" />
-          Threephase</label>
+          Three phase</label>
       </div>
     </div>
   </div>
@@ -89,7 +92,7 @@
       <div class="form-check">
         <label> <input [(ngModel)]="this.model.IsWashupfacilities" name="IsWashupfacilities" type="checkbox"
             class="form-check-input" id="IsWashupfacilities" />
-          Washupfacilities</label>
+          Washup facilities</label>
       </div>
     </div>
 

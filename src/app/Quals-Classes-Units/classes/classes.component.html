@@ -5,7 +5,6 @@
       <th>Code</th>
       <th>Name</th>
       <th>
-
         <button (click)="Action(null)" class="btn btn-primary ">
           <span class="fa fa-plus"></span></button>
       </th>
@@ -15,9 +14,9 @@
         <td>{{ item.ClassCode }}</td>
         <td>{{ item.Name }}</td>
 
-<td>
+        <td>
           <button (click)="Action(item)" class="btn btn-primary  ">
-            <span class="fa fa-pencil-square-o"></span></button>
+            <span class="fa fa-edit"></span></button>
         </td>
 
       </tr>
@@ -41,13 +40,13 @@
           placeholder="ClassCode" />
       </div>
     </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="ClassCode">Name</label>
-          <input id="Name" name="Name" [(ngModel)]="model.Name" type="text" class="form-control" placeholder="Name" />
-        </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ClassCode">Name</label>
+        <input id="Name" name="Name" [(ngModel)]="model.Name" type="text" class="form-control" placeholder="Name" />
       </div>
     </div>
+  </div>
 
 
 
@@ -56,7 +55,9 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="ClassContactHrs">Total Class Hrs</label>
-        <input id="ClassContactHrs" name="ClassContactHrs" [(ngModel)]="model.ClassContactHrs" type="text"
+        <input id="ClassContactHrs" name="ClassContactHrs" [(ngModel)]="model.ClassContactHrs"
+        (ngModelChange)="model.ClassContactHrs = $event === null ? 0 : $event"
+        type="number" numeric
           class="form-control" placeholder="ClassContactHrs" />
       </div>
     </div>
@@ -64,16 +65,18 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="ClassCohort">Cohort</label>
-        <input id="ClassCohort" name="ClassCohort" [(ngModel)]="model.ClassCohort" type="text"
-          class="form-control" placeholder="ClassCohort" />
+        <input id="ClassCohort" name="ClassCohort" [(ngModel)]="model.ClassCohort" type="text" class="form-control"
+          placeholder="ClassCohort" />
       </div>
     </div>
 
     <div class="col-md-4">
       <div class="form-group">
-        <label for="ClassMatsAcc">Min % Attendance Req</label>
-        <input id="ClassMatsAcc" name="ClassMatsAcc" [(ngModel)]="model.ClassMatsAcc" type="text"
-          class="form-control" placeholder="ClassMatsAcc" />
+        <label for="ClassMatsAcc">CM ACC.</label>
+        <input id="ClassMatsAcc" name="ClassMatsAcc" [(ngModel)]="model.ClassMatsAcc" type="text" class="form-control"
+
+        type="text"
+        placeholder="CM ACCOUNT" />
       </div>
     </div>
   </div>
@@ -81,28 +84,46 @@
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
-        <label for="ClassMinAttend">Min Hrs Req</label>
-        <input id="ClassMinAttend" name="ClassMinAttend" [(ngModel)]="model.ClassMinAttend" type="text"
+        <label for="ClassMinAttend">Min % Attendacne Req</label>
+        <input id="ClassMinAttend" name="ClassMinAttend" [(ngModel)]="model.ClassMinAttend"
+        (ngModelChange)="model.ClassMinAttend = $event === null ? 0 : $event"
+        type="number" numeric
           class="form-control" placeholder="ClassMinAttend" />
       </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ClassMinAttendxxx">Min Hrs Req</label>
+        <input disabled id="ClassMinAttendxxx" name="ClassMinAttendxxx"
+        value="{{this.getMinHrRequired()}}"
+        type="number" numeric
+          class="form-control" placeholder="ClassMinAttend" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ClassHrsPerWk">Class Hours Per Week</label>
+        <input id="ClassHrsPerWk" name="ClassHrsPerWk" [(ngModel)]="model.ClassHrsPerWk"
+        (ngModelChange)="model.ClassHrsPerWk = $event === null ? 0 : $event"
+        type="number" numeric
+          class="form-control" placeholder="ClassHrsPerWk" />
+      </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="ClassHrsPerWk">Class Hours Per Week</label>
-          <input id="ClassHrsPerWk" name="ClassHrsPerWk" [(ngModel)]="model.ClassHrsPerWk" type="text"
-            class="form-control" placeholder="ClassHrsPerWk" />
-        </div>
-      </div>
 
-
-      </div>
-      <div class="btn-group">
-        <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
-        <button type="button" (click)="router.navigate(['classes']);" class="btn btn-primary back_button"> <span
-            class="fa fa-arrow-left"></span> </button>
-      </div>
+  </div>
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+    <button type="button" (click)="router.navigate(['classes']);" class="btn btn-primary back_button"> <span
+        class="fa fa-arrow-left"></span> </button>
+  </div>
 
 </form>
+
+<!-- <pre>{{model|json}}</pre> -->

@@ -22,7 +22,7 @@
         <td>{{ item.PrepName }}</td>
         <td>
           <button (click)="Action(item)" class="btn btn-primary ">
-            <span class="fa fa-pencil-square-o"></span></button>
+            <span class="fa fa-edit"></span></button>
         </td>
       </tr>
       <tr class="" *ngIf="this.gridOption.datas.pagedItems == 0">
@@ -81,23 +81,18 @@
 
                     <div class="col-md-4">
                       <label class="form-check-label">
-                        <input [(ngModel)]="this.modelRecipe.StandardPortions" id="Reference" name="Reference"
-                          type="number" class="form-control" placeholder="Reference" />
-
-
-
+                        <input [(ngModel)]="this.modelRecipe.StandardPortions"
+                        (ngModelChange)="this.modelRecipe.StandardPortions = $event === null ? 0 : $event"
+                        type="number"
+                        numeric  decimals="2"  maxlength="10"
+                        id="Reference" name="Reference"    class="form-control" placeholder="Reference" />
                       </label>
-
-
                     </div>
-
                     <div class="col-md-4">
-
                       <div class="form-group">
-
-
                         <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
                           name="Coursessafdf">
+                          <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
                             {{ i.RefDescription }}
                           </option>
@@ -115,13 +110,16 @@
                     <div class="col-md-4">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.ReqPortions" id="Reference" name="ReqPortions"
-                          type="number" class="form-control" placeholder="ReqPortions" />
+                        (ngModelChange)="this.modelRecipe.ReqPortions = $event === null ? 0 : $event"
+                        type="number"
+                        numeric  decimals="2"  maxlength="10"  class="form-control" placeholder="ReqPortions" />
                       </label>
                     </div>
 
                     <div class="col-md-4">
                       <select [(ngModel)]="this.modelRecipe.StandradUnitId" class="form-control" id="Courses"
                         name="Coursest">
+                        <option value="0"></option>
                         <option *ngFor="let i of this.modelWrapper.StandradUnits" [ngValue]="i.RefId">
                           {{ i.RefDescription }}
                         </option>
@@ -140,12 +138,13 @@
                     <div class="col-md-6">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.YieldNumber" id="YieldNumber1" name="YieldNumber1"
-                          type="number" class="form-control" placeholder="YieldNumber" />
+                          type="text"  numeric decimals="2"  class="form-control" placeholder="YieldNumber" />
                       </label>
                     </div>
                     <div class="col-md-6">
                       <select [(ngModel)]="this.modelRecipe.YieldUnitId" (change)="onChangeYieldUnit()"
                         class="form-control" id="Courses" name="Coursesssssssssssssssss">
+                        <option value="0"></option>
                         <option *ngFor="let i of this.modelWrapper.YieldUnits" [ngValue]="i.RefId">
                           {{ i.RefDescription }}
                         </option>
@@ -211,6 +210,7 @@
 
                         <select [(ngModel)]="this.modelRecipe.CourseId" class="form-control" id="Courses"
                           name="Courses">
+                          <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.Courses" [ngValue]="i.RefId">
                             {{ i.RefDescription }}
                           </option>
@@ -222,6 +222,7 @@
                         <label for="MOCs">MOCs</label>
 
                         <select [(ngModel)]="this.modelRecipe.Mocid" class="form-control" id="MOCs" name="MOCs">
+                          <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.MOCs" [ngValue]="i.RefId">
                             {{ i.RefDescription }}
                           </option>
@@ -234,6 +235,7 @@
 
                         <select [(ngModel)]="this.modelRecipe.PrepId" class="form-control" id="CookingTime"
                           name="CookingTime">
+                          <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.CookingTime" [ngValue]="i.RefId">
                             {{ i.RefDescription }}
                           </option>
@@ -246,6 +248,7 @@
 
                         <select [(ngModel)]="this.modelRecipe.CuisineId" class="form-control" id="CuisneTypes"
                           name="CuisneTypes">
+                          <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.CuisneTypes" [ngValue]="i.RefId">
                             {{ i.RefDescription }}
                           </option>
@@ -312,6 +315,7 @@
                 <td>
                   <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
                     name="modelStorageAreafgdfgfgs{{ index }}">
+                    <option value="0"></option>
                     <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
                       {{ j.ProductName }}
                     </option>
@@ -319,8 +323,10 @@
                 </td>
 
                 <td>
-                  <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" type="number"
-                    class="form-control" placeholder="Quantity" />
+                  <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}"
+                    class="form-control" placeholder="Quantity"
+                    (ngModelChange)="i.Quantity = $event === null ? 0 : $event"  type="number" numeric maxlength="10"
+                    />
                 </td>
                 <td>
                   {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
@@ -329,7 +335,7 @@
                   {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
                 </td>
                 <td>
-                  <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
+                  <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" numeric decimals="2"  type="text" class="form-control"
                     placeholder="Yield" />
                 </td>
                 <td>

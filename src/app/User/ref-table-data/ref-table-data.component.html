@@ -27,19 +27,18 @@
       <tr *ngFor="let item of this.model;let i=index;" class="table-hover">
         <td>{{item.RefId}}</td>
         <td>
-
-          <input id="RefDescription{{i}}" name="RefDescription{{i}}" [(ngModel)]="item.RefDescription" type="text" class="form-control"
-            placeholder="RefDescription" />
-
-
+          <input id="RefDescription{{i}}" name="RefDescription{{i}}" [(ngModel)]="item.RefDescription" type="text"
+            class="form-control" placeholder="RefDescription" />
         </td>
-
         <td>
-
           <button (click)="saveRef(item)" class="btn btn-primary  ">
             Save</button>
         </td>
       </tr>
+
+        <tr *ngIf="this.model.length==0">
+          <td class="datanotfound" colspan="3">Data not found</td>
+        </tr>
 
     </tbody>
   </table>

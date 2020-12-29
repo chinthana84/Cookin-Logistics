@@ -8,7 +8,9 @@
       <th>ReqStudent Numbers</th>
       <th>Assessment</th>
       <th>
-        <input type="button" value="New" class="btn btn-primary" (click)="Action(null)" />
+        <button  class="btn btn-primary" (click)="Action(null)">
+          <span class="fa fa-plus"></span>
+        </button>
       </th>
     </thead>
     <tbody>
@@ -17,9 +19,12 @@
         <td>{{ item.StudentNumbers }}</td>
         <td>{{ item.ReqStudentNumbers }}</td>
         <td> <input [(ngModel)]="item.IsAssessment" name="IsAssessment{index}" type="checkbox" disabled
-              id="IsAssessment{index}" /></td>
+            id="IsAssessment{index}" /></td>
         <td>
-          <input type="button" value="Edit" class="btn btn-primary" (click)="Action(item)" />
+
+          <button  class="btn btn-primary" (click)="Action(item)">
+            <span class="fa fa-edit"></span>
+          </button>
         </td>
       </tr>
       <tr *ngIf="this.gridOption.datas.pagedItems==0">
@@ -71,16 +76,23 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="StudentNumbers">StudentNumbers</label>
-                        <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers" name="StudentNumbers"
-                          type="text" class="form-control" placeholder="StudentNumbers" />
+                        <label for="StudentNumbers">Student Numbers</label>
+                        <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers"
+                        name="StudentNumbers"
+                        (ngModelChange)="this.modelOrder.StudentNumbers = $event === null ? 0 : $event"
+                        type="number" numeric maxlength="4"
+                        class="form-control" placeholder="StudentNumbers" />
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="ReqStudentNumbers">ReqStudentNumbers</label>
+                        <label for="ReqStudentNumbers">Req. Student Numbers</label>
                         <input [(ngModel)]="this.modelOrder.ReqStudentNumbers" id="ReqStudentNumbers"
-                          name="ReqStudentNumbers" type="text" class="form-control" placeholder="ReqStudentNumbers" />
+                          name="ReqStudentNumbers"
+                          (ngModelChange)="this.modelOrder.ReqStudentNumbers = $event === null ? 0 : $event"
+                          type="number" numeric maxlength="4"
+                          class="form-control"
+                          placeholder="ReqStudentNumbers" />
                       </div>
                     </div>
                   </div>
@@ -99,9 +111,9 @@
                       <div class="form-group">
                         <div class="form-check">
                           <label>
-                          <input [(ngModel)]="this.modelOrder.IsAssessment" name="KitchRec" type="checkbox"
-                            class="form-check-input" id="IsAssessment" />
-                           Assessment</label>
+                            <input [(ngModel)]="this.modelOrder.IsAssessment" name="KitchRec" type="checkbox"
+                              class="form-check-input" id="IsAssessment" />
+                            Assessment</label>
                         </div>
                       </div>
                     </div>
@@ -161,6 +173,7 @@
                 <td>
                   <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
                     name="modelStorageAreafgdfgfgs{{ index }}">
+                    <option value="0"></option>
                     <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
                       {{ j.ProductName }}
                     </option>
@@ -168,17 +181,24 @@
                 </td>
 
                 <td> {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}</td>
-                <td> <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" type="number"
-                    class="form-control" placeholder="Quantity" /></td>
+                <td> <input [(ngModel)]="i.Quantity" type="number"
+                  (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2"
+                    id="Quantity" name="Quantity{{ index }}"   class="form-control" placeholder="Quantity"
+                     /></td>
+
 
                 <td> <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
-                    placeholder="Yield" /></td>
+                  (ngModelChange)="i.Yield = $event === null ? 0 : $event"
+                  placeholder="Yield" numeric decimals="2" /></td>
 
                 <td>
                   <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId)" class="btn btn-primary btn-sm">
                     <span class="fa fa-trash"></span>
                   </button>
                 </td>
+              </tr>
+              <tr *ngIf="this.modelOrder.OrderDetails?.length == 0 || this.modelOrder.OrderDetails?.length == null  ">
+                <td class="datanotfound" colspan="12">Data not found</td>
               </tr>
             </tbody>
           </table>

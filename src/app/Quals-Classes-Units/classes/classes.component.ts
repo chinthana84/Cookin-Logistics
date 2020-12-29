@@ -88,6 +88,17 @@ export class ClassesComponent implements OnInit {
     this.edited = true
   }
 
+  getMinHrRequired():string{
+    let n=this.model.ClassMinAttend/this.model.ClassContactHrs;
+
+    if (n==undefined){
+      return "0";
+    }
+    else{
+      return n.toFixed(2);
+    }
+  }
+
   onSubmit(obj: Class) {
 
       this.http

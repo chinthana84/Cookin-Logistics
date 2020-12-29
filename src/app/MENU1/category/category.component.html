@@ -18,12 +18,16 @@
             <td>{{ item.CategoryName }}</td>
             <td>{{ item.Description }}</td>
             <td>
+              <div class="btn-group">
+
+
               <button (click)="Action(item)" class="btn btn-primary" data-title="Edit" data-toggle="modal"
               data-target="#edit">
-              <span class="fa fa-pencil-square-o"></span></button>
+              <span class="fa fa-edit"></span></button>
               <button class="btn btn-primary"
               (click)="this.commonService.goCNN('?rpt_id=1&catid='+ item.CategoryId +'&catname='+ item.CategoryName)"> <span
                 class="fa fa-print"></span></button>
+              </div>
             </td>
           </tr>
           <tr *ngIf="this.gridOption.datas.pagedItems==0">

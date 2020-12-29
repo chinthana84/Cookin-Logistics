@@ -1,0 +1,125 @@
+<div id="safsdf" *ngIf="!this.edited">
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
+
+  <table class="table table-bordered">
+    <thead>
+      <th>QualName</th>
+      <th>
+        <button class="btn btn-primary" (click)="Action(null)">
+          <span class="fa fa-plus"></span>
+        </button>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover">
+        <td>{{ item.QualName }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="Action(item)">
+            <span class="fa fa-edit"></span>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="this.gridOption.datas.pagedItems==0">
+        <td class="datanotfound" colspan="7">Data not found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+</div>
+
+
+
+<form (ngSubmit)="onSubmit(modelQulification)" *ngIf="this.edited" novalidate #heroForm="ngForm">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="QualName">Name</label>
+        <input id="QualName" name="QualName" [(ngModel)]="modelQulification.QualName" type="text" class="form-control"
+          placeholder="QualName" />
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="pre-scrollable" style="max-height: 60vh">
+        <table class="table table-striped">
+          <thead>
+            <th>
+              <button type="button" (click)="AddModules()" class="btn btn-primary" data-title="Edit" data-toggle="modal"
+                data-target="#edit">
+                <span class="fa fa-plus"></span></button>
+            </th>
+            <th>Modules</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of this.modelQulification.QulificationModules; let index = index"
+              class="table-hover mt-0">
+              <td>
+                <button type="button" (click)="deleteModule(i.QuliModuleId)" class="btn btn-primary" data-title="Edit"
+                  data-toggle="modal" data-target="#edit">
+                  <i class="fa fa-trash"></i> </button>
+              </td>
+              <td>
+                <select [(ngModel)]="i.RefId" class="form-control" id="modelStorageAreas"
+                  name="modelStorageAreas{{ index }}">
+                  <option value="0"></option>
+                  <option *ngFor="let i of this.modelWrapper.cookModules" [ngValue]="i.RefId">
+                    {{ i.RefDescription }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr *ngIf="this.modelWrapper.cookModules?.length == 0">
+              <td class="datanotfound" colspan="3">Data not found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="pre-scrollable" style="max-height: 60vh">
+        <table class="table table-striped">
+          <thead>
+            <th>
+              <button type="button" (click)="AddUnit()" class="btn btn-primary" data-title="Edit" data-toggle="modal"
+                data-target="#edit">
+                <span class="fa fa-plus"></span></button>
+            </th>
+            <th>Units</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of this.modelQulification.QulificationUnits; let index = index"
+              class="table-hover mt-0">
+              <td>
+                <button type="button" (click)="deleteUnit(i.QuliUnitId)" class="btn btn-primary" data-title="Edit"
+                  data-toggle="modal" data-target="#edit">
+                  <i class="fa fa-trash"></i> </button>
+              </td>
+              <td>
+                <select [(ngModel)]="i.UnitId" class="form-control" id="units{{ index }}"
+                  name="units{{ index }}">
+                  <option value="0"></option>
+                  <option *ngFor="let i of this.modelWrapper.units" [ngValue]="i.UnitId">
+                    {{ i.UnitCode }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr *ngIf="this.modelWrapper.cookModules?.length == 0">
+              <td class="datanotfound" colspan="3">Data not found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+    <button type="button" (click)="router.navigate(['quli']);" class="btn btn-primary back_button"> <span
+        class="fa fa-arrow-left"></span> </button>
+  </div>
+</form>

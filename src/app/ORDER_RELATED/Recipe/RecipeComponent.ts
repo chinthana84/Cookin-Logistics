@@ -81,16 +81,10 @@ export class RecipeComponent implements OnInit {
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
 
         this.subs.sink =   forkJoin([a, b]).subscribe(results => {
-          // results[0] is our character
-          // results[1] is our character homeworld
           this.modelRecipe = results[0]
           this.modelWrapper = results[1];
-          console.log(this.modelRecipe)
           this.onChangeYieldUnit();
-
         });
-
-
       } else {
         this.edited = false;
       }
@@ -123,14 +117,20 @@ export class RecipeComponent implements OnInit {
     this.edited = true;
   }
 
-  PortionSize(): number {
-    let val = (this.modelRecipe.YieldNumber / this.modelRecipe.StandardPortions);
-    return isNaN(val) ? 0 : val
+  PortionSize(): string {
+    let val:number
+       val= (this.modelRecipe.YieldNumber / this.modelRecipe.StandardPortions);
+    if (isNaN(val)){
+      return '0';
+    }
+    else{
+    return  val.toFixed(2) ;
   }
+}
 
-  RequiredYield(): number {
+  RequiredYield(): string {
     var x = (this.modelRecipe.ReqPortions * this.modelRecipe.YieldNumber);
-    return isNaN(x / this.modelRecipe.StandardPortions) ? 0 : x / this.modelRecipe.StandardPortions;
+    return isNaN(x / this.modelRecipe.StandardPortions) ? '0' : (x / this.modelRecipe.StandardPortions).toFixed(2);
 
   }
 

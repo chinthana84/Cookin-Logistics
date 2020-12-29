@@ -20,9 +20,8 @@
         <td>{{ item.CategoryName }}</td>
         <td>
           <div class="btn-group">
-            <button (click)="Action(item)" class="btn btn-primary"> <span class="fa fa-pencil-square-o"></span></button>
-
-
+            <button (click)="Action(item)" class="btn btn-primary">
+              <span class="fa fa-edit"></span></button>
           </div>
         </td>
       </tr>
@@ -36,7 +35,6 @@
 
 
 <form (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
-
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#home">Genaral</a>
@@ -74,6 +72,7 @@
                   <div class="form-group">
                     <label for="Unit">Unit</label>
                     <select class="form-control" id="Unit" name="UnitXXX" [(ngModel)]="this.model.ProdUnitId">
+                      <option value="0"></option>
                       <option *ngFor="let x of this.modelProductUnits" [ngValue]="x.RefId">
                         {{ x.RefDescription}}
                       </option>
@@ -83,14 +82,18 @@
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="Unit">Unit Price($)</label>
-                    <input id="Unit" name="Unit" [(ngModel)]="model.UnitPrice" type="number" class="form-control"
+                    <input id="Unit" name="Unit" [(ngModel)]="model.UnitPrice" type="number"
+                     (ngModelChange)="model.UnitPrice = $event === null ? 0 : $event"
+                     numeric decimals="2" maxlength="10" class="form-control"
                       placeholder="Unit Price" />
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="Yield">Yield%</label>
-                    <input id="Yield" name="Yield" [(ngModel)]="model.Yield" type="number" min="1" max="5"
+                    <input id="Yield" name="Yield"
+                    (ngModelChange)="model.Yield = $event === null ? 0 : $event"
+                    [(ngModel)]="model.Yield" type="number" numeric maxlength="3"
                       class="form-control" placeholder="Yield" />
                   </div>
                 </div>
@@ -105,7 +108,7 @@
                       <tr>
                         <th>100% Yield Reqs.</th>
                         <th>{{ this.getCal2() }}</th>
-                        <th>{{ this.getUnit()  }}</th>
+                        <th>{{ this.getUnit() }}</th>
                       </tr>
                     </thead>
                   </table>
@@ -145,6 +148,7 @@
                         <td>
                           <select class="form-control" id="modelStorageAreas" name="modelStorageAreas{{ index }}"
                             [(ngModel)]="i.StoreId">
+                            <option value="0"></option>
                             <option *ngFor="let i of this.modelStorageAreas" [ngValue]="i.StoreId">
                               {{ i.StoreName }}
                             </option>
@@ -170,14 +174,13 @@
             <div class="card-header">Supplier/Commodity</div>
             <div class="card-body">
               <div class="col-md-12">
-
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="modelCategory">Category Name</label>
-
                       <select class="form-control" id="modelCategory" name="modelCategory"
                         [(ngModel)]="this.model.CategoryId">
+                        <option value="0"></option>
                         <option *ngFor="let i of this.modelCategory" [ngValue]="i.CategoryId">
                           {{ i.CategoryName }}
                         </option>
@@ -188,9 +191,9 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="modelSupplier">Company Name</label>
-
                       <select class="form-control" id="modelSupplier" name="modelSupplier"
                         [(ngModel)]="this.model.SupplierId">
+                        <option value="0"></option>
                         <option *ngFor="let i of this.modelSupplier" [ngValue]="i.SupplierId">
                           {{ i.CompanyName }}
                         </option>
@@ -209,7 +212,6 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="ProductNotes">ProductNotes</label>
-
             <textarea rows="5" id="ProductNotes" name="ProductNotes" [(ngModel)]="model.ProductNotes" type="text"
               class="form-control" placeholder="ProductNotes"></textarea>
           </div>
@@ -217,18 +219,45 @@
       </div>
     </div>
 
-    <div id="menu1" class="container tab-pane fade"><br>
-      <h3>Reference</h3>
-      <p>NOT IMPLEMENTED
-      </p>
+    <div id="menu1" class="container-fluid tab-pane fade"><br>
+
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table   table-bordered ">
+            <thead>
+              <tr>
+                <th>OrderID</th>
+                <th>Lession Topic</th>
+              </tr>
+              <tr *ngFor="let ii of this.modelWrapper.Orders">
+                <td>{{ii.OrderDescription }} </td>
+                <td>{{ii.PractTitle }} </td>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table   table-bordered ">
+            <thead>
+              <tr>
+
+                <th>RecipeName</th>
+              </tr>
+              <tr *ngFor="let ii of this.modelWrapper.Recipes">
+                <td>{{ii.RecipeName }}</td>
+
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <div class="btn-group">
     <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
 
-    <button type="button" class="btn btn-primary back_button"(click)="router.navigate(['products']);"> <span class="fa fa-arrow-left"></span> </button>
+    <button type="button" class="btn btn-primary back_button" (click)="router.navigate(['products']);"> <span
+        class="fa fa-arrow-left"></span> </button>
 
   </div>
 </form>
-
-

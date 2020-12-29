@@ -13,7 +13,7 @@ import {
 } from "src/app/models/product.model";
 import { RefTable } from 'src/app/models/reftable.model';
 import { Supplier } from "src/app/models/supplier.model";
-import { IMyGrid } from 'src/app/models/wrapper.model';
+import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from "src/app/_shared/confirm-dialog/confirm-dialog.service";
 import { GridOptions } from "src/app/_shared/_grid/gridModels/gridOption.model";
 import { SearchObject } from "src/app/_shared/_grid/gridModels/searchObject.model";
@@ -35,6 +35,7 @@ export class ProductComponent implements OnInit, IMyGrid, OnDestroy {
   modelSupplier: Supplier[] = [];
   modelStorageAreas: StorageAreas[] = [];
   modelProductUnits: RefTable[] = [];
+  modelWrapper :Wrapper={};
 
   gridOption: GridOptions = {
     datas: {},
@@ -79,6 +80,8 @@ export class ProductComponent implements OnInit, IMyGrid, OnDestroy {
         this.edited = true;
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Product/GetProductByID/` + params.id).subscribe((data) => { this.model = data; });
         this.loadRef();
+        this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Product/GetProductRelatedWrapper/`+ params.id)
+        .subscribe((data) => { this.modelWrapper = data; console.log(data); });
       } else { this.edited = false; }
     });
   }
@@ -95,6 +98,8 @@ export class ProductComponent implements OnInit, IMyGrid, OnDestroy {
 
     this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/common/GetAllProductionUnits`)
       .subscribe((data) => { this.modelProductUnits = data; });
+
+
   }
 
   setPage(obj: SearchObject) {
