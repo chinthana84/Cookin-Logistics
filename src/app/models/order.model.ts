@@ -11,7 +11,10 @@ export class Order {
   public   IsTheory?:Boolean=false;
   public   IsPractical?:Boolean=false;
 
+  public    Notes ?:string="";
+
   public   OrderDetails?: OrderDetails[];
+  public   OrderTheoryNotes?: OrderTheoryNotesDTO []=[];
 }
 
 export class OrderDetails
@@ -27,4 +30,14 @@ export class OrderDetails
 
     public   Order?: Order;
     public   Product?: Product;
+}
+
+export   class OrderTheoryNotesDTO
+{
+    public   TheoryNoteId ?: number=0;
+    public   OrderId ?: number=0;
+    public   TherNoteTitle ?: string='';
+    public   Notes ?: string='';
+    public   UniqueFileName?:string="";
+
 }

@@ -116,11 +116,16 @@ CheckAccess(path:string){
    else if(path=="admin" && this.currentObj.UserAccess==true){
     return "admin";
   }
+  else if(path=="quli" && this.currentObj.Qulification==true){
+    return "quli";
+  }
+  else if(path=="ref" && this.currentObj.Reference==true){
+    return "ref";
+  }
  else{
     return "home";
   }
-
-
+ 
 
 }
 

@@ -5,13 +5,18 @@
       <h3>Cookin ERP </h3>
     </div>
 
-    <ul class="list-unstyled components">
+
+
+
+    <ul id="x" class="list-unstyled components">
       <li>
         <a routerLink="home">Home</a>
       </li>
       <li>
-        <a href="#Cat_Prod_Sup" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cat/Prod/Sup</a>
-        <ul class="collapse list-unstyled" id="Cat_Prod_Sup">
+        <a   data-toggle="collapse" aria-expanded="true"
+        class=" dropdown-toggle" data-target="#Cat_Prod_Sup"
+        aria-controls="Cat_Prod_Sup">Cat/Prod/Sup</a>
+        <ul class="collapse list-unstyled" data-parent="#x" id="Cat_Prod_Sup">
           <li>
             <a [ngClass]="{'norights': !this.currentObj.Supplier}"
               routerLink="{{this.CheckAccess('suppliers')}}">Suppliers</a>
@@ -28,94 +33,92 @@
       </li>
 
       <li>
-        <a href="#Recipes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Recipes</a>
-        <ul class="collapse list-unstyled" id="Recipes">
+        <a  data-toggle="collapse" aria-expanded="true"
+        class="dropdown-toggle" data-target="#Recipes">Recipes</a>
+        <ul class="collapse list-unstyled" id="Recipes" data-parent="#x">
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Recipe}" routerLink="{{this.CheckAccess('recipes')}}"  >Recipes</a>
+            <a [ngClass]="{'norights': !this.currentObj.Recipe}"
+              routerLink="{{this.CheckAccess('recipes')}}">Recipes</a>
           </li>
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}"  >Orders</a>
+            <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
           </li>
         </ul>
       </li>
 
       <li>
-        <a href="#Tutor_Time" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tutor-Time</a>
-        <ul class="collapse list-unstyled" id="Tutor_Time">
+        <a href="#Tutor_Time" data-toggle="collapse" aria-expanded="true"
+        class="dropdown-toggle">Tutor-Time</a>
+        <ul class="collapse list-unstyled" id="Tutor_Time" data-parent="#x">
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Tutor}" routerLink="{{this.CheckAccess('tutor')}}"  >Tutor</a>
+            <a [ngClass]="{'norights': !this.currentObj.Tutor}" routerLink="{{this.CheckAccess('tutor')}}">Tutor</a>
           </li>
-
         </ul>
       </li>
 
       <li>
-        <a href="#Venues_Sessions" data-toggle="collapse" aria-expanded="false"
+        <a href="#Venues_Sessions" data-toggle="collapse" aria-expanded="true"
           class="dropdown-toggle">Venues-Sessions</a>
-        <ul class="collapse list-unstyled" id="Venues_Sessions">
+        <ul class="collapse list-unstyled" id="Venues_Sessions" data-parent="#x">
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Venue}" routerLink="{{this.CheckAccess('venue')}}"  >Venue</a>
+            <a [ngClass]="{'norights': !this.currentObj.Venue}" routerLink="{{this.CheckAccess('venue')}}">Venue</a>
           </li>
         </ul>
       </li>
 
       <li>
-        <a href="#Class_Quli_Unit" data-toggle="collapse" aria-expanded="false"
+        <a href="#Class_Quli_Unit" data-toggle="collapse" aria-expanded="true"
           class="dropdown-toggle">Class-Quli-Unit</a>
-        <ul class="collapse list-unstyled" id="Class_Quli_Unit">
+        <ul class="collapse list-unstyled" id="Class_Quli_Unit" data-parent="#x">
           <li>
-
-            <a [ngClass]="{'norights': !this.currentObj.Classs}" routerLink="{{this.CheckAccess('classes')}}"  >Classes</a>
+            <a [ngClass]="{'norights': !this.currentObj.Classs}"
+              routerLink="{{this.CheckAccess('classes')}}">Classes</a>
           </li>
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Unit}" routerLink="{{this.CheckAccess('units')}}"  >Units</a>
+            <a [ngClass]="{'norights': !this.currentObj.Unit}" routerLink="{{this.CheckAccess('units')}}">Units</a>
           </li>
           <li>
-            <a routerLink="quli" >Quli</a>
+        
+            <a [ngClass]="{'norights': !this.currentObj.Qulification}" routerLink="{{this.CheckAccess('quli')}}">Qulification
+            </a>
           </li>
         </ul>
       </li>
 
       <li>
-        <a href="#Requitions_Summary" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Requitions
+        <a href="#Requitions_Summary" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">Requitions
           Summary</a>
-        <ul class="collapse list-unstyled" id="Requitions_Summary">
+        <ul class="collapse list-unstyled" id="Requitions_Summary" data-parent="#x">
           <li>
-            <!-- <a [routerLink]="['Search']" [queryParams]="{selectedYear:'0',selectedWeekID:0}">Weeks</a> -->
-            <a [ngClass]="{'norights': !this.currentObj.Weeks}" routerLink="{{this.CheckAccess('Search')}}" [queryParams]="{selectedYear:'0',selectedWeekID:0}"  >Weeks</a>
-
+            <a [ngClass]="{'norights': !this.currentObj.Weeks}" routerLink="{{this.CheckAccess('Search')}}"
+              [queryParams]="{selectedYear:'0',selectedWeekID:0}">Weeks</a>
           </li>
-
         </ul>
       </li>
 
       <li>
-        <a [ngClass]="{'norights': !this.currentObj.ChangePW}" routerLink="{{this.CheckAccess('changepw')}}"  >Change Password</a>
-
+        <a [ngClass]="{'norights': !this.currentObj.ChangePW}" routerLink="{{this.CheckAccess('changepw')}}">Change
+          Password</a>
       </li>
-
     </ul>
 
     <ul class="list-unstyled components">
-
       <li>
         <a href="#admin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Admin</a>
-        <ul class="collapse list-unstyled" id="admin">
+        <ul class="collapse list-unstyled" id="admin" data-parent="#x">
           <li>
-
-            <a [ngClass]="{'norights': !this.currentObj.UserAccess}" routerLink="{{this.CheckAccess('admin')}}"  >User Access</a>
-
+            <a [ngClass]="{'norights': !this.currentObj.UserAccess}" routerLink="{{this.CheckAccess('admin')}}">User
+              Access</a>
           </li>
           <li>
 
-            <a routerLink="ref"  >Ref Tables</a>
-
+            <a [ngClass]="{'norights': !this.currentObj.Reference}" routerLink="{{this.CheckAccess('ref')}}">Ref Tables
+               </a>
           </li>
         </ul>
       </li>
     </ul>
   </nav>
-
 
   <!-- Page Content  -->
   <div id="content">
@@ -151,7 +154,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#"  (click)="this.commonServie.logout()" >Log out- {{getUsername()}}</a>
+              <a class="nav-link" href="#" (click)="this.commonServie.logout()">Log out- {{getUsername()}}</a>
             </li>
           </ul>
         </div>

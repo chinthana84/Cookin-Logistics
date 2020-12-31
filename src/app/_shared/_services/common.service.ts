@@ -24,6 +24,25 @@ export class CommonService {
   goCNN(url) {
     window.open(`${environment.RptAPI}/${url}`, '_blank');
   }
+
+  downloadFile(filename) {
+
+  //   return this.http.get(this.url + '/GetImage?image=' + image, {
+  //     responseType: 'blob'
+  // });
+
+      this.http.get(`${environment.APIEndpoint}/Common/Download/` + filename
+      , {
+        responseType: 'blob'
+      }).subscribe(x=> {
+        console.log(x)
+        const url= window.URL.createObjectURL(x);
+        window.open(url);
+       // return x;
+      });
+
+  }
+
   private _securityModel: SecurityModel;
 
 
@@ -39,7 +58,7 @@ export class CommonService {
   }
 
   public logout() {
-    this._securityModel=new   SecurityModel();
+    this._securityModel = new SecurityModel();
     sessionStorage.removeItem("todoBearerToken");
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("pw");
@@ -47,7 +66,7 @@ export class CommonService {
   }
 
   public Login(userForm: Login): Observable<SecurityModel> {
-  
+
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -61,7 +80,7 @@ export class CommonService {
       )
       .pipe(
         tap((result) => {
-          this.securityModel=new SecurityModel();
+          this.securityModel = new SecurityModel();
           Object.assign(this.securityModel, result);
           //Now check if Authenticated is true store token in sessionStorage
           if (this.securityModel.IsAuthenticated) {
@@ -80,12 +99,24 @@ export class CommonService {
               userForm.Password
             )
           } else {
-            this.securityModel=new SecurityModel();
+            this.securityModel = new SecurityModel();
           }
         })
       );
   }
 
 
+
+
+
+
+
+  upload(fileToUpload: any) {
+    let input = new FormData();
+    input.append("file", fileToUpload);
+
+    return this.http
+      .post(`${environment.APIEndpoint}/Common/UploadFile`, input);
+  }
 
 }

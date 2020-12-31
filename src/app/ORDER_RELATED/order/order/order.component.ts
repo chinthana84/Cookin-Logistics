@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { OrdersGridDTO } from 'src/app/models/Grid/grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
-import { Order, OrderDetails } from 'src/app/models/order.model';
+import { Order, OrderDetails, OrderTheoryNotesDTO } from 'src/app/models/order.model';
 import { Product } from 'src/app/models/product.model';
 import { Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
@@ -31,10 +31,10 @@ export class OrderComponent implements OnInit,OnDestroy {
     datas: {},
     searchObject: {
       girdId: GridType.Order
-      , defaultSortColumnName: "StudentNumbers",
+      , defaultSortColumnName: "OrderDescription",
       pageNo: 1,
       searchColName: '',
-      colNames: [{ colName: "StudentNumbers", colText: 'Student Numbers' }
+      colNames: [{ colName: "OrderDescription", colText: 'Order Description' }
       ]
     }
   };
@@ -43,7 +43,7 @@ export class OrderComponent implements OnInit,OnDestroy {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
-    private commonService: CommonService,
+    public commonService: CommonService,
     private gridService: GridService) { }
 
   ngOnDestroy(): void {
@@ -141,4 +141,44 @@ export class OrderComponent implements OnInit,OnDestroy {
     let x = this.modelWrapper.Products.filter(b => b.ProductId == i)
     return x[0];
   }
+
+  AddNote(){
+    let obj=new OrderTheoryNotesDTO();
+    obj.OrderId=this.modelOrder.OrderId;
+    if(this.modelOrder.OrderTheoryNotes == undefined){
+      this.modelOrder.OrderTheoryNotes=[];
+    }
+    this.modelOrder.OrderTheoryNotes.push(obj);
+  }
+
+  deleteNote(obj:OrderTheoryNotesDTO){
+    this.modelOrder.OrderTheoryNotes=this.modelOrder.OrderTheoryNotes.
+                                    filter(r=> r.TheoryNoteId != obj.TheoryNoteId);
+  }
+
+
+
+  addFile(event, i:OrderTheoryNotesDTO): void {
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        let formData:FormData = new FormData();
+        formData.append('uploadFile', file, file.name);
+        let headers = new Headers();
+        /** In Angular 5, including the header Content-Type can invalidate your request */
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+
+        this.commonService
+                  .upload(file)
+                  .subscribe(res => {
+                    console.log(res)
+
+                      i.UniqueFileName= String(res);
+
+                  });
+    }
+
+  }
+
 }

@@ -297,7 +297,7 @@
               <th>Product</th>
               <th>Standard</th>
               <th>Unit</th>
-              <th>UnitPrice $</th>
+              <th>Unit Price  </th>
               <th>Yield%</th>
               <th>Required</th>
               <th>Cost</th>
@@ -332,7 +332,7 @@
                   {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
                 </td>
                 <td>
-                  {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
+                 $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
                 </td>
                 <td>
                   <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" numeric decimals="2"  type="text" class="form-control"
@@ -342,7 +342,7 @@
                   {{(i.Quantity * 100)/i.Yield}}
 
                 <td>
-                  {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }}
+                $  {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }}
                 </td>
                 <td>QPP</td>
                 <td>Ext. Price</td>

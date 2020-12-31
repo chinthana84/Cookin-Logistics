@@ -18,6 +18,12 @@ export class SecurityModel {
   public UserAccess?: Boolean = false;
   public ChangePW?: Boolean = false;
 
+  public Qulification?: Boolean = false;
+  public Reference?: Boolean = false;
+
+
+
+
   //CanAccessSupplier
   //CanAccessCategory
 }
