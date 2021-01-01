@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
 
-   this.model.UserName= sessionStorage.getItem("username")
+   this.model.UserName= localStorage.getItem("username")
   }
 
   changepassword(){

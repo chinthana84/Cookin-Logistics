@@ -59,9 +59,9 @@ export class CommonService {
 
   public logout() {
     this._securityModel = new SecurityModel();
-    sessionStorage.removeItem("todoBearerToken");
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("pw");
+    localStorage.removeItem("todoBearerToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("pw");
     this.router.navigate(['login']);
   }
 
@@ -85,16 +85,17 @@ export class CommonService {
           //Now check if Authenticated is true store token in sessionStorage
           if (this.securityModel.IsAuthenticated) {
             this._securityModel2.next(result);
-            sessionStorage.setItem(
+
+            localStorage.setItem(
               "todoBearerToken",
               this.securityModel.BearerToken
             );
-            sessionStorage.setItem(
+            localStorage.setItem(
               "username",
               userForm.UserName
             )
 
-            sessionStorage.setItem(
+            localStorage.setItem(
               "pw",
               userForm.Password
             )

@@ -13,6 +13,7 @@ import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
+import { ErrorHandlerService } from 'src/app/_shared/_services/error-handler.service';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
 
@@ -39,6 +40,7 @@ export class OrderComponent implements OnInit,OnDestroy {
     }
   };
   constructor(private http: HttpClient,
+    private errorHandler: ErrorHandlerService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
@@ -72,7 +74,12 @@ export class OrderComponent implements OnInit,OnDestroy {
         this.subs.sink =      forkJoin([a, b]).subscribe(results => {
           this.modelOrder = results[0]
           this.modelWrapper = results[1];
-        });
+        } ,
+              (error) => {
+
+                this.confirmDialogService.messageBox(environment.APIerror);
+                this.errorHandler.handleError(error);
+              });
 
       } else {
         this.edited = false;
@@ -164,10 +171,10 @@ export class OrderComponent implements OnInit,OnDestroy {
         let file: File = fileList[0];
         let formData:FormData = new FormData();
         formData.append('uploadFile', file, file.name);
-        let headers = new Headers();
-        /** In Angular 5, including the header Content-Type can invalidate your request */
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
+        // let headers = new Headers();
+        // /** In Angular 5, including the header Content-Type can invalidate your request */
+        // headers.append('Content-Type', 'multipart/form-data');
+        // headers.append('Accept', 'application/json');
 
         this.commonService
                   .upload(file)

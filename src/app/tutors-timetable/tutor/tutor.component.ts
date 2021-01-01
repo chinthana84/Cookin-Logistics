@@ -9,6 +9,7 @@ import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
 import { CommonService } from 'src/app/_shared/_services/common.service';
+import { ErrorHandlerService } from 'src/app/_shared/_services/error-handler.service';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
 
@@ -37,7 +38,7 @@ export class TutorComponent implements OnInit,OnDestroy {
 
 
   constructor(private gridService: GridService,
-
+    private errorHandler: ErrorHandlerService,
     private commonService: CommonService,
     private http: HttpClient, public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,
@@ -105,7 +106,9 @@ export class TutorComponent implements OnInit,OnDestroy {
         }
       }, (error) => {
 
-        this.confirmDialogService.messageBox(environment.APIerror)
+        this.confirmDialogService.messageBox(environment.APIerror);
+        this.errorHandler.handleError(error);
+
       });
 
   }

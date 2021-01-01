@@ -39,8 +39,8 @@ ngOnInit(): void {
   this.setBreadcrumb();
   if  ( this.securityModel == undefined){
     this.securityModel=new SecurityModel();
-   let u = sessionStorage.getItem("username")
-   let pw = sessionStorage.getItem("pw")
+   let u = localStorage.getItem("username")
+   let pw = localStorage.getItem("pw")
    if (u !=null){
     this.commonServie.Login({ UserName:u, Password:pw}).subscribe(r=>{  });
    }
@@ -74,7 +74,7 @@ ngOnInit(): void {
 }
 
 getUsername(){
-  return sessionStorage.getItem("username")
+  return localStorage.getItem("username")
 }
 
 CheckAccess(path:string){
@@ -125,7 +125,7 @@ CheckAccess(path:string){
  else{
     return "home";
   }
- 
+
 
 }
 
