@@ -81,7 +81,7 @@ export class ProductComponent implements OnInit, IMyGrid, OnDestroy {
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Product/GetProductByID/` + params.id).subscribe((data) => { this.model = data; });
         this.loadRef();
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Product/GetProductRelatedWrapper/`+ params.id)
-        .subscribe((data) => { this.modelWrapper = data; console.log(data); });
+        .subscribe((data) => { this.modelWrapper = data;  });
       } else { this.edited = false; }
     });
   }

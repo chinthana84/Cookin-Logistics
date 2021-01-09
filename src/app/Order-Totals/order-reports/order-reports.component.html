@@ -1,0 +1,133 @@
+<div class="row mt-3">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="RecipeName">Processing Year</label>
+      <select [(ngModel)]="selectedYear" class="form-control" id="modelStorsageAreas"
+        name="fmodelsafStorageAreafgdfgfgs ">
+        <option value=""></option>
+        <option *ngFor="let j of this.firstMondayList" [(value)]="j.FirstMondayId">
+          {{ j.FirstMondayDate }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mt-2">
+  <div class="col-md-6">
+    <form novalidate #heroForm="ngForm">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" href="" data-target="#home">Header</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="" data-target="#profile">Details</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="OrderDescription">Start Week of timetable period</label>
+                <input [(ngModel)]="this.startWeekNo" id="OrderDescription" name="OrderDescription" type="text"
+                  class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="StudentNumbers">End Week of timetable period</label>
+                <input [(ngModel)]="this.endWeekNo" id="PractTitle" name="PractTitle" type="text"
+                  class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" (click)="loadreports()" class="btn btn-primary save_button">
+              <span class="fa fa-print"></span>
+            </button>
+            <button type="button" class="btn btn-primary back_button">
+              <span class="fa fa-arrow-left"></span>
+            </button>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="profile">
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="OrderDescription">Start Date of timetable period</label>
+                <input type="date" [(ngModel)]="this.startWeekDate" id="OrderDescription" name="OrderDescription"
+                  class="form-control" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="StudentNumbers">End Date of timetable period</label>
+                <input [(ngModel)]="this.endWeekDate" id="PractTitle" name="PractTitle" type="date"
+                  class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" (click)="loadreportsDate()" class="btn btn-primary save_button">
+              <span class="fa fa-print"></span>
+            </button>
+            <button type="button" class="btn btn-primary back_button">
+              <span class="fa fa-arrow-left"></span>
+            </button>
+          </div>
+
+        </div>
+
+        <br />
+
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-1"></div>
+
+  <div class="col-md-5">
+  <div class="form-group">
+    <label for="StudentNumbers">Categories</label>
+    <select [(ngModel)]="this.categoryID" class="form-control" id="category" name="cat">
+      <option value="0">All Categories</option>
+      <option *ngFor="let j of this.modelWrapper.Categories" [ngValue]="j.CategoryId">
+        {{ j.CategoryName }}
+      </option>
+    </select>
+  </div>
+
+
+  <div class="form-group">
+    <label for="StudentNumbers">Class</label>
+    <select   [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
+      <option value="0"></option>
+      <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
+        {{ j.ClassCode }}
+      </option>
+    </select>
+
+  </div>
+
+  <div class="form-group">
+    <label for="StudentNumbers">Class</label>
+    <select   [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
+      <option value="0"></option>
+      <option *ngFor="let j of this.modelWrapper" [ngValue]="j.ClassId">
+        {{ j.ClassCode }}
+      </option>
+    </select>
+
+  </div>
+
+  </div>
+
+
+</div>
+

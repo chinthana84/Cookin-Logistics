@@ -30,6 +30,9 @@ export class OrderDetails
 
     public   Order?: Order;
     public   Product?: Product;
+
+    public ProdUnitId ?: number=0;
+    public  UnitPrice  : number=0;
 }
 
 export   class OrderTheoryNotesDTO

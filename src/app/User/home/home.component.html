@@ -10,9 +10,9 @@
             <div class="col-md-4 ">
               <div *ngIf="this.currentObj.Supplier" class="card-body  border border-primary ">
                 <a class="card-title text-center" (click)="this.loadpage('suppliers')">
-                  <img  class="card-img-top" style="height: 84px;"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvcbWPFIqyS3U3uTod4vcMeNa5kq9HE0MRow&usqp=CAU"
-                    alt="Card image cap">
+                  <img  class="card-img-top"
+                    src="assets/test.png"
+                    alt="Card image cap" />
                   Supplier </a>
               </div>
             </div>
@@ -58,7 +58,7 @@
               <div  *ngIf="this.currentObj.Order" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('orders')">
                   <img style="height: 84px;" class="card-img-top"
-                    src="https://cdn.icon-icons.com/icons2/2483/PNG/512/order_number_icon_149906.png"
+                    src="https://assets.netohq.com/cms/neto-icon-sales-order.svg?mtime=20190829103623"
                     alt="Card image cap">
                   Order </a>
               </div>
@@ -139,6 +139,25 @@
               </div>
             </div>
 
+            <div class="col-md-4">
+              <div  *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpage('units')">
+                  <img style="height: 84px;" class="card-img-top"
+                    src="https://media-exp1.licdn.com/dms/image/C4D0BAQHwrU_5z3SUTg/company-logo_200_200/0/1519861360730?e=1617840000&v=beta&t=69DxsM4m5Ln84O3AqAK9AfeYwAXER0fsdp3t2D8HqZo"
+                    alt="Card image cap">
+                  Units</a>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div  *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpage('quli')">
+                  <img style="height: 84px;" class="card-img-top"
+                    src="https://www.unisa.ac.za/static/corporate_web/Content/Apply%20for%20admission/Undergraduate/Images/icons-apply-qualifications.png"
+                    alt="Card image cap">
+                    Qulification</a>
+              </div>
+            </div>
 
           </div>
         </div>

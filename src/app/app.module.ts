@@ -15,7 +15,6 @@ import { ConfirmDialogModule } from './_shared/confirm-dialog/confirm-dialog.mod
 import { CategoryComponent } from './MENU1/category/category.component';
 import { ProductComponent } from './MENU1/product/product.component';
 
-import { OrderModule } from './ORDER_RELATED/order.module';
 import { LoginModule } from './User/login.module';
 import { MenuComponent } from './menu/menu.component';
 
@@ -32,6 +31,7 @@ import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
 import { QuliClassUniModule } from './Quals-Classes-Units/quli-class-uni.module';
 import { OrderTotalsModule } from './Order-Totals/order-totals.module';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { OrderModule } from './Recipess/order.module';
 
 
 

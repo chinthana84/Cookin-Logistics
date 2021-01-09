@@ -65,7 +65,7 @@ export class QulificatonComponent implements OnInit {
           .get<any>(`${environment.APIEndpoint}/Common/GetQulificationRelatedData`)
           .subscribe((data) => {
             this.modelWrapper = data;
-            console.log(data)
+        
           });
       } else if (params.id > 0) {
         this.edited = true;

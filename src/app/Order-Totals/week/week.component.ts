@@ -55,6 +55,8 @@ export class WeekComponent implements OnInit {
     this.subs.sink =      forkJoin([a,b]).subscribe(results => {
       this.firstMondayList = results[0]
       this.weekList = results[1];
+    }, (error) => {
+      this.confirmDialogService.messageBox(environment.APIerror)
     });
 
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
@@ -72,38 +74,20 @@ export class WeekComponent implements OnInit {
         this.summaryWrapper=results[3];
        this.selectedWeekID =params.selectedWeek;
        this.selectedYear =params.selectedYear;
+      }, (error) => {
+        this.confirmDialogService.messageBox(environment.APIerror)
       });
 
 
 
       } else {
-        //  let a = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllMondays`);
-        // let b = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllWeeks`)
 
-        // this.subs.sink =      forkJoin([a, b]).subscribe(results => {
-        //   this.firstMondayList = results[0]
-        //   this.weekList = results[1];
-        // });
-
-        // this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllReftsForRequisitionSummary`)
-        // .subscribe((data) => { this.modelWrapper = data; });
-
-
-
+        
       }
     });
   }
 
   getWeeksData(){
-
-  // this.subs.sink=    this.http
-  //   .get<any>(`${environment.APIEndpoint}/Common/getWeeksData/${this.selectedYear}/${this.selectedWeekID}` )
-  //   .subscribe((data) => {
-  //     this.model = data;
-  //   }, (error) => {
-  //     this.confirmDialogService.messageBox(environment.APIerror)
-  //   });
-
     this.router.navigate(['/Search/'],
      { queryParams: { selectedYear: this.selectedYear,selectedWeek:this.selectedWeekID} });
 
@@ -111,10 +95,8 @@ export class WeekComponent implements OnInit {
 
   AddNewLine(objx: RequistionSummary){
     var obj = new RequistionSummary();
-
     this.model.push(obj);
   }
-
 
   saveLine(obj: RequistionSummary){
     obj.FirstMondayId=this.selectedYear;

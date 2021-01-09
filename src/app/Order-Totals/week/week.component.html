@@ -8,7 +8,7 @@
           name="fmodelsafStorageAreafgdfgfgs ">
           <option value=""></option>
           <option *ngFor="let j of this.firstMondayList" [(value)]="j.FirstMondayId">
-            {{ j.FirstMondayDate   }}
+            {{ j.FirstMondayDate }}
           </option>
         </select>
       </div>
@@ -20,7 +20,7 @@
           name="modelStorageAreafgdfffffgfgsfff ">
           <option value="0"></option>
           <option *ngFor="let j of this.weekList  ;let index = index" [(value)]="j.WeekId">
-            {{ j.WeekName   }}
+            {{ j.WeekName }}
           </option>
         </select>
       </div>
@@ -29,7 +29,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-bordered ">
+      <table class="table   ">
         <thead>
 
           <th>Date</th>
@@ -48,20 +48,20 @@
         <tbody>
           <tr *ngFor="let item of model ;  let index = index" class="table-hover">
             <td>
-  <select [(ngModel)]="item.ReqDate" class="form-control" id="reatda" name="ReqDateReqDate{{ index }}">
+              <select [(ngModel)]="item.ReqDate" class="form-control" id="reatda" name="ReqDateReqDate{{ index }}">
                 <option value="1/1/0001"></option>
                 <option *ngFor="let j of this.weekDays" [ngValue]="j.dtm">
-                  {{ j.dispalyValue   }}
+                  {{ j.dispalyValue }}
                 </option>
               </select>
-               
+
 
             </td>
             <td>
               <select [(ngModel)]="item.TutorId" class="form-control" id="Tutors" name="Tutors{{ index }}">
                 <option value="0"></option>
                 <option *ngFor="let j of this.modelWrapper.Tutors" [ngValue]="j.TutorId">
-                  {{ j.FirstName   }}
+                  {{ j.FirstName }}
                 </option>
               </select>
             </td>
@@ -71,7 +71,7 @@
               <select [(ngModel)]="item.KitchenId" class="form-control" id="Venues" name="Venues{{ index }}">
                 <option value="0"></option>
                 <option *ngFor="let j of this.modelWrapper.Venues" [ngValue]="j.KitchenId">
-                  {{ j.KitchenName   }}
+                  {{ j.KitchenName }}
                 </option>
               </select>
             </td>
@@ -81,7 +81,7 @@
               <select [(ngModel)]="item.TimeId" class="form-control" id="Sessions" name="Sessions{{ index }}">
                 <option value="0"></option>
                 <option *ngFor="let j of this.modelWrapper.Sessions" [ngValue]="j.TimeId">
-                  {{ j.TimeDescription   }}
+                  {{ j.TimeDescription }}
                 </option>
               </select>
             </td>
@@ -91,7 +91,7 @@
               <select [(ngModel)]="item.ClassId" class="form-control" id="Sessions" name="Classes{{ index }}">
                 <option value="0"></option>
                 <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
-                  {{ j.Name   }}
+                  {{ j.Name }}
                 </option>
               </select>
             </td>
@@ -100,26 +100,27 @@
               <select [(ngModel)]="item.OrderId" class="form-control" id="Sessions" name="Orders{{ index }}">
                 <option value="0"></option>
                 <option *ngFor="let j of this.modelWrapper.Orders" [ngValue]="j.OrderId">
-                  {{ j.OrderDescription   }}
+                  {{ j.OrderDescription }}
                 </option>
               </select>
             </td>
             <td>
-              <input id="Students{{ index }}" name="Students{{ index }}"
-              [(ngModel)]="item.Students"
-              (ngModelChange)="model.Students = $event === null ? 0 : $event"
- type="number" numeric
+              <input id="Students{{ index }}" name="Students{{ index }}" [(ngModel)]="item.Students"
+                (ngModelChange)="model.Students = $event === null ? 0 : $event" type="number" numeric
                 class="form-control" placeholder="Students" />
-              </td>
+            </td>
 
             <td>
               <button (click)="this.saveLine(item)" type="button" class="btn btn-primary" data-title="Edit"
                 data-toggle="modal" data-target="#edit">
                 <span class="fa fa-save"></span></button>
-                <button (click)="this.deleteLine(item)"   type="button" class="btn btn-warning " data-title="Edit"
+              <button (click)="this.deleteLine(item)" type="button" class="btn btn-warning " data-title="Edit"
                 data-toggle="modal" data-target="#edit">
                 <span class="fa fa-trash"></span></button>
             </td>
+          </tr>
+          <tr *ngIf="model?.length== 0 || model?.length == null  ">
+            <td class="datanotfound" colspan="12">Data not found</td>
           </tr>
 
         </tbody>
@@ -130,7 +131,7 @@
 
   <div class="row">
     <div class="col-md-4">
-      <table class="table table-bordered ">
+      <table class="table ">
         <thead>
           <th>Venue</th>
           <th>Use</th>
@@ -143,12 +144,15 @@
               {{item.MyProperty2}}
             </td>
           </tr>
+          <tr *ngIf="summaryWrapper.Venues?.length== 0 || summaryWrapper.Venues?.length == null  ">
+            <td class="datanotfound" colspan="12">Data not found</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="col-md-4">
-      <table class="table table-bordered ">
+      <table class="table">
         <thead>
           <th>Name</th>
           <th>Use</th>
@@ -161,12 +165,15 @@
               {{item.MyProperty2}}
             </td>
           </tr>
+          <tr *ngIf="summaryWrapper.Tutors?.length== 0 || summaryWrapper.Tutors?.length == null  ">
+            <td class="datanotfound" colspan="12">Data not found</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
     <div class="col-md-4">
-      <table class="table table-bordered ">
+      <table class="table ">
         <thead>
           <th>Sessions</th>
           <th>Hours</th>
@@ -178,6 +185,9 @@
             <td>
               {{item.MyProperty2}}
             </td>
+          </tr>
+          <tr *ngIf="summaryWrapper.Hours?.length== 0 || summaryWrapper.Hours?.length == null  ">
+            <td class="datanotfound" colspan="12">Data not found</td>
           </tr>
         </tbody>
       </table>

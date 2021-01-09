@@ -3,12 +3,15 @@
   Data Loading!!!!!!!!!!!!!!!!!!!!!!!!!
   </div>
 </div> -->
- 
+
 <div   *ngIf="isLoading | async"  >
   <div class="row">
     <div class="col text-center">
-      <div class=" " role="status">
+      <!-- <div class=" " role="status">
         <span class=" ">Loading...</span>
+      </div> -->
+      <div class="fa-3x">
+        <i class="fas fa-spinner fa-spin"></i>
       </div>
     </div>
   </div>

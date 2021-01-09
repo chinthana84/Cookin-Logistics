@@ -3,7 +3,7 @@
       <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject">
 
       </app-search>
-      <table class="table table-bordered">
+      <table class="table  ">
         <thead>
           <th>Category Name</th>
           <th>Description</th>
@@ -19,8 +19,6 @@
             <td>{{ item.Description }}</td>
             <td>
               <div class="btn-group">
-
-
               <button (click)="Action(item)" class="btn btn-primary" data-title="Edit" data-toggle="modal"
               data-target="#edit">
               <span class="fa fa-edit"></span></button>

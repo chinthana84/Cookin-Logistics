@@ -12,3 +12,9 @@ export enum GridType {
   UserAdmin = 11,
   Quli =12
 }
+
+ 
+
+export enum OrderTotalReportTypes{
+Breakdown_of_Supply=1
+}

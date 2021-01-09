@@ -70,7 +70,7 @@ export class ClassesComponent implements OnInit {
 
   setPage(obj: SearchObject) {
     this.gridService.getGridData(obj).subscribe((data) => {
-      console.log(data)
+ 
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)

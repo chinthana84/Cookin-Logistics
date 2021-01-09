@@ -1,6 +1,6 @@
 <div *ngIf="!edited">
   <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"> </app-search>
-  <table class="table table-bordered ">
+  <table class="table  ">
     <thead>
       <th>UnitCode</th>
       <th>UnitTitle</th>
@@ -198,7 +198,7 @@
                           </div>
                           <div class="card-body" *ngIf=" itemPC.RangeNotes.length>0 ">
 
-                            <table class="table table-bordered ">
+                            <table class="table  ">
                               <thead>
                                 <th>Range Text</th>
                                 <th>Judge Text</th>

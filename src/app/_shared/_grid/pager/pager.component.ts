@@ -20,7 +20,7 @@ export class PagerComponent implements OnInit {
 
 
   uploadComplete(pageno:number) {
-    debugger;
+ 
     this.gridService.currentData.subscribe(x => this.searchObject = x)
     this.searchObject.pageNo=pageno;
      this.searchObject.girdId=this.pagerX.searchObject.girdId;

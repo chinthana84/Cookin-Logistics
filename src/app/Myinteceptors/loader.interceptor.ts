@@ -22,7 +22,6 @@ export class LoaderInterceptor implements HttpInterceptor {
 
       if (localStorage.getItem("todoBearerToken")) {
 
-        debugger;
         const headerSettings: {[name: string]: string | string[]; } = {};
 
        if(request.url.split('/')[request.url.split('/').length-1]==="UploadFile"){

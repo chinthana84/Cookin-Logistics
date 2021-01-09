@@ -9,9 +9,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NumericDirective } from './directive/numeric.directive';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonViewerComponent } from './_grid/common-viewer/common-viewer.component';
 
 const routes: Routes = [
-
+  { path:'common', component: CommonViewerComponent },
     { path: '500', component: InternalServerComponent },
     { path: '403', component: InternalServerComponent }
 ]
@@ -19,7 +20,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,NumericDirective, InternalServerComponent   ],
+  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,NumericDirective, InternalServerComponent, CommonViewerComponent   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

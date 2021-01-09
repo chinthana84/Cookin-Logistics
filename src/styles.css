@@ -17,6 +17,33 @@ font-size: 10;
 }
 
 
+table {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+thead th {
+  background-color: #7386D5;
+  color: white;
+}
+
+tbody td {
+  background-color: #EEEEEE;
+}
+
+tr td:first-child,
+tr th:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tr td:last-child,
+tr th:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+
 
 
 .table tbody tr:hover td, .table tbody tr:hover th {
@@ -31,6 +58,9 @@ background-color:sandybrown;
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    background: url('assets/bg.jpg') no-repeat center center fixed !important;
+    /* color:white !important; */
+    background-size: cover !important;
 }
 
 p {
@@ -113,7 +143,7 @@ a:focus {
 
 #sidebar ul li a {
     padding: 10px;
-    font-size: 1.1em;
+    /* font-size: 1.1em; */
     display: block;
 }
 
@@ -175,7 +205,8 @@ a.article:hover {
 
 #content {
     width: calc(100% - 250px);
-    padding: 40px;
+    /* padding: 40px; */
+    padding: 15px;
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;

@@ -15,7 +15,6 @@ export class ErrorHandlerService {
 
   public handleError = (error: HttpErrorResponse) => {
 
-    debugger;
     if(error.status === 401){
       this.handle500Error(error);
     }

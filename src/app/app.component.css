@@ -1,5 +1,8 @@
- 
+
   .norights{
     text-decoration:line-through
   }
 
+  a {
+    font-family: 'Montserrat','Open Sans',sans-serif;
+}

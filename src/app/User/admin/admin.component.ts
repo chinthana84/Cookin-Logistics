@@ -67,7 +67,7 @@ export class AdminComponent implements OnInit {
           .get<any>(`${environment.APIEndpoint}/User/GetUserRightsByUserID/` + params.id)
           .subscribe((data) => {
             this.modelUserRights = data;
-            console.log(data)
+           
           }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror)
           });

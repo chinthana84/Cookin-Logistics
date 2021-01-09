@@ -21,6 +21,10 @@ export class CommonService {
       this.router.navigate([uri]));
   }
 
+  getUserLoggedUserName(){
+    return localStorage.getItem("username")
+  }
+
   goCNN(url) {
     window.open(`${environment.RptAPI}/${url}`, '_blank');
   }
@@ -35,7 +39,7 @@ export class CommonService {
       , {
         responseType: 'blob'
       }).subscribe(x=> {
-        console.log(x)
+
         const url= window.URL.createObjectURL(x);
         window.open(url);
        // return x;
@@ -80,6 +84,7 @@ export class CommonService {
       )
       .pipe(
         tap((result) => {
+
           this.securityModel = new SecurityModel();
           Object.assign(this.securityModel, result);
           //Now check if Authenticated is true store token in sessionStorage
