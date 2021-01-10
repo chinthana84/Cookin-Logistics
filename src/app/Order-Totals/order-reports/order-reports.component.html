@@ -16,7 +16,7 @@
 
 <div class="row mt-2">
   <div class="col-md-6">
-    <form novalidate #heroForm="ngForm">
+    <!-- <form novalidate #heroForm="ngForm"> -->
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="" data-target="#home">Header</a>
@@ -38,7 +38,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="StudentNumbers">End Week of timetable period</label>
-                <input [(ngModel)]="this.endWeekNo" id="PractTitle" name="PractTitle" type="text"
+                <input [(ngModel)]="this.endWeekNo" id="PractTitle2" name="PractTitle2" type="text"
                   class="form-control" />
               </div>
             </div>
@@ -59,8 +59,8 @@
           <div class="row mt-3">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="OrderDescription">Start Date of timetable period</label>
-                <input type="date" [(ngModel)]="this.startWeekDate" id="OrderDescription" name="OrderDescription"
+                <label for="OrderDescription2">Start Date of timetable period</label>
+                <input type="date" [(ngModel)]="this.startWeekDate" id="OrderDescription2" name="OrderDescription2"
                   class="form-control" />
               </div>
             </div>
@@ -87,13 +87,13 @@
         <br />
 
       </div>
-    </form>
+    <!-- </form> -->
   </div>
 
   <div class="col-md-1"></div>
 
   <div class="col-md-5">
-  <div class="form-group">
+  <div class="form-group" *ngIf="this.showCate">
     <label for="StudentNumbers">Categories</label>
     <select [(ngModel)]="this.categoryID" class="form-control" id="category" name="cat">
       <option value="0">All Categories</option>
@@ -104,18 +104,18 @@
   </div>
 
 
-  <div class="form-group">
-    <label for="StudentNumbers">Class</label>
-    <select   [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
+  <div class="form-group" *ngIf="this.showSup">
+    <label for="Suppliers">Suppliers</label>
+    <select   [(ngModel)]="this.supplierid" class="form-control" id="Suppliers" name="Suppliers">
       <option value="0"></option>
-      <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
-        {{ j.ClassCode }}
+      <option *ngFor="let j of this.modelWrapper.Suppliers" [ngValue]="j.SupplierId">
+        {{ j.CompanyName }}
       </option>
     </select>
 
   </div>
 
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="StudentNumbers">Class</label>
     <select   [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
       <option value="0"></option>
@@ -124,7 +124,7 @@
       </option>
     </select>
 
-  </div>
+  </div> -->
 
   </div>
 
