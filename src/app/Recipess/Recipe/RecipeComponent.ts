@@ -134,6 +134,18 @@ export class RecipeComponent implements OnInit {
 
   }
 
+  unitPriceDefaultValues(val :any,obj:RecipeDetailsDTO){
+
+    if(val===0 || val === null || val === undefined){
+      let objProd= this.getProductObject(obj.ProductId)
+      obj.UnitPrice=objProd.UnitPrice
+    }
+    else{
+      obj.UnitPrice=val;
+    }
+
+   }
+
   onSubmit(obj: Recipe) {
     this.subs.sink =  this.http
       .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})

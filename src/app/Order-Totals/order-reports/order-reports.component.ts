@@ -24,6 +24,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
   categoryID: number = 0;
   classid: number = 0;
   supplierid: number = 0;
+  kitchenID: number = 0;
 
   firstMondayList: FirstMonday[] = [];
   selectedYear: number = 0;
@@ -33,13 +34,13 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
 
   showCate: boolean = false;
   showSup: boolean = false;
+  showClass: boolean = false;
+  showKitchen: boolean = false;
 
   constructor(private confirmDialogService: ConfirmDialogService, private commonService: CommonService,
     private http: HttpClient,
     public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
-
-
 
   ngOnInit(): void {
 
@@ -61,22 +62,30 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
 
       this.params = params;
 
+      this.showCate = false;
+      this.showCate = false;
+      this.showClass = false;
+      this.showSup = false;
+      this.showKitchen=false
+
       if (this.params.rptID == 3) {
         this.showCate = true;
-        this.showSup = false;
-
       }
       else if (this.params.rptID == 4 && this.params.subtype == 1) {
         this.showCate = true;
-        this.showSup = false;
       }
       else if (this.params.rptID == 4 && this.params.subtype == 2) {
-        this.showCate = false;
         this.showSup = true;
       }
-      else {
-        this.showCate = false;
-        this.showSup = false;
+      else if (this.params.rptID == 4 && this.params.subtype == 3) {
+        this.showClass = true;
+      }
+      else if (this.params.rptID == 4 && this.params.subtype == 4) {
+        this.showKitchen=true;
+      }
+
+      else if (this.params.rptID == 5 && this.params.subtype == 1) {
+        this.showCate = true;
       }
 
     });
@@ -149,6 +158,71 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
       this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
     }
 
+    else if (this.params.rptID == 4 && this.params.subtype == 3) {
+
+      let classDesc: string = ""
+      let obj = this.modelWrapper.Classes.filter(r => r.ClassId == this.classid)
+
+      if (obj.length > 0) {
+        classDesc = obj[0].ClassCode
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &w1=${this.startWeekNo}
+                  &w2=${this.endWeekNo}
+                  &searchtype=w
+                  &classid=${this.classid}
+                  &classDesc=${classDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+    else if (this.params.rptID == 4 && this.params.subtype == 4) {
+
+      let VenuDesc: string = ""
+      let obj = this.modelWrapper.Venues.filter(r => r.KitchenId == this.kitchenID)
+
+      if (obj.length > 0) {
+        VenuDesc = obj[0].KitchenCode
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &w1=${this.startWeekNo}
+                  &w2=${this.endWeekNo}
+                  &searchtype=d
+                  &venuid=${this.kitchenID}
+                  &VenuDesc=${VenuDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+
+    else if (this.params.rptID == 5 && this.params.subtype == 1) {
+
+      let catDesc: string = ""
+      let obj = this.modelWrapper.Categories.filter(r => r.CategoryId == this.categoryID)
+
+      if (obj.length > 0) {
+        catDesc = obj[0].CategoryName
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &w1=${this.startWeekNo}
+                  &w2=${this.endWeekNo}
+                  &searchtype=w
+                  &categoryid=${this.categoryID}
+                  &cateDesc=${catDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+
 
   }
 
@@ -215,6 +289,70 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
                     &searchtype=d
                     &supplierID=${this.supplierid}
                     &supDesc=${supDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+    else if (this.params.rptID == 4 && this.params.subtype == 3) {
+
+      let classDesc: string = ""
+      let obj = this.modelWrapper.Classes.filter(r => r.ClassId == this.classid)
+
+      if (obj.length > 0) {
+        classDesc = obj[0].ClassCode
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &d1=${this.startWeekDate}
+                  &d2=${this.endWeekDate}
+                  &searchtype=d
+                  &classid=${this.classid}
+                  &classDesc=${classDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+    else if (this.params.rptID == 4 && this.params.subtype == 4) {
+
+      let VenuDesc: string = ""
+      let obj = this.modelWrapper.Venues.filter(r => r.KitchenId == this.kitchenID)
+
+      if (obj.length > 0) {
+        VenuDesc = obj[0].KitchenCode
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &d1=${this.startWeekDate}
+                  &d2=${this.endWeekDate}
+                  &searchtype=d
+                  &venuid=${this.kitchenID}
+                  &VenuDesc=${VenuDesc}`
+
+
+      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+    }
+
+    else if (this.params.rptID == 5 && this.params.subtype == 1) {
+
+      let catDesc: string = ""
+      let obj = this.modelWrapper.Categories.filter(r => r.CategoryId == this.categoryID)
+
+      if (obj.length > 0) {
+        catDesc = obj[0].CategoryName
+      }
+      let query = `?rpt_id=${this.params.rptID}
+                  &subtype=${this.params.subtype}
+                  &selectedYearID=${this.selectedYear}
+                  &user=${user}
+                  &d1=${this.startWeekDate}
+                  &d2=${this.endWeekDate}
+                  &searchtype=w
+                  &categoryid=${this.categoryID}
+                  &cateDesc=${catDesc}`
 
 
       this.commonService.goCNN(query.replace(/\s{2,}/g, ""));

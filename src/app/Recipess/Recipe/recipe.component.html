@@ -298,6 +298,7 @@
               <th>Standard</th>
               <th>Unit</th>
               <th>Unit Price  </th>
+              <th>Unit Price</th>
               <th>Yield%</th>
               <th>Required</th>
               <th>Cost</th>
@@ -333,6 +334,19 @@
                 </td>
                 <td>
                  $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
+                </td>
+                <td>
+                  <input
+                  [(ngModel)]="i.UnitPrice"
+                  id="UnitPrice2"
+                  name="UnitPrice2{{ index }}"
+                  type="number"
+                  class="form-control"
+                  (ngModelChange)="unitPriceDefaultValues($event,i)"
+                  placeholder="UnitPrice"
+                  numeric
+                  decimals="2"
+                />
                 </td>
                 <td>
                   <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" numeric decimals="2"  type="text" class="form-control"

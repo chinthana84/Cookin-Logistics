@@ -50,6 +50,6 @@ export class   RecipeDetailsDTO {
   Yield?: number=0;
   RequiredQuantity?: number=0;
   ProdNote?: string="";
-
+  UnitPrice:number=0;
   public   Product?:Product;
 }
