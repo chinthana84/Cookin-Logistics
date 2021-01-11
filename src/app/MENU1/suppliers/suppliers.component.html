@@ -24,6 +24,7 @@
           <td>
             <button (click)="Supplier(item)" class="btn btn-primary  ">
               <span class="fa fa-edit"></span></button>
+
           </td>
         </tr>
         <tr *ngIf="this.gridOption.datas.pagedItems==0">
@@ -31,7 +32,7 @@
         </tr>
       </tbody>
     </table>
- 
+
   <br />
   <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
 </div>
@@ -84,9 +85,86 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="ContactTitle">Address</label>
+        <input id="Address" name="Address" [(ngModel)]="model.Address" type="text" class="form-control"
+          placeholder="Address" />
+      </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check">
+          <label>
+            <input name="Isgst" type="checkbox" class="form-check-input" id="Isgst"
+              [(ngModel)]="this.model.Isgst" />GST
+          </label>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="Abn">ABN</label>
+        <input id="Abn" name="Abn" [(ngModel)]="model.Abn" type="text" class="form-control"
+          placeholder="ABN" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="EmailAddressOrderPerson">Email Address of OrderPerson</label>
+        <input id="EmailAddressOrderPerson" name="EmailAddressOrderPerson" [(ngModel)]="model.EmailAddressOrderPerson" type="text" class="form-control"
+          placeholder="EmailAddressOrderPerson" />
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="EmailAddressSalesManager">Email Address Of SalesManager</label>
+        <input id="EmailAddressSalesManager" name="EmailAddressSalesManager" [(ngModel)]="model.EmailAddressSalesManager" type="text" class="form-control"
+          placeholder="EmailAddressSalesManager" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="EmailAddressAccountPerson">Email Address of  Account Person</label>
+        <input id="EmailAddressAccountPerson" name="EmailAddressAccountPerson" [(ngModel)]="model.EmailAddressAccountPerson" type="text" class="form-control"
+          placeholder="EmailAddressAccountPerson" />
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="PhoneAccountPerson1">Phone no of AccountPerson</label>
+        <input id="PhoneAccountPerson1" name="PhoneAccountPerson1" [(ngModel)]="model.PhoneAccountPerson1" type="text" class="form-control"
+          placeholder="PhoneAccountPerson" />
+      </div>
+    </div>
+  </div>
+
   <div class="btn-group">
     <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
-    <button type="button" (click)="router.navigate(['suppliers']);" class="btn btn-primary back_button"> <span
-        class="fa fa-arrow-left"></span> </button>
+
+        <button class="btn btn-primary"
+        (click)="this.LoadReport()"> <span
+          class="fa fa-print"></span></button>
+          <button type="button" (click)="router.navigate(['suppliers']);" class="btn btn-primary back_button"> <span
+            class="fa fa-arrow-left"></span> </button>
   </div>
 </form>
+
+<!-- public  Isgst ?: Boolean=false
+public   Address?: string="";
+public   Abn?: string="";
+
+public   EmailAddressOrderPerson?: string="";
+public   EmailAddressSalesManager?: string="";
+
+public   EmailAddressAccountPerson?: string="";
+public   PhoneAccountPerson1?: string=""; -->

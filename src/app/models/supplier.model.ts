@@ -9,5 +9,14 @@ export class Supplier {
   public ContactTitle?: string="";
   public Phone?: string="";
   public Fax?: string="";
+  public  Isgst ?: Boolean=false
+public   Address?: string="";
+public   Abn?: string="";
+public   EmailAddressOrderPerson?: string="";
+public   EmailAddressSalesManager?: string="";
+public   EmailAddressAccountPerson?: string="";
+public   PhoneAccountPerson1?: string="";
 }
+
+
 

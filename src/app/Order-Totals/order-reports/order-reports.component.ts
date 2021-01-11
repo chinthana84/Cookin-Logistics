@@ -26,6 +26,8 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
   supplierid: number = 0;
   kitchenID: number = 0;
 
+  subSearchType:string="";
+
   firstMondayList: FirstMonday[] = [];
   selectedYear: number = 0;
   modelWrapper: Wrapper = {};
@@ -36,6 +38,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
   showSup: boolean = false;
   showClass: boolean = false;
   showKitchen: boolean = false;
+  subSearchTypeBoo:boolean=false;
 
   constructor(private confirmDialogService: ConfirmDialogService, private commonService: CommonService,
     private http: HttpClient,
@@ -43,6 +46,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.subSearchType="c";
 
     this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllMondays`)
       .subscribe(r => {
@@ -62,6 +66,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
 
       this.params = params;
 
+      this.subSearchTypeBoo=false;
       this.showCate = false;
       this.showCate = false;
       this.showClass = false;
@@ -72,7 +77,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
         this.showCate = true;
       }
       else if (this.params.rptID == 4 && this.params.subtype == 1) {
-        this.showCate = true;
+        this.subSearchTypeBoo=true;
       }
       else if (this.params.rptID == 4 && this.params.subtype == 2) {
         this.showSup = true;
@@ -124,16 +129,10 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
     else if (this.params.rptID == 4 && this.params.subtype == 1) {
 
 
-      let query = `?rpt_id=${this.params.rptID}
-                    &subtype=${this.params.subtype}
-                    &selectedYearID=${this.selectedYear}
-                    &user=${user}
-                    &w1=${this.startWeekNo}
-                    &w2=${this.endWeekNo}
-                    &searchtype=w`
+      let query = `?rpt_id=${this.params.rptID}&subtype=${this.params.subtype}&selectedYearID=${this.selectedYear}&user=${user}&w1=${this.startWeekNo}&w2=${this.endWeekNo}&searchtype=w&searchsubtype=${this.subSearchType}`
 
 
-      this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
+      this.commonService.goCNN(query );
     }
 
     else if (this.params.rptID == 4 && this.params.subtype == 2) {
@@ -268,7 +267,8 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
                     &user=${user}
                     &d1=${this.startWeekDate}
                     &d2=${this.endWeekDate}
-                    &searchtype=d`
+                    &searchtype=d
+                    &searchsubtype=${this.subSearchType}`
 
 
       this.commonService.goCNN(query.replace(/\s{2,}/g, ""));

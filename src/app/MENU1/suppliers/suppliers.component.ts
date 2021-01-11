@@ -55,7 +55,7 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
-    private commonService: CommonService
+    public commonService: CommonService
   ) {
     this.edited = false;
   }
@@ -113,6 +113,13 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
       }, (error) => {
         this.confirmDialogService.messageBox(environment.APIerror)
       });
+  }
+
+  LoadReport(){
+    let user = this.commonService.getUserLoggedUserName();
+    let query = `?rpt_id=6&user=${user}`
+
+this.commonService.goCNN(query.replace(/\s{2,}/g, ""));
   }
 
   ngOnDestroy(): void {

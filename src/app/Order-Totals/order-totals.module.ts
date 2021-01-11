@@ -4,24 +4,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { WeekComponent } from './week/week.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/Shared.module';
-import { OrderComponent } from './order/order/order.component';
+
 import { OrderReportsComponent } from './order-reports/order-reports.component';
 
 const routes: Routes = [
   {
     path: 'Search', component: WeekComponent
   }
- , {
-    path: 'orders', component: OrderComponent
-    , children: [{ path: 'edit', component: OrderComponent }]
-
-  },
+,
   { path: 'orderRpt', component: OrderReportsComponent}
 ];
 
 
 @NgModule({
-  declarations: [WeekComponent,OrderComponent,OrderReportsComponent],
+  declarations: [WeekComponent,OrderReportsComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -5,7 +5,7 @@
       <!-- <h3>Cookin ERP </h3> -->
       <img class="card-img-top img-fluid" src="assets/evolution_new.png" />
     </div>
-  
+
     <ul id="x" class="list-unstyled components">
       <li>
 
@@ -37,6 +37,7 @@
           <li>
             <a [ngClass]="{'norights': !this.currentObj.Recipe}"
               routerLink="{{this.CheckAccess('recipes')}}">Recipes</a>
+              <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
           </li>
           <li>
 
@@ -97,7 +98,7 @@
             routerLink="{{this.CheckAccess('Search')}}"
               [queryParams]="{selectedYear:'0',selectedWeekID:0}">Weeks</a>
 
-              <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
+
               <a routerLink="orderRpt"
               [queryParams]="{rptID:'3',
               subtype: 1  }">Order Breakdown by Category</a>

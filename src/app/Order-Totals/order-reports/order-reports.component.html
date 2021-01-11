@@ -134,9 +134,19 @@
         {{ j.KitchenCode }}
       </option>
     </select>
-
   </div>
 
+  <div class="form-check" *ngIf="this.subSearchTypeBoo">
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input"    name="optradio"  value="c" [(ngModel)]="this.subSearchType" />Sort by Category
+    </label>
+  </div>
+  <div class="form-check" *ngIf="this.subSearchTypeBoo">
+    <label class="form-check-label">
+      <input type="radio" class="form-check-input"  name="optradio"  value="s" [(ngModel)]="this.subSearchType" />Sort by Supplier
+    </label>
+  </div>
+ 
   </div>
 
 
