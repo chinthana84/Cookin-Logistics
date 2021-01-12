@@ -34,6 +34,7 @@ export class Recipe {
   public   YieldUnit?:RefTable;
 
   public   RecipeDetails?: RecipeDetailsDTO[];
+  public   RecipeOrderLink?: RecipeOrderLinkDTO[]=[];
 
 
   //Addtional properties
@@ -51,5 +52,17 @@ export class   RecipeDetailsDTO {
   RequiredQuantity?: number=0;
   ProdNote?: string="";
   UnitPrice:number=0;
+  ProdUnitId:number=0;
+
   public   Product?:Product;
+}
+
+export class RecipeOrderLinkDTO
+{
+    public  ROLinkId?: number=0;
+    public  RecipeId?: number=0;
+    public  OrderId?: number=0;
+    public  NumReq?: number=0;
+    public  CalcNote?: string="";
+
 }

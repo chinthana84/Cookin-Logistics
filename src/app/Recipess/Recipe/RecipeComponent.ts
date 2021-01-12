@@ -6,8 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable } from 'rxjs';
 import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
+import { Order } from 'src/app/models/order.model';
 import { Product } from 'src/app/models/product.model';
-import { Recipe, RecipeDetailsDTO } from 'src/app/models/recipe.model';
+import { Recipe, RecipeDetailsDTO, RecipeOrderLinkDTO } from 'src/app/models/recipe.model';
 import { RefTable } from 'src/app/models/reftable.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
@@ -29,6 +30,7 @@ export class RecipeComponent implements OnInit {
   edited: boolean = false;
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
+  modelOrders : Order[]=[];
 
   gridOption: GridOptions = {
     datas: {},
@@ -70,20 +72,30 @@ export class RecipeComponent implements OnInit {
         this.edited = true;
         this.modelRecipe = new Recipe();
         this.modelRecipe.RecipeDetails=[]
-        this.subs.sink =   this.http
-          .get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-          .subscribe((data) => {
-            this.modelWrapper = data;
-          });
+
+        let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+        let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
+
+        this.subs.sink =   forkJoin([b,c]).subscribe(results => {
+          this.modelWrapper = results[0];
+          this.modelOrders=results[1]
+          this.onChangeYieldUnit();
+
+
+        });
+
       } else if (params.id > 0) {
         this.edited = true;
         let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+        let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
-        this.subs.sink =   forkJoin([a, b]).subscribe(results => {
+        this.subs.sink =   forkJoin([a, b,c]).subscribe(results => {
           this.modelRecipe = results[0]
           this.modelWrapper = results[1];
+          this.modelOrders=results[2]
           this.onChangeYieldUnit();
+          console.log(this.modelRecipe)
         });
       } else {
         this.edited = false;
@@ -143,7 +155,20 @@ export class RecipeComponent implements OnInit {
     else{
       obj.UnitPrice=val;
     }
+   }
 
+
+   unitIDDefaultValues(val :any,obj:RecipeDetailsDTO){
+debugger
+   
+
+    if(obj.ProdUnitId===0 || obj.ProdUnitId === null || obj.ProdUnitId === undefined){
+      let objProd= this.getProductObject(obj.ProductId)
+      obj.ProdUnitId =objProd.ProdUnit.RefId;
+    }
+    else{
+      obj.ProdUnitId=val;
+    }
    }
 
   onSubmit(obj: Recipe) {
@@ -184,6 +209,19 @@ export class RecipeComponent implements OnInit {
   }
 
 
+  public AddAssosiatedOrders(): void {
+    var obj = new RecipeOrderLinkDTO();
+    obj.RecipeId = this.modelRecipe.RecipeId;
+    console.log(this.modelRecipe.RecipeOrderLink)
+
+    if(this.modelRecipe.RecipeOrderLink == undefined){
+      this.modelRecipe.RecipeOrderLink=[];
+    }
+
+    this.modelRecipe.RecipeOrderLink.push(obj);
+  }
+
+
   getProductObject(i: number): Product {
     let x = this.modelWrapper.Products.filter(b => b.ProductId == i)
     return x[0];
@@ -191,6 +229,10 @@ export class RecipeComponent implements OnInit {
 
   deleteRecipeDetails(i : number):void{
     this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+  }
+
+  deleteLinkOrder(i:number){
+    this.modelRecipe.RecipeOrderLink = this.modelRecipe.RecipeOrderLink.filter(item => item.OrderId != i);
   }
 
 }

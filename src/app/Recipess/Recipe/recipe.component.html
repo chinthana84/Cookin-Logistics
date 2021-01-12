@@ -47,6 +47,10 @@
           <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
             aria-selected="false">Details</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders"
+            aria-selected="false">Associated Orders</a>
+        </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -82,10 +86,9 @@
                     <div class="col-md-4">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.StandardPortions"
-                        (ngModelChange)="this.modelRecipe.StandardPortions = $event === null ? 0 : $event"
-                        type="number"
-                        numeric  decimals="2"  maxlength="10"
-                        id="Reference" name="Reference"    class="form-control" placeholder="Reference" />
+                          (ngModelChange)="this.modelRecipe.StandardPortions = $event === null ? 0 : $event"
+                          type="number" numeric decimals="2" maxlength="10" id="Reference" name="Reference"
+                          class="form-control" placeholder="Reference" />
                       </label>
                     </div>
                     <div class="col-md-4">
@@ -110,9 +113,8 @@
                     <div class="col-md-4">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.ReqPortions" id="Reference" name="ReqPortions"
-                        (ngModelChange)="this.modelRecipe.ReqPortions = $event === null ? 0 : $event"
-                        type="number"
-                        numeric  decimals="2"  maxlength="10"  class="form-control" placeholder="ReqPortions" />
+                          (ngModelChange)="this.modelRecipe.ReqPortions = $event === null ? 0 : $event" type="number"
+                          numeric decimals="2" maxlength="10" class="form-control" placeholder="ReqPortions" />
                       </label>
                     </div>
 
@@ -138,7 +140,7 @@
                     <div class="col-md-6">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.YieldNumber" id="YieldNumber1" name="YieldNumber1"
-                          type="text"  numeric decimals="2"  class="form-control" placeholder="YieldNumber" />
+                          type="text" numeric decimals="2" class="form-control" placeholder="YieldNumber" />
                       </label>
                     </div>
                     <div class="col-md-6">
@@ -217,7 +219,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <div class="form-group">
                         <label for="MOCs">MOCs</label>
 
@@ -229,9 +231,9 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <div class="form-group">
-                        <label for="CookingTime">CookingTime</label>
+                        <label for="CookingTime">Prep. Time</label>
 
                         <select [(ngModel)]="this.modelRecipe.PrepId" class="form-control" id="CookingTime"
                           name="CookingTime">
@@ -242,9 +244,9 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <div class="form-group">
-                        <label for="CuisneTypes">CuisneTypes</label>
+                        <label for="CuisneTypes">Style</label>
 
                         <select [(ngModel)]="this.modelRecipe.CuisineId" class="form-control" id="CuisneTypes"
                           name="CuisneTypes">
@@ -255,6 +257,21 @@
                         </select>
                       </div>
                     </div>
+
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="CuisneTypes">Select Search Ingredient for Recipe</label>
+
+                        <select [(ngModel)]="this.modelRecipe.MainIngredId" class="form-control" id="MainIngredId"
+                          name="MainIngredId">
+                          <option value="0"></option>
+                          <option *ngFor="let i of this.modelWrapper.Products" [ngValue]="i.ProductId">
+                            {{ i.ProductName }} - {{i.ProdUnit.RefDescription}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -297,7 +314,8 @@
               <th>Product</th>
               <th>Standard</th>
               <th>Unit</th>
-              <th>Unit Price  </th>
+              <th>Unit Price </th>
+              <th>Changed Unit</th>
               <th>Unit Price</th>
               <th>Yield%</th>
               <th>Required</th>
@@ -315,8 +333,7 @@
               <tr *ngFor=" let i of this.modelRecipe.RecipeDetails; let index = index " class="table-hover">
                 <td>
                   <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
-                    name="modelStorageAreafgdfgfgs{{ index }}">
-                    <option value="0"></option>
+                    name="modelStorageAreafgdfgfgs{{ index }}" (ngModelChange)="unitIDDefaultValues($event,i)">
                     <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
                       {{ j.ProductName }}
                     </option>
@@ -324,39 +341,40 @@
                 </td>
 
                 <td>
-                  <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}"
-                    class="form-control" placeholder="Quantity"
-                    (ngModelChange)="i.Quantity = $event === null ? 0 : $event"  type="number" numeric maxlength="10"
-                    />
+                  <input [(ngModel)]="i.Quantity" id="Quantity" name="Quantity{{ index }}" class="form-control"
+                    placeholder="Quantity" (ngModelChange)="i.Quantity = $event === null ? 0 : $event" type="number"
+                    numeric maxlength="10" />
                 </td>
                 <td>
                   {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
                 </td>
                 <td>
-                 $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
+                  $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
                 </td>
                 <td>
-                  <input
-                  [(ngModel)]="i.UnitPrice"
-                  id="UnitPrice2"
-                  name="UnitPrice2{{ index }}"
-                  type="number"
-                  class="form-control"
-                  (ngModelChange)="unitPriceDefaultValues($event,i)"
-                  placeholder="UnitPrice"
-                  numeric
-                  decimals="2"
-                />
+
+                  <select [(ngModel)]="i.ProdUnitId"  class="form-control" id="ChangedProdUnits"
+                  name="ChangedProdUnits{{ index }}" >
+                               
+                  <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
+                    {{ j.RefDescription }}
+                  </option>
+                </select>
                 </td>
                 <td>
-                  <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" numeric decimals="2"  type="text" class="form-control"
-                    placeholder="Yield" />
+                  <input [(ngModel)]="i.UnitPrice" id="UnitPrice2" name="UnitPrice2{{ index }}" type="number"
+                    class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)" placeholder="UnitPrice"
+                    numeric decimals="2" />
+                </td>
+                <td>
+                  <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" numeric decimals="2" type="text"
+                    class="form-control" placeholder="Yield" />
                 </td>
                 <td>
                   {{(i.Quantity * 100)/i.Yield}}
 
                 <td>
-                $  {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }}
+                  $ {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }}
                 </td>
                 <td>QPP</td>
                 <td>Ext. Price</td>
@@ -378,6 +396,36 @@
             </tbody>
           </table>
         </div>
+
+        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+          <table class="table  ">
+            <thead>
+              <th>Order</th>
+              <th>
+                <button type="button" (click)="this.AddAssosiatedOrders()" class="btn btn-primary">
+                  <span class="fa fa-plus"></span></button></th>
+            </thead>
+            <tbody>
+              <tr *ngFor=" let i of this.modelRecipe.RecipeOrderLink; let index = index " class="table-hover">
+                <td>
+                  <select [(ngModel)]="i.OrderId" class="form-control" id="orderLink" name="orderLink{{ index }}">
+                    <option value="0"></option>
+                    <option *ngFor="let j of this.modelOrders " [ngValue]="j.OrderId">
+                      {{ j.OrderDescription }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <button type="button" (click)="deleteLinkOrder(i.OrderId)" class="btn btn-primary ">
+                    <span class="fa fa-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
         <br />
         <div class="btn-group">
           <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
@@ -389,3 +437,5 @@
     </form>
   </div>
 </div>
+
+

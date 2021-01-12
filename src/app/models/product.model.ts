@@ -5,7 +5,7 @@ import { Supplier } from './supplier.model';
 export class Product {
   public ProductId?: number = 0;
   public ProductName?: string;
-  public ProdUnitId?: Number=0;
+  public ProdUnitId?: number=0;
   public UnitPrice?: number=0;
   public ProductNotes?: string
   public Yield?: number=0;
