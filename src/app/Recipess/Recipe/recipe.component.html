@@ -201,12 +201,12 @@
           </div>
 
           <div class="row mt-3">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="card">
                 <div class="card-header">Featured</div>
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="Courses">Courses</label>
 
@@ -219,7 +219,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="MOCs">MOCs</label>
 
@@ -231,7 +231,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="CookingTime">Prep. Time</label>
 
@@ -244,7 +244,10 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-md-2">
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label for="CuisneTypes">Style</label>
 
@@ -258,7 +261,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-8">
                       <div class="form-group">
                         <label for="CuisneTypes">Select Search Ingredient for Recipe</label>
 
@@ -271,14 +274,10 @@
                         </select>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="row mt-3">
             <div class="col-md-6">
               <div class="card">
                 <div class="card-header">Add To List As</div>
@@ -306,6 +305,8 @@
               </div>
             </div>
           </div>
+
+     
         </div>
         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
@@ -352,14 +353,13 @@
                   $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
                 </td>
                 <td>
+                  <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits"
+                    name="ChangedProdUnits{{ index }}">
 
-                  <select [(ngModel)]="i.ProdUnitId"  class="form-control" id="ChangedProdUnits"
-                  name="ChangedProdUnits{{ index }}" >
-                               
-                  <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
-                    {{ j.RefDescription }}
-                  </option>
-                </select>
+                    <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
+                      {{ j.RefDescription }}
+                    </option>
+                  </select>
                 </td>
                 <td>
                   <input [(ngModel)]="i.UnitPrice" id="UnitPrice2" name="UnitPrice2{{ index }}" type="number"
@@ -403,7 +403,8 @@
               <th>Order</th>
               <th>
                 <button type="button" (click)="this.AddAssosiatedOrders()" class="btn btn-primary">
-                  <span class="fa fa-plus"></span></button></th>
+                  <span class="fa fa-plus"></span></button>
+              </th>
             </thead>
             <tbody>
               <tr *ngFor=" let i of this.modelRecipe.RecipeOrderLink; let index = index " class="table-hover">
@@ -437,5 +438,3 @@
     </form>
   </div>
 </div>
-
-

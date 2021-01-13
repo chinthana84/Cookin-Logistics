@@ -16,7 +16,7 @@ font-size: 10;
   max-width: 80px;
 }
 
-
+/* 
 table {
   border-collapse: separate;
   border-spacing: 0 5px;
@@ -42,7 +42,7 @@ tr th:last-child {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 }
-
+ */
 
 
 
@@ -54,11 +54,11 @@ background-color:sandybrown;
     DEMO STYLE
 */
 
-/* @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"; */
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
-    background: url('assets/bg.jpg') no-repeat center center fixed !important;
+    /* background: url('assets/bg.jpg') no-repeat center center fixed !important; */
     /* color:white !important; */
     background-size: cover !important;
 }
@@ -244,7 +244,7 @@ a.article:hover {
 
 
 
-
+/*
 .dropdown-submenu {
   position: relative;
 }
@@ -291,4 +291,4 @@ a.article:hover {
   -webkit-border-radius: 6px 0 6px 6px;
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
-}
+} */
