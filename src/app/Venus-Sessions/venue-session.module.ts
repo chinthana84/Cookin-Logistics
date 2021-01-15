@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
-    path: 'venue',  component: VenueComponent , children: [{ path: 'edit', component: VenueComponent }]
+    path: 'venue',data:{titleKey: 'Venue'},  component: VenueComponent , children: [{ path: 'edit', component: VenueComponent }]
   }
  ];
 

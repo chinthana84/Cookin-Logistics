@@ -52,15 +52,15 @@ import { OrderModule } from './Recipess/order.module';
 
     RouterModule.forRoot([
       { path: '', component: LoginComponent },
-      { path: 'home', component: HomeComponent },
+      { path: 'home',data:{titleKey: 'home'}, component: HomeComponent },
       {
-        path: 'suppliers', component: SuppliersComponent, children: [{ path: 'edit', component: SuppliersComponent }]
+        path: 'suppliers',data:{titleKey: 'Supplier'}, component: SuppliersComponent, children: [{ path: 'edit', component: SuppliersComponent }]
 
       }, {
-        path: 'category', component: CategoryComponent, children: [{ path: 'edit', component: SuppliersComponent }]
+        path: 'category',data:{titleKey: 'Category'}, component: CategoryComponent, children: [{ path: 'edit', component: SuppliersComponent }]
       }
       , {
-        path: 'products', component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
+        path: 'products',data:{titleKey: 'Product'}, component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
     ]),
 

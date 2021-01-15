@@ -15,14 +15,14 @@ const routes: Routes = [
     path: 'login',  component: LoginComponent
   },
   {
-    path: 'changepw',  component: ChangePasswordComponent
+    path: 'changepw',data:{titleKey: 'Change Password'},  component: ChangePasswordComponent
   },
   {
-    path: 'admin',  component: AdminComponent,
+    path: 'admin',data:{titleKey: 'Admin'},  component: AdminComponent,
      children: [{ path: 'edit', component: AdminComponent }]
   },
   {
-    path: 'ref',  component: RefTableDataComponent
+    path: 'ref',data:{titleKey: 'Reference Data'},  component: RefTableDataComponent
   }
  ];
 

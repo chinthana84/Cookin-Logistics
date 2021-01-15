@@ -7,7 +7,7 @@ import { SharedModule } from '../_shared/Shared.module';
 
 const routes: Routes = [
   {
-    path: 'tutor', component: TutorComponent
+    path: 'tutor',data:{titleKey: 'Tutor'}, component: TutorComponent
     , children: [{ path: 'edit', component: TutorComponent }]
   }
 ];

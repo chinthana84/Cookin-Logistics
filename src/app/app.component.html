@@ -8,15 +8,16 @@
 
     <ul id="x" class="list-unstyled components">
       <li>
-
         <a routerLink="home"> <i class="fa fa-plus-circle " aria-hidden="true"></i> Home</a>
       </li>
+
       <li>
         <a data-toggle="collapse" aria-expanded="true" class="dropdown-toggle" data-target="#Cat_Prod_Sup"
           aria-controls="Cat_Prod_Sup"><i class="fa fa-plus-circle " aria-hidden="true"></i> Cat/Prod/Sup</a>
         <ul class="collapse list-unstyled" data-parent="#x" id="Cat_Prod_Sup">
           <li>
             <a [ngClass]="{'norights': !this.currentObj.Supplier}"
+            data-linkname="XXX"
               routerLink="{{this.CheckAccess('suppliers')}}">Suppliers</a>
           </li>
           <li>
@@ -37,7 +38,7 @@
           <li>
             <a [ngClass]="{'norights': !this.currentObj.Recipe}"
               routerLink="{{this.CheckAccess('recipes')}}">Recipes</a>
-              <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
+            <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
           </li>
           <li>
 
@@ -63,8 +64,7 @@
         <ul class="collapse list-unstyled" id="Venues_Sessions" data-parent="#x">
           <li>
             <a [ngClass]="{'norights': !this.currentObj.Venue}" routerLink="{{this.CheckAccess('venue')}}">Venue</a>
-            <a routerLink="common"
-            [queryParams]="{rptID:'2'}">All Venue</a>
+            <a routerLink="common" [queryParams]="{rptID:'2'}">All Venue</a>
           </li>
 
         </ul>
@@ -94,32 +94,26 @@
           <i class="fa fa-plus-circle " aria-hidden="true"></i> Requitions Summary</a>
         <ul class="collapse list-unstyled" id="Requitions_Summary" data-parent="#x">
           <li>
-            <a [ngClass]="{'norights': !this.currentObj.Weeks}"
-            routerLink="{{this.CheckAccess('Search')}}"
+            <a [ngClass]="{'norights': !this.currentObj.Weeks}" routerLink="{{this.CheckAccess('Search')}}"
               [queryParams]="{selectedYear:'0',selectedWeekID:0}">Weeks</a>
 
 
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'3',
-              subtype: 1  }">Order Breakdown by Category</a>
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'4',
-              subtype: 1  }">Breakdown of all-venue/all-class</a>
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'4',
-              subtype: 2  }">Order Single Supplier</a>
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'4',
-              subtype: 3  }">Order Single Class</a>
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'5',
-              subtype: 1  }">Order Single Category</a>
-              <a routerLink="orderRpt"
-              [queryParams]="{rptID:'4',
-              subtype: 4  }">Order Single Venue</a>
+            <a routerLink="orderRpt"[queryParams]="{rptID:'3', subtype: 1 ,rptUI_ID:900 }" >Order Breakdown by Category</a>
 
+            <a routerLink="orderRpt" [queryParams]="{rptID:'4',
+              subtype: 1 ,rptUI_ID:901 }">Breakdown of all-venue/all-class</a>
 
+            <a routerLink="orderRpt" [queryParams]="{rptID:'4',
+              subtype: 2 ,rptUI_ID:902 }">Order Single Supplier</a>
 
+            <a routerLink="orderRpt" [queryParams]="{rptID:'4',
+              subtype: 3 ,rptUI_ID:903 }">Order Single Class</a>
+
+            <a routerLink="orderRpt" [queryParams]="{rptID:'5',
+              subtype: 1 ,rptUI_ID:904 }">Order Single Category</a>
+
+            <a routerLink="orderRpt" [queryParams]="{rptID:'4',
+              subtype: 4 ,rptUI_ID:905 }">Order Single Venue</a>
 
 
           </li>
@@ -199,8 +193,11 @@
                 <a class="breadcrumb-text" href="javascript:void(0)" [routerLink]='this.home'>Home</a>
               </li>
               <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
-                <a *ngIf="breadLink.name != 'pro' && breadLink.name != 'home' && breadLink.name != undefined " href="javascript:void(0)"
-                  [routerLink]="breadLink.url" class="breadcrumb-text">{{ breadLink.name }}</a>
+                <a *ngIf="breadLink.name != 'pro' && breadLink.name != 'home' && breadLink.name != undefined "
+                  href="javascript:void(0)"
+                  (click)="this.decodeurl(breadLink.url)"
+                  class="breadcrumb-text">{{ breadLink.name
+                  }}</a>
               </li>
 
 

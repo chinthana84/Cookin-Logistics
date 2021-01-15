@@ -9,14 +9,14 @@ import { QulificatonComponent } from './qulificaton/qulificaton.component';
 
 const routes: Routes = [
   {
-    path: 'classes',  component: ClassesComponent , children: [{ path: 'edit', component: ClassesComponent }]
+    path: 'classes',data:{titleKey: 'Classes'},  component: ClassesComponent , children: [{ path: 'edit', component: ClassesComponent }]
   },
   {
-    path: 'units',  component: UnitsComponent , children: [{ path: 'edit', component: UnitsComponent }]
+    path: 'units',data:{titleKey: 'Units'},  component: UnitsComponent , children: [{ path: 'edit', component: UnitsComponent }]
   }
   ,
   {
-    path: 'quli',  component: QulificatonComponent , children: [{ path: 'edit', component: QulificatonComponent }]
+    path: 'quli',data:{titleKey: 'Qulifications'},  component: QulificatonComponent , children: [{ path: 'edit', component: QulificatonComponent }]
   }
  ];
 

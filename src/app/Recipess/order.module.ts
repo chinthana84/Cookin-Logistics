@@ -9,11 +9,11 @@ import { OrderComponent } from './order/order/order.component';
 
 const routes: Routes = [
   {
-    path: 'recipes', component: RecipeComponent
+    path: 'recipes',data:{titleKey: 'Recipes'}, component: RecipeComponent
     , children: [{ path: 'edit', component: RecipeComponent }]
   },
    {
-    path: 'orders', component: OrderComponent
+    path: 'orders',data:{titleKey: 'Orders'}, component: OrderComponent
     , children: [{ path: 'edit', component: OrderComponent }]
 
   }

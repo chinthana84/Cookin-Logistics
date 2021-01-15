@@ -9,7 +9,7 @@ import { OrderReportsComponent } from './order-reports/order-reports.component';
 
 const routes: Routes = [
   {
-    path: 'Search', component: WeekComponent
+    path: 'Search',data:{titleKey: 'Requitions'}, component: WeekComponent
   }
 ,
   { path: 'orderRpt', component: OrderReportsComponent}
