@@ -7,6 +7,7 @@ import { OrdersGridDTO } from 'src/app/models/Grid/grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Order, OrderDetails, OrderTheoryNotesDTO } from 'src/app/models/order.model';
 import { Product } from 'src/app/models/product.model';
+import { Recipe, RecipeOrderLinkDTO } from 'src/app/models/recipe.model';
 import { Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
@@ -22,11 +23,14 @@ import { SubSink } from 'subsink';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit,OnDestroy {
+export class OrderComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   edited: boolean = false;
   modelOrder: Order = {};
   modelWrapper: Wrapper = {};
+  selectedCouseID: number = 0;
+  selectedRecipeID: number = 0;
+  modelRecipeHeader: Recipe[] = [];
 
   gridOption: GridOptions = {
     datas: {},
@@ -55,7 +59,7 @@ export class OrderComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.subs.sink =   this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
 
       if (params.id == 0) {
         this.edited = true;
@@ -63,7 +67,8 @@ export class OrderComponent implements OnInit,OnDestroy {
         this.modelOrder = new Order();
         this.modelOrder.OrderDetails = [];
 
-        this.subs.sink =     this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
+        this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+        .subscribe((data) => { this.modelWrapper = data; });
 
       } else if (params.id > 0) {
         this.edited = true;
@@ -71,16 +76,15 @@ export class OrderComponent implements OnInit,OnDestroy {
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
 
-        this.subs.sink =      forkJoin([a, b]).subscribe(results => {
+        this.subs.sink = forkJoin([a, b]).subscribe(results => {
           this.modelOrder = results[0]
           this.modelWrapper = results[1];
-        } ,
-              (error) => {
-
-                this.confirmDialogService.messageBox(environment.APIerror);
-                this.errorHandler.handleError(error);
-              });
-
+          console.log(this.modelOrder)
+        },
+          (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror);
+            this.errorHandler.handleError(error);
+          });
       } else {
         this.edited = false;
       }
@@ -90,7 +94,7 @@ export class OrderComponent implements OnInit,OnDestroy {
 
 
   setPage(obj: SearchObject): void {
-    this.subs.sink =    this.gridService.getGridData(obj).subscribe((data) => {
+    this.subs.sink = this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
@@ -116,35 +120,31 @@ export class OrderComponent implements OnInit,OnDestroy {
     this.modelOrder.OrderDetails.push(obj);
   }
 
-  public onOptionsSelected(obj:OrderDetails) {
-   let objProd= this.getProductObject(obj.ProductId)
-    obj.UnitPrice=objProd.UnitPrice;
- }
 
- unitPriceDefaultValues(val :any,obj:OrderDetails){
+  unitPriceDefaultValues(val: any, obj: OrderDetails) {
+    debugger
+    if (val === 0 || val === null || val === undefined) {
+      let objProd = this.getProductObject(obj.ProductId)
+      obj.UnitPrice = objProd.UnitPrice
+    }
+    else {
+      obj.UnitPrice = val;
+    }
 
-  if(val===0 || val === null || val === undefined){
-    let objProd= this.getProductObject(obj.ProductId)
-    obj.UnitPrice=objProd.UnitPrice
   }
-  else{
-    obj.UnitPrice=val;
-  }
-
- }
 
   public deleteOrderLine(id: number): void {
     let that: this;
     let IsOk: Boolean = false;
-    this.confirmDialogService.confirmThis("Are you sure to delete?", ()=>{
+    this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
       this.modelOrder.OrderDetails = this.modelOrder.OrderDetails.filter(item => item.OrderDetailsId != id);
     },
-    function () { })
+      function () { })
 
   }
 
   onSubmit(obj: Order) {
-    this.subs.sink =    this.http
+    this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Order/Save`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {
@@ -167,42 +167,81 @@ export class OrderComponent implements OnInit,OnDestroy {
     return x[0];
   }
 
-  AddNote(){
-    let obj=new OrderTheoryNotesDTO();
-    obj.OrderId=this.modelOrder.OrderId;
-    if(this.modelOrder.OrderTheoryNotes == undefined){
-      this.modelOrder.OrderTheoryNotes=[];
+  AddNote() {
+    let obj = new OrderTheoryNotesDTO();
+    obj.OrderId = this.modelOrder.OrderId;
+    if (this.modelOrder.OrderTheoryNotes == undefined) {
+      this.modelOrder.OrderTheoryNotes = [];
     }
     this.modelOrder.OrderTheoryNotes.push(obj);
   }
 
-  deleteNote(obj:OrderTheoryNotesDTO){
-    this.modelOrder.OrderTheoryNotes=this.modelOrder.OrderTheoryNotes.
-                                    filter(r=> r.TheoryNoteId != obj.TheoryNoteId);
+  deleteNote(obj: OrderTheoryNotesDTO) {
+    this.modelOrder.OrderTheoryNotes = this.modelOrder.OrderTheoryNotes.
+      filter(r => r.TheoryNoteId != obj.TheoryNoteId);
   }
 
-
-
-  addFile(event, i:OrderTheoryNotesDTO): void {
+  addFile(event, i: OrderTheoryNotesDTO): void {
     let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-        let file: File = fileList[0];
-        let formData:FormData = new FormData();
-        formData.append('uploadFile', file, file.name);
-        // let headers = new Headers();
-        // /** In Angular 5, including the header Content-Type can invalidate your request */
-        // headers.append('Content-Type', 'multipart/form-data');
-        // headers.append('Accept', 'application/json');
-
-        this.commonService
-                  .upload(file)
-                  .subscribe(res => {
-
-
-                      i.UniqueFileName= String(res);
-
-                  });
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+      this.commonService
+        .upload(file)
+        .subscribe(res => {
+          i.UniqueFileName = String(res);
+        });
     }
+  }
+
+  GetSelectedCouseRecipes(couseid: number) {
+    this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetRecipeHeaderByCourseID/` + couseid)
+      .subscribe(r => {
+        this.modelRecipeHeader = r;
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+  }
+
+  AddLinkRecipe(recipeid: number) {
+    let selectedRecipe = this.modelRecipeHeader.filter(r => r.RecipeId == recipeid)[0]
+    let obj = new RecipeOrderLinkDTO();
+    obj.OrderId = this.modelOrder.OrderId;
+    obj.RecipeId = recipeid;
+    obj.Recipe = selectedRecipe;
+    this.modelOrder.RecipeOrderLink.push(obj);
+  }
+
+  DeleteLinkRecipe(recipeLinkID: number) {
+    this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
+      this.modelOrder.RecipeOrderLink = this.modelOrder.RecipeOrderLink.filter(r => r.ROLinkId != recipeLinkID);
+    },
+      function () { });
+  }
+
+  unitIDDefaultValues(val: any, obj: OrderDetails) {
+    obj.ProdUnitId = 0;
+    let objProd = this.getProductObject(obj.ProductId)
+    obj.ProdUnitId = objProd.ProdUnit.RefId;
+    obj.UnitPrice = objProd.UnitPrice;
+  }
+
+  AutoBuild(){
+    this.confirmDialogService.confirmThis("are you sure?", () => {
+      this.subs.sink = this.http
+      .post<any>(`${environment.APIEndpoint}/Order/OrderDetailAutoBuild`, this.modelOrder.RecipeOrderLink, {})
+      .subscribe((data) => {
+        this.modelOrder.OrderDetails=data;
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+
+    },
+      function () { });
+
 
   }
 

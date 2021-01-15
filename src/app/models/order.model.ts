@@ -1,4 +1,5 @@
 import { Product } from './product.model';
+import { RecipeOrderLinkDTO } from './recipe.model';
 
 export class Order {
   public   OrderId?: number=0;
@@ -12,7 +13,7 @@ export class Order {
   public   IsPractical?:Boolean=false;
 
   public    Notes ?:string="";
-
+  public    RecipeOrderLink?:RecipeOrderLinkDTO[];
   public   OrderDetails?: OrderDetails[];
   public   OrderTheoryNotes?: OrderTheoryNotesDTO []=[];
 }

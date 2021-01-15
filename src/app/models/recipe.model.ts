@@ -1,3 +1,4 @@
+import { Order } from './order.model';
 import { Product } from './product.model';
 import { RefTable } from './reftable.model';
 
@@ -64,5 +65,9 @@ export class RecipeOrderLinkDTO
     public  OrderId?: number=0;
     public  NumReq?: number=0;
     public  CalcNote?: string="";
+
+
+    public    Order?:Order={}
+    public     Recipe ?:Recipe={}
 
 }

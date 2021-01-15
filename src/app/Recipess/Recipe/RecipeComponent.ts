@@ -159,12 +159,11 @@ export class RecipeComponent implements OnInit {
 
 
    unitIDDefaultValues(val :any,obj:RecipeDetailsDTO){
-debugger
-   
-
+    obj.ProdUnitId=0;
     if(obj.ProdUnitId===0 || obj.ProdUnitId === null || obj.ProdUnitId === undefined){
       let objProd= this.getProductObject(obj.ProductId)
       obj.ProdUnitId =objProd.ProdUnit.RefId;
+      obj.UnitPrice=objProd.UnitPrice;
     }
     else{
       obj.ProdUnitId=val;
@@ -234,6 +233,12 @@ debugger
   deleteLinkOrder(i:number){
     this.modelRecipe.RecipeOrderLink = this.modelRecipe.RecipeOrderLink.filter(item => item.OrderId != i);
   }
+
+  ViewReport(){
+    alert('not implemnted')
+  }
+
+
 
 }
 
