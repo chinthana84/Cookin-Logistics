@@ -428,6 +428,10 @@
                   </button>
                 </td>
               </tr>
+              <tr
+              *ngIf="this.modelRecipe.RecipeOrderLink?.length == 0 || this.modelRecipe.RecipeOrderLink?.length == null  ">
+              <td class="datanotfound" colspan="12">Data not found</td>
+            </tr>
             </tbody>
           </table>
         </div>

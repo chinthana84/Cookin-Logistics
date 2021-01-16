@@ -211,6 +211,9 @@ export class OrderComponent implements OnInit, OnDestroy {
     obj.OrderId = this.modelOrder.OrderId;
     obj.RecipeId = recipeid;
     obj.Recipe = selectedRecipe;
+    if (this.modelOrder.RecipeOrderLink == undefined){
+      this.modelOrder.RecipeOrderLink=[];
+    }
     this.modelOrder.RecipeOrderLink.push(obj);
   }
 

@@ -115,8 +115,8 @@
                       <div class="form-group">
                         <div class="form-check">
                           <label>
-                            <input [(ngModel)]="this.modelOrder.IsAssessment" name="KitchRec" type="checkbox"
-                              class="form-check-input" id="IsAssessment" />
+                            <input [(ngModel)]="this.modelOrder.IsAssessment" name="IsAssessmentx" type="checkbox"
+                              class="form-check-input" id="IsAssessmentx" />
                             Assessment</label>
                         </div>
                       </div>
@@ -124,8 +124,8 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="form-check">
-                          <input [(ngModel)]="this.modelOrder.IsPractical" name="KitchRec" type="checkbox"
-                            class="form-check-input" id="IsPractical" />
+                          <input [(ngModel)]="this.modelOrder.IsPractical" name="IsPracticalx" type="checkbox"
+                            class="form-check-input" id="IsPracticalx" />
                           <label class="form-check-label" for="IsPractical">
                             Practical</label>
                         </div>
@@ -134,9 +134,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="form-check">
-                          <input [(ngModel)]="this.modelOrder.IsService" name="KitchRec" type="checkbox"
-                            class="form-check-input" id="IsService" />
-                          <label class="form-check-label" for="IsService">
+                          <input [(ngModel)]="this.modelOrder.IsService" name="IsServicex" type="checkbox"
+                            class="form-check-input" id="IsServicex" />
+                          <label class="form-check-label" for="IsServicex">
                             Service</label>
                         </div>
                       </div>
@@ -144,9 +144,9 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <div class="form-check">
-                          <input [(ngModel)]="this.modelOrder.IsTheory" name="IsTheory" type="checkbox"
-                            class="form-check-input" id="IsTheory" />
-                          <label class="form-check-label" for="IsTheory">
+                          <input [(ngModel)]="this.modelOrder.IsTheory" name="IsTheoryx" type="checkbox"
+                            class="form-check-input" id="IsTheoryx" />
+                          <label class="form-check-label" for="IsTheoryx">
                             Theory</label>
                         </div>
                       </div>
@@ -273,10 +273,15 @@
             <div class="col-md-1">
               <div class="form-group">
                 <br />
-                <button [disabled]="this.selectedRecipeID==0" (click)="this.AddLinkRecipe(this.selectedRecipeID)"
+                <div class="btn-group">
+                  <button [disabled]="this.selectedRecipeID==0" (click)="this.AddLinkRecipe(this.selectedRecipeID)"
                   type="button" class="form-control btn btn-primary">
                   <span class="fa fa-plus"></span>
                 </button>
+                <button (click)="this.AutoBuild()" type="button" class="form-control btn btn-primary"> Auto Build
+                </button>
+                </div>
+
               </div>
             </div>
           </div>
@@ -309,10 +314,9 @@
                         class="form-control btn btn-danger">
                         <span class="fa fa-trash"></span>
                       </button>
-                      <button (click)="this.AutoBuild()" type="button" class="form-control btn btn-primary"> Auto Build
-                      </button>
+
                       </div>
-                   
+
                     </td>
                   </tr>
                   <tr *ngIf="this.modelOrder.RecipeOrderLink?.length == 0">
