@@ -21,8 +21,13 @@
         <td>{{ item.MocName }}</td>
         <td>{{ item.PrepName }}</td>
         <td>
-          <button (click)="Action(item)" class="btn btn-primary ">
+          <div class="btn-group">
+               <button (click)="Action(item)" class="btn btn-primary ">
             <span class="fa fa-edit"></span></button>
+            <button type="button" class="btn btn-primary  " data-toggle="modal" data-target="#exampleModalCenter"> <span
+              class="fa fa-print"></span> </button>
+          </div>
+
         </td>
       </tr>
       <tr class="" *ngIf="this.gridOption.datas.pagedItems == 0">
@@ -495,7 +500,7 @@
           <div class="col-md-6">
             <div class="card">
               <div class="card-header">
-                Ggeneral:
+                General:
               </div>
               <div class="card-body">
                 <div class="row ml-2">

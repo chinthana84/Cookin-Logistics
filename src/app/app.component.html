@@ -1,8 +1,198 @@
-<div class="wrapper" style="border-top: 5px black solid;">
+<div class="container-fluid fixed-top" style="padding:0px;background-color: #2a3042;">
+  <div class="container" style="max-width: 85%;">
+    <nav *ngIf="this.currentObj.IsAuthenticated" style="background-color: #2a3042;color:white !important;  "
+      class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" routerLink="home">
+        <img src="assets/evolution_new.png" width="60" height="40" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#demo-navbar"
+        aria-controls="demo-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="demo-navbar">
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item active">
+            <a class="nav-link text-light" href="https://www.jquery-az.com/">Tutorials <span
+                class="sr-only">(current)</span></a>
+          </li> -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Cat_Prod_Sup" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Cat/Prod/Sup
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Cat_Prod_Sup">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Supplier}"
+                routerLink="{{this.CheckAccess('suppliers')}}">Suppliers</a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Category}"
+                routerLink="{{this.CheckAccess('category')}}">Category</a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Product}"
+                routerLink="{{this.CheckAccess('products')}}">Products</a>
+
+              <div class="dropdown-divider"></div>
+
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Recipes" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Recipes
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Recipes">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Recipe}"
+                routerLink="{{this.CheckAccess('recipes')}}">Recipe</a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Order}"
+                routerLink="{{this.CheckAccess('orders')}}">Orders</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Tutor-Time" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Tutor-Time
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Tutor-Time">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Tutor}"
+                routerLink="{{this.CheckAccess('tutor')}}">Tutor</a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Venues-Sessions" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Venues-Sessions
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Venues-Sessions">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Venue}"
+                routerLink="{{this.CheckAccess('venue')}}">Venue </a>
+              <div class="dropdown-divider">Reports</div>
+              <ul class="navbar-nav mr-auto">
+                <a class="dropdown-item" routerLink="common" [queryParams]="{rptID:'2'}">All Venue </a>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Class-Quli-Unit" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Class-Quli-Unit
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Class-Quli-Unit">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Classs}"
+                routerLink="{{this.CheckAccess('classes')}}">Classes </a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Unit}"
+                routerLink="{{this.CheckAccess('units')}}">Units </a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Qulification}"
+                routerLink="{{this.CheckAccess('quli')}}">Qulification </a>
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="RequitionsSummary" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Requitions Summary
+            </a>
+            <div class="dropdown-menu" aria-labelledby="RequitionsSummary">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Weeks}"
+                routerLink="{{this.CheckAccess('Search')}}" [queryParams]="{selectedYear:'0',selectedWeekID:0}">Weeks
+              </a>
+              <div class="dropdown-divider">Reports</div>
+              <a class="dropdown-item" routerLink="orderRpt"
+                [queryParams]="{rptID:'3', subtype: 1 ,rptUI_ID:900 }">Order Breakdown by Category</a>
+
+              <a class="dropdown-item" routerLink="orderRpt" [queryParams]="{rptID:'4',
+                  subtype: 1 ,rptUI_ID:901 }">Breakdown of all-venue/all-class</a>
+
+              <a class="dropdown-item" routerLink="orderRpt" [queryParams]="{rptID:'4',
+                  subtype: 2 ,rptUI_ID:902 }">Order Single Supplier</a>
+
+              <a class="dropdown-item" routerLink="orderRpt" [queryParams]="{rptID:'4',
+                  subtype: 3 ,rptUI_ID:903 }">Order Single Class</a>
+
+              <a class="dropdown-item" routerLink="orderRpt" [queryParams]="{rptID:'5',
+                  subtype: 1 ,rptUI_ID:904 }">Order Single Category</a>
+
+              <a class="dropdown-item" routerLink="orderRpt" [queryParams]="{rptID:'4',
+                  subtype: 4 ,rptUI_ID:905 }">Order Single Venue</a>
+
+            </div>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="Admin" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Admin
+            </a>
+            <div class="dropdown-menu" aria-labelledby="Admin">
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.UserAccess}"
+                routerLink="{{this.CheckAccess('admin')}}">User
+                Access</a>
+              <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Reference}"
+                routerLink="{{this.CheckAccess('ref')}}">Ref Tables
+              </a>
+            </div>
+          </li>
+
+
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown  " >
+            <a  class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              [{{getUsername()}}]
+              <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item " [ngClass]="{'norights': !this.currentObj.ChangePW}"
+              routerLink="{{this.CheckAccess('changepw')}}">Change Password</a>
+              <a class="dropdown-item " href="#">Log Out</a>
+            </div>
+          </li>
+
+      </ul>
+
+      </div>
+    </nav>
+  </div>
+
+  <div class="container-fluid" style="background-color: #fff">
+    <div class="container" style="max-width: 85%;">
+      <nav class="  border-secondary " *ngIf="this.currentObj.IsAuthenticated" aria-label="breadcrumb">
+        <ol class="breadcrumb" style="background-color: #fff;margin-bottom: 1px;">
+          <li class="breadcrumb-item">
+            <span class="fa fa-home"></span>
+            <a class="breadcrumb-text" href="javascript:void(0)" [routerLink]='this.home'>Home</a>
+          </li>
+          <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
+            <a *ngIf="breadLink.name != 'pro' && breadLink.name != 'home' && breadLink.name != undefined "
+              href="javascript:void(0)" (click)="this.decodeurl(breadLink.url)" class="breadcrumb-text">{{
+              breadLink.name
+              }}</a>
+          </li>
+          <li class="breadcrumb-itemx   nav navbar-nav ml-auto">
+            <a class="breadcrumb-textx justify-content-end" href="#" (click)="this.commonServie.logout()">
+              <span class="fa fa-sign-out-alt fa-w-16"></span>
+              :[{{getUsername()}}]</a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="container-fluid" style="margin-top: 145px;">
   <!-- Sidebar  -->
-  <nav *ngIf="this.currentObj.IsAuthenticated" id="sidebar">
+  <!-- <nav *ngIf="this.currentObj.IsAuthenticated" id="sidebar">
     <div class="sidebar-header">
-      <!-- <h3>Cookin ERP </h3> -->
       <img class="card-img-top img-fluid" src="assets/evolution_new.png" />
     </div>
 
@@ -41,8 +231,6 @@
             <a [ngClass]="{'norights': !this.currentObj.Order}" routerLink="{{this.CheckAccess('orders')}}">Orders</a>
           </li>
           <li>
-
-
           </li>
         </ul>
       </li>
@@ -160,69 +348,19 @@
 
       </li>
     </ul>
-  </nav>
+  </nav> -->
 
-  <!-- Page Content  -->
-  <div id="content">
-    <nav style="padding-left:0px;" *ngIf="this.currentObj.IsAuthenticated"
-      class="navbar navbar-expand-lg navbar-light bg-light " style="    padding-left: 0px;
-      margin-top: 0px;
-      padding-top: 0px;
-      padding-right: 0px;
-      padding-bottom: 0px;">
-      <div style="padding-left:0px;padding-right:0px;" class="container-fluid  ">
-
-        <div class="collapse navbar-collapse  container-fluid" id="navigation"
-          style="padding-left:0px;padding-right:0px;">
-          <nav style="padding-left:0px;padding-right:0px;" class="  border-secondary container-fluid"
-            *ngIf="this.currentObj.IsAuthenticated" aria-label="breadcrumb">
-
-
-            <ol class="breadcrumb container-fluid " style="background-color: rgb(237, 229, 245); ">
-              <li class="breadcrumb-itemx" style="margin-right:10px;padding-right:0px;">
-                <img id='logoImage' class="  img-fluid" style="height: 30px;width: 60px;display:none"
-                  src="assets/evolution_new.png" />
-              </li>
-              <li class="breadcrumb-item">
-                <button type="button" id="sidebarCollapse" (click)="CCCC()" class="btn btn-info btn-sm">
-                  <i class="fas fa-align-left"></i>
-                </button>
-
-              </li>
-              <li class="breadcrumb-item">
-                <a class="breadcrumb-text" href="javascript:void(0)" [routerLink]='this.home'>Home</a>
-              </li>
-              <li *ngFor="let breadLink of displayBreadcrumbList" class="breadcrumb-item active" aria-current="page">
-                <a *ngIf="breadLink.name != 'pro' && breadLink.name != 'home' && breadLink.name != undefined "
-                  href="javascript:void(0)"
-                  (click)="this.decodeurl(breadLink.url)"
-                  class="breadcrumb-text">{{ breadLink.name
-                  }}</a>
-              </li>
-
-
-              <li class="breadcrumb-itemx   nav navbar-nav ml-auto">
-                <a class="breadcrumb-textx justify-content-end" href="#" (click)="this.commonServie.logout()">
-                  <span class="fa fa-sign-out-alt fa-w-16"></span>
-                  :[{{getUsername()}}]</a>
-              </li>
-
-            </ol>
-
-
-
-          </nav>
-
-        </div>
-
-
-      </div>
-    </nav>
+  <div class="container  " style="max-width: 85%;background-color:#fff ;padding-top:10px ;padding-bottom: 5px;">
     <app-confirm-dialog></app-confirm-dialog>
     <app-loader></app-loader>
     <router-outlet></router-outlet>
   </div>
+
+
+
+
 </div>
+<br />
 
 
 
