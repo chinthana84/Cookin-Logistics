@@ -164,6 +164,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   getProductObject(i: number): Product {
     let x = this.modelWrapper.Products.filter(b => b.ProductId == i)
+    console.log(x)
     return x[0];
   }
 

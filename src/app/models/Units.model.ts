@@ -1,7 +1,7 @@
 export class UnitsDTO
 {
     public  UnitId?: number=0;
-    public  UnitCode? : number=0;
+    public  UnitCode? : string="";
     public  UnitTitle? :string="";
     public  UnitCrval? : number=0;
     public  UnitLevel ?: number=0;

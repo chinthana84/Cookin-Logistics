@@ -30,7 +30,7 @@ export class RecipeComponent implements OnInit {
   edited: boolean = false;
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
-  modelOrders : Order[]=[];
+  modelOrders: Order[] = [];
 
   gridOption: GridOptions = {
     datas: {},
@@ -67,21 +67,23 @@ export class RecipeComponent implements OnInit {
 
 
 
-    this.subs.sink =   this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
         this.modelRecipe = new Recipe();
-        this.modelRecipe.RecipeDetails=[]
+        this.modelRecipe.RecipeDetails = []
 
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
         let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
-        this.subs.sink =   forkJoin([b,c]).subscribe(results => {
+        this.subs.sink = forkJoin([b, c]).subscribe(results => {
           this.modelWrapper = results[0];
-          this.modelOrders=results[1]
+          this.modelOrders = results[1]
           this.onChangeYieldUnit();
 
 
+        }, (error) => {
+          this.confirmDialogService.messageBox(environment.APIerror)
         });
 
       } else if (params.id > 0) {
@@ -90,12 +92,14 @@ export class RecipeComponent implements OnInit {
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
         let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
-        this.subs.sink =   forkJoin([a, b,c]).subscribe(results => {
+        this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
           this.modelRecipe = results[0]
           this.modelWrapper = results[1];
-          this.modelOrders=results[2]
+          this.modelOrders = results[2]
           this.onChangeYieldUnit();
           console.log(this.modelRecipe)
+        }, (error) => {
+          this.confirmDialogService.messageBox(environment.APIerror)
         });
       } else {
         this.edited = false;
@@ -130,15 +134,15 @@ export class RecipeComponent implements OnInit {
   }
 
   PortionSize(): string {
-    let val:number
-       val= (this.modelRecipe.YieldNumber / this.modelRecipe.StandardPortions);
-    if (isNaN(val)){
+    let val: number
+    val = (this.modelRecipe.YieldNumber / this.modelRecipe.StandardPortions);
+    if (isNaN(val)) {
       return '0';
     }
-    else{
-    return  val.toFixed(2) ;
+    else {
+      return val.toFixed(2);
+    }
   }
-}
 
   RequiredYield(): string {
     var x = (this.modelRecipe.ReqPortions * this.modelRecipe.YieldNumber);
@@ -146,32 +150,32 @@ export class RecipeComponent implements OnInit {
 
   }
 
-  unitPriceDefaultValues(val :any,obj:RecipeDetailsDTO){
+  unitPriceDefaultValues(val: any, obj: RecipeDetailsDTO) {
 
-    if(val===0 || val === null || val === undefined){
-      let objProd= this.getProductObject(obj.ProductId)
-      obj.UnitPrice=objProd.UnitPrice
+    if (val === 0 || val === null || val === undefined) {
+      let objProd = this.getProductObject(obj.ProductId)
+      obj.UnitPrice = objProd.UnitPrice
     }
-    else{
-      obj.UnitPrice=val;
+    else {
+      obj.UnitPrice = val;
     }
-   }
+  }
 
 
-   unitIDDefaultValues(val :any,obj:RecipeDetailsDTO){
-    obj.ProdUnitId=0;
-    if(obj.ProdUnitId===0 || obj.ProdUnitId === null || obj.ProdUnitId === undefined){
-      let objProd= this.getProductObject(obj.ProductId)
-      obj.ProdUnitId =objProd.ProdUnit.RefId;
-      obj.UnitPrice=objProd.UnitPrice;
+  unitIDDefaultValues(val: any, obj: RecipeDetailsDTO) {
+    obj.ProdUnitId = 0;
+    if (obj.ProdUnitId === 0 || obj.ProdUnitId === null || obj.ProdUnitId === undefined) {
+      let objProd = this.getProductObject(obj.ProductId)
+      obj.ProdUnitId = objProd.ProdUnit.RefId;
+      obj.UnitPrice = objProd.UnitPrice;
     }
-    else{
-      obj.ProdUnitId=val;
+    else {
+      obj.ProdUnitId = val;
     }
-   }
+  }
 
   onSubmit(obj: Recipe) {
-    this.subs.sink =  this.http
+    this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
       .subscribe((data) => {
         if (data.IsValid == false) {
@@ -213,8 +217,8 @@ export class RecipeComponent implements OnInit {
     obj.RecipeId = this.modelRecipe.RecipeId;
     console.log(this.modelRecipe.RecipeOrderLink)
 
-    if(this.modelRecipe.RecipeOrderLink == undefined){
-      this.modelRecipe.RecipeOrderLink=[];
+    if (this.modelRecipe.RecipeOrderLink == undefined) {
+      this.modelRecipe.RecipeOrderLink = [];
     }
 
     this.modelRecipe.RecipeOrderLink.push(obj);
@@ -226,15 +230,25 @@ export class RecipeComponent implements OnInit {
     return x[0];
   }
 
-  deleteRecipeDetails(i : number):void{
-    this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+  deleteRecipeDetails(i: number): void {
+
+    this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
+      this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+    },
+      function () { })
+
   }
 
-  deleteLinkOrder(i:number){
-    this.modelRecipe.RecipeOrderLink = this.modelRecipe.RecipeOrderLink.filter(item => item.OrderId != i);
+  deleteLinkOrder(i: number) {
+    this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
+      this.modelRecipe.RecipeOrderLink = this.modelRecipe.RecipeOrderLink.filter(item => item.OrderId != i);
+    },
+      function () { })
+
+
   }
 
-  ViewReport(){
+  ViewReport() {
     alert('not implemnted')
   }
 

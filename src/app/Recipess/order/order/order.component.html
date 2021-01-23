@@ -189,21 +189,22 @@
             <tbody>
               <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
                 <td>
-                  <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas"
+                  <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas{{ index }}"
                     name="modelStorageAreafgdfgfgs{{ index }}" (ngModelChange)="unitIDDefaultValues($event,i)">
                     >
                     <!-- <option value="0"></option> -->
                     <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
-                      {{ j.ProductName }} | {{j.ProdUnit.RefDescription}} | {{ j.UnitPrice }}
+                      <!-- {{ j.ProductName }} | {{j.ProdUnit.RefDescription}} | {{ j.UnitPrice }} -->
+                      {{ j.ProductName }}
                     </option>
                   </select>
                 </td>
 
                 <td>
-                  {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
+                  <!-- {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }} -->
                 </td>
                 <td>
-                  $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
+                  <!-- $ {{ this.getProductObject(i.ProductId)?.UnitPrice }} -->
                 </td>
                 <td>
                   <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits{{ index }}"

@@ -66,13 +66,9 @@
             <div class="dropdown-menu" aria-labelledby="Venues-Sessions">
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Venue}"
                 routerLink="{{this.CheckAccess('venue')}}">Venue </a>
-              
-              <ul class="navbar-nav mr-auto">
+                <div class="dropdown-divider">Reports</div>
                 <a class="dropdown-item" routerLink="common" [queryParams]="{rptID:'2'}">All Venue </a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Level 2</a></li>
-                  </ul>
-              </ul>
+
             </div>
           </li>
 
@@ -156,6 +152,7 @@
 
       </div>
     </nav>
+
   </div>
 
   <div class="container-fluid" style="background-color: #fff">

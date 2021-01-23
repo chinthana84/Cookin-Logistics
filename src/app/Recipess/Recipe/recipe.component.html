@@ -274,7 +274,8 @@
                           name="MainIngredId">
                           <option value="0"></option>
                           <option *ngFor="let i of this.modelWrapper.Products" [ngValue]="i.ProductId">
-                            {{ i.ProductName }} - {{i.ProdUnit.RefDescription}}
+                            {{ i.ProductName }}
+                            <!-- - {{i.ProdUnit.RefDescription}} -->
                           </option>
                         </select>
                       </div>
@@ -380,7 +381,7 @@
 
                 <td>
                   <!-- $ {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }} -->
-                  $ {{ ((i.Quantity * 100)/i.Yield)* ( i.UnitPrice)}}
+                  $ {{ (((i.Quantity * 100)/i.Yield)* ( i.UnitPrice)).toFixed(2)}}
                 </td>
                 <td>QPP</td>
                 <td>Ext. Price</td>
