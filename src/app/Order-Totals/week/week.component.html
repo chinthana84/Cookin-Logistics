@@ -111,12 +111,16 @@
             </td>
 
             <td>
+              <div class="btn-group">
+
+
               <button (click)="this.saveLine(item)" type="button" class="btn btn-primary" data-title="Edit"
                 data-toggle="modal" data-target="#edit">
                 <span class="fa fa-save"></span></button>
               <button (click)="this.deleteLine(item)" type="button" class="btn btn-warning " data-title="Edit"
                 data-toggle="modal" data-target="#edit">
                 <span class="fa fa-trash"></span></button>
+              </div>
             </td>
           </tr>
           <tr *ngIf="model?.length== 0 || model?.length == null  ">

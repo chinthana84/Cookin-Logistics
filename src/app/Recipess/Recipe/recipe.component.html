@@ -350,10 +350,10 @@
                 <td>
                   <input [(ngModel)]="i.Quantity" id="Quantity{{ index }}" name="Quantity{{ index }}" class="form-control"
                     placeholder="Quantity" (ngModelChange)="i.Quantity = $event === null ? 0 : $event" type="number"
-                    numeric maxlength="10" />
+                    numeric decimals="2" maxlength="10" />
                 </td>
                 <td>
-                  {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }}
+                  {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
                 </td>
                 <td>
                   $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}

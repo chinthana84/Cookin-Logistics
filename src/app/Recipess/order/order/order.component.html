@@ -201,12 +201,13 @@
                 </td>
 
                 <td>
-                  <!-- {{ this.getProductObject(i.ProductId)?.ProdUnit.RefDescription }} -->
+                  {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
                 </td>
                 <td>
-                  <!-- $ {{ this.getProductObject(i.ProductId)?.UnitPrice }} -->
+                  $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
                 </td>
                 <td>
+                 
                   <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits{{ index }}"
                     name="ChangedProdUnits{{ index }}">
                     <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
