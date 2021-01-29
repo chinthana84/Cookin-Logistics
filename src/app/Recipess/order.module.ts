@@ -6,6 +6,8 @@ import { SharedModule } from '../_shared/Shared.module';
 import { CommonModule } from '@angular/common';
 import { OrderComponent } from './order/order/order.component';
 
+import { RecipeOrderReportsComponent } from './recipe-order-reports/recipe-order-reports.component';
+
 
 const routes: Routes = [
   {
@@ -16,12 +18,12 @@ const routes: Routes = [
     path: 'orders',data:{titleKey: 'Orders'}, component: OrderComponent
     , children: [{ path: 'edit', component: OrderComponent }]
 
-  }
-
+  },
+  { path: 'RecipeOrderRPT', component: RecipeOrderReportsComponent}
 ];
 
 @NgModule({
-  declarations: [RecipeComponent,OrderComponent],
+  declarations: [RecipeComponent,OrderComponent,    RecipeOrderReportsComponent],
   imports: [
     CommonModule,
     FormsModule,

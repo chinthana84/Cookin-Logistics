@@ -44,6 +44,10 @@
                 routerLink="{{this.CheckAccess('recipes')}}">Recipe</a>
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Order}"
                 routerLink="{{this.CheckAccess('orders')}}">Order Lessions</a>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" routerLink="RecipeOrderRPT" [queryParams]="{rptID:'1000',
+                subtype: 4 ,rptUI_ID:1000 }">XXXX</a>
             </div>
           </li>
 

@@ -31,8 +31,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['home'] );
       },
       (error) => {
-        this.confirmDialogService.messageBox("invalid username or password")
-       
+      //  this.confirmDialogService.messageBox("invalid username or password")
+        alert("invalid user or server error")
+
       }
     );
   }
