@@ -10,26 +10,21 @@
             <div class="col-md-4 ">
               <div *ngIf="this.currentObj.Supplier" class="card-body  border border-primary ">
                 <a class="card-title text-center" (click)="this.loadpage('suppliers')">
-                  <img  class="card-img-top"
-                    src="assets/1.PNG"                   alt="Card image cap" />
+                  <img class="card-img-top" src="assets/icons/icon-2x2-01.png" alt="Card image cap" />
                   Supplier </a>
               </div>
             </div>
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Category" class="card-body   border border-primary">
+              <div *ngIf="this.currentObj.Category" class="card-body   border border-primary">
                 <a (click)="this.loadpage('category')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="data:image/png;base64,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"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-02.png" alt="Card image cap" />
                   Category </a>
               </div>
             </div>
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Product" class="card-body   border border-primary">
+              <div *ngIf="this.currentObj.Product" class="card-body   border border-primary">
                 <a (click)="this.loadpage('products')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://cdn.xl.thumbs.canstockphoto.com/products-products-for-sale-at-online-internet-web-shop-webshop-cataloge-stock-illustration_csp22810269.jpg"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-03.png" alt="Card image cap" />
                   Products </a>
               </div>
             </div>
@@ -46,20 +41,18 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Recipe" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Recipe" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('recipes')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://www.flaticon.com/premium-icon/icons/svg/1021/1021460.svg" alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-25.png" alt="Card image cap" />
                   Recipe </a>
               </div>
             </div>
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Order" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Order" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('orders')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://assets.netohq.com/cms/neto-icon-sales-order.svg?mtime=20190829103623"
-                    alt="Card image cap">
-                  Order </a>
+
+                  <img class="card-img-top" src="assets/icons/icon-2x2-26.png" alt="Card image cap" />
+                  Lession </a>
               </div>
             </div>
           </div>
@@ -68,6 +61,74 @@
     </div>
   </div>
 
+  <div class="row mt-2">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+        Order Total
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithQueryWeeks('Search',0,0)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-11.png" alt="Card image cap" />
+                  Requitision Summary</a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',3,900,1)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-12.png" alt="Card image cap" />
+                  Order Breakdown by Category</a>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',4,901,1)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-13.png" alt="Card image cap" />
+                  Breakdown of all-venue/all-class</a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',4,902,2)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-14.png" alt="Card image cap" />
+                  Order Single Supplier</a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',4,903,3)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-15.png" alt="Card image cap" />
+                  Order Single Class</a>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',5,904,1)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-16.png" alt="Card image cap" />
+                  Order Single Category</a>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithSubType('orderRpt',4,905,4)">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-17.png" alt="Card image cap" />
+                  Order Single Category</a>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="row mt-2">
     <div class="col-md-6">
@@ -77,19 +138,44 @@
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Tutor" class="card-body border border-primary">
+            <div   class="col-md-4">
+              <div  class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('tutor')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="data:image/png;base64,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"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-04.png" alt="Card image cap" />
                   Tutor</a>
               </div>
             </div>
 
 
+            <div class="col-md-4">
+              <div class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithQuery('common','2','2000')">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-05.png" alt="Card image cap" />
+                  Venue Time Table</a>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithQuery('common','2','2001')">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-06.png" alt="Card image cap" />
+                  Class Time Table </a>
+              </div>
+            </div>
+
 
           </div>
+          <div class="row mt-2">
+
+            <div class="col-md-4">
+              <div class="card-body border border-primary">
+                <a class="card-title text-center" (click)="this.loadpageWithQuery('common','2','2002')">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-07.png" alt="Card image cap" />
+                  Tutor Time Table </a>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -102,11 +188,9 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Venue" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Venue" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('venue')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="data:image/png;base64,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"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-28.png" alt="Card image cap" />
                   Venue </a>
               </div>
             </div>
@@ -129,32 +213,26 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('classes')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF5YbwzsMRgvCVgSgn2sVjrLlklOW1B4q-lw&usqp=CAU"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-30.png" alt="Card image cap" />
                   Classes</a>
               </div>
             </div>
 
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('units')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://media-exp1.licdn.com/dms/image/C4D0BAQHwrU_5z3SUTg/company-logo_200_200/0/1519861360730?e=1617840000&v=beta&t=69DxsM4m5Ln84O3AqAK9AfeYwAXER0fsdp3t2D8HqZo"
-                    alt="Card image cap">
+                  <img class="card-img-top" src="assets/icons/icon-2x2-31.png" alt="Card image cap" />
                   Units</a>
               </div>
             </div>
 
             <div class="col-md-4">
-              <div  *ngIf="this.currentObj.Classs" class="card-body border border-primary">
+              <div *ngIf="this.currentObj.Classs" class="card-body border border-primary">
                 <a class="card-title text-center" (click)="this.loadpage('quli')">
-                  <img style="height: 84px;" class="card-img-top"
-                    src="https://www.unisa.ac.za/static/corporate_web/Content/Apply%20for%20admission/Undergraduate/Images/icons-apply-qualifications.png"
-                    alt="Card image cap">
-                    Qulification</a>
+                  <img class="card-img-top" src="assets/icons/icon-2x2-32.png" alt="Card image cap" />
+                  Qulification</a>
               </div>
             </div>
 

@@ -24,16 +24,18 @@ export class OrderDetails
     public   OrderId ?: number=0;
     public   ProductId?: number=0;
     public   Quantity  : number=0;
-    public  Qps?: number=0;
+    public   Qps?: number=0;
     public   Discount?: number=0;
     public   Yield ?: number=0;
-    public    RequiredQuantity ?: number=0;
+    public   RequiredQuantity ?: number=0;
 
     public   Order?: Order;
     public   Product?: Product;
 
     public ProdUnitId ?: number=0;
     public  UnitPrice  : number=0;
+
+    public guid?:string=''
 }
 
 export   class OrderTheoryNotesDTO

@@ -54,6 +54,7 @@ export class   RecipeDetailsDTO {
   ProdNote?: string="";
   UnitPrice:number=0;
   ProdUnitId:number=0;
+  guid?:string=""
 
   public   Product?:Product;
 }

@@ -240,8 +240,13 @@ export class AppComponent implements AfterViewInit, OnInit {
 ,    { "ID": "904", "Name": "Order Single Category" }
 ,    { "ID": "905", "Name": "Order Single Venue" }
 ,    { "ID": "1000", "Name": "XXX" }
+,    { "ID": "2000", "Name": "Venue Time Table" }
+,    { "ID": "2001", "Name": "Class Time Table" }
+,    { "ID": "2002", "Name": "Tutor Time Table" }
   ];
 
 }
+
+ 
 
 

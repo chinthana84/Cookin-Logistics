@@ -34,6 +34,20 @@ export class HomeComponent implements OnInit {
     this.route.navigate([p]);
   }
 
+  loadpageWithQuery(p:string,rptid:string,uiid:string){
+    this.route.navigate([p],{ queryParams:{ rptID:rptid,rptUI_ID:uiid} });
+  }
+
+  loadpageWithSubType(p:string,rptid:string,uiid:string,subtype:string){
+    this.route.navigate([p],{ queryParams:{ rptID:rptid,rptUI_ID:uiid,subtype:subtype} });
+  }
+
+  loadpageWithQueryWeeks(p:string,selectedYear:string,selectedWeekID:string){
+
+    this.route.navigate([p],{ queryParams:{ selectedYear:selectedYear,selectedWeekID:selectedWeekID} });
+  }
+
+
   securityModel: SecurityModel;
   constructor(
     private route:Router,

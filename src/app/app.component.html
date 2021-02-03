@@ -46,8 +46,8 @@
                 routerLink="{{this.CheckAccess('orders')}}">Order Lessions</a>
 
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" routerLink="RecipeOrderRPT" [queryParams]="{rptID:'1000',
-                subtype: 4 ,rptUI_ID:1000 }">XXXX</a>
+                <!-- <a class="dropdown-item" routerLink="RecipeOrderRPT" [queryParams]="{rptID:'1000',
+                subtype: 4 ,rptUI_ID:1000 }">XXXX</a> -->
             </div>
           </li>
 
@@ -59,6 +59,17 @@
             <div class="dropdown-menu" aria-labelledby="Tutor-Time">
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Tutor}"
                 routerLink="{{this.CheckAccess('tutor')}}">Tutor</a>
+
+                <div class="dropdown-divider">Reports</div>
+                <a class="dropdown-item" routerLink="common"
+                 [queryParams]="{rptID:'2',rptUI_ID:'2000'}">  Venue Time Table </a>
+
+                 <a class="dropdown-item" routerLink="common"
+                 [queryParams]="{rptID:'2',rptUI_ID:'2001'}">Class Time Table </a>
+
+                 <a class="dropdown-item" routerLink="common"
+                 [queryParams]="{rptID:'2',rptUI_ID:'2002'}">Tutor Time Table </a>
+
             </div>
           </li>
 
@@ -70,8 +81,6 @@
             <div class="dropdown-menu" aria-labelledby="Venues-Sessions">
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Venue}"
                 routerLink="{{this.CheckAccess('venue')}}">Venue </a>
-                <div class="dropdown-divider">Reports</div>
-                <a class="dropdown-item" routerLink="common" [queryParams]="{rptID:'2'}">All Venue </a>
 
             </div>
           </li>
@@ -94,7 +103,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-light" href="#" id="RequitionsSummary" role="button"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Requitions Summary
+              Order Total
             </a>
             <div class="dropdown-menu" aria-labelledby="RequitionsSummary">
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Weeks}"

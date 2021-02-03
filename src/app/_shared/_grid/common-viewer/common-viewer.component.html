@@ -93,27 +93,27 @@
   <div class="col-md-1"></div>
 
   <div class="col-md-5">
-  <div class="form-group">
-    <label for="StudentNumbers">Tutors</label>
-    <select [(ngModel)]="this.tutorId" class="form-control" id="Tutors" name="Tutors">
-      <option value="0"></option>
-      <option *ngFor="let j of this.modelWrapper.Tutors" [ngValue]="j.TutorId">
-        {{ j.FirstName }}
-      </option>
-    </select>
-  </div>
+    <div *ngIf="IsTutors" class="form-group">
+      <label for="StudentNumbers">Tutors</label>
+      <select [(ngModel)]="this.tutorId" class="form-control" id="Tutors" name="Tutors">
+        <option value="0"></option>
+        <option *ngFor="let j of this.modelWrapper.Tutors" [ngValue]="j.TutorId">
+          {{ j.FirstName }}
+        </option>
+      </select>
+    </div>
 
 
-  <div class="form-group">
-    <label for="StudentNumbers">Class</label>
-    <select   [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
-      <option value="0"></option>
-      <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
-        {{ j.ClassCode }}
-      </option>
-    </select>
+    <div *ngIf="IsClass" class="form-group">
+      <label for="StudentNumbers">Class</label>
+      <select [(ngModel)]="this.classid" class="form-control" id="Class" name="Class">
+        <option value="0"></option>
+        <option *ngFor="let j of this.modelWrapper.Classes" [ngValue]="j.ClassId">
+          {{ j.ClassCode }}
+        </option>
+      </select>
 
-  </div>
+    </div>
   </div>
 
 

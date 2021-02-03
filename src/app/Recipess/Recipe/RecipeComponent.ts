@@ -12,6 +12,7 @@ import { Recipe, RecipeDetailsDTO, RecipeOrderLinkDTO } from 'src/app/models/rec
 import { RefTable } from 'src/app/models/reftable.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
+import { MyproductServiceService } from 'src/app/_shared/product-dialog/myproduct-service.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
@@ -31,6 +32,7 @@ export class RecipeComponent implements OnInit {
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
   modelOrders: Order[] = [];
+  public workingRecipeDetID:number=0;
 
   gridOption: GridOptions = {
     datas: {},
@@ -57,15 +59,14 @@ export class RecipeComponent implements OnInit {
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
     private commonService: CommonService,
-    private gridService: GridService
+    private gridService: GridService,
+    public myproductServiceService:MyproductServiceService
   ) {
     this.edited = true;
   }
 
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
-
-
 
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
@@ -105,6 +106,11 @@ export class RecipeComponent implements OnInit {
         this.edited = false;
       }
     });
+
+    this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => {
+      debugger
+        this.AddRecipeLine(message);
+        });
 
   }
 
@@ -205,11 +211,6 @@ export class RecipeComponent implements OnInit {
     }
   }
 
-  public AddRecipeLine(): void {
-    var obj = new RecipeDetailsDTO();
-    obj.RecipeId = this.modelRecipe.RecipeId;
-    this.modelRecipe.RecipeDetails.push(obj);
-  }
 
 
   public AddAssosiatedOrders(): void {
@@ -230,10 +231,17 @@ export class RecipeComponent implements OnInit {
     return x[0];
   }
 
-  deleteRecipeDetails(i: number): void {
+  deleteRecipeDetails(i: number,guid:string): void {
 
     this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
+      if (i >0){
       this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+      }
+      else{
+        this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.
+        filter(item => item.guid != guid);
+      }
+
     },
       function () { })
 
@@ -252,6 +260,42 @@ export class RecipeComponent implements OnInit {
     alert('not implemnted')
   }
 
+
+
+
+  public AddRecipeLine(obj_pro:Product): void {
+    debugger;
+    var obj = new RecipeDetailsDTO();
+    obj.RecipeId = this.modelRecipe.RecipeId;
+
+    if (this.workingRecipeDetID >0 ){
+
+      let obj=   this.modelRecipe.RecipeDetails
+          .filter(item => item.RecipeDetailId ==this.workingRecipeDetID)[0]
+      obj.Product=obj_pro;
+      obj.RecipeId = this.modelRecipe.RecipeId;
+      obj.ProductId=obj_pro.ProductId;
+      obj.UnitPrice=obj_pro.UnitPrice;
+      obj.ProdUnitId=obj_pro.ProdUnitId;
+
+    }else
+    {
+
+    obj.Product=obj_pro;
+    obj.ProductId=obj_pro.ProductId;
+    obj.UnitPrice=obj_pro.UnitPrice;
+    obj.ProdUnitId=obj_pro.ProdUnitId;
+    obj.guid=this.commonService.newGuid();
+    this.modelRecipe.RecipeDetails.push(obj);
+    }
+  }
+
+
+
+  AddProdutDialog(prod_id:number,recipe_det_id:number){
+    this.workingRecipeDetID=recipe_det_id;
+    this.myproductServiceService.ProductPopup(this.modelWrapper,prod_id,0);
+  }
 
 
 }

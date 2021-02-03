@@ -168,10 +168,14 @@
           </div>
         </div>
 
+<app-product-dialog></app-product-dialog>
+
+
         <div class="tab-pane fade" id="profile">
           <table class="table ">
             <thead>
-              <th>Product</th>
+              <th>Product Name</th>
+
               <th>Unit</th>
               <th>Unit Price</th>
               <th>Change Unit</th>
@@ -180,25 +184,22 @@
               <th>Yield</th>
               <th>Update</th>
               <th>
-                <button (click)="this.AddOrderLine(null)" type="button" class="btn btn-primary btn-xs" data-title="Edit"
+                <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary" data-title="Edit"
                   data-toggle="modal" data-target="#edit">
                   <span class="fa fa-plus"></span>
                 </button>
+
               </th>
             </thead>
             <tbody>
               <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
                 <td>
-                  <select [(ngModel)]="i.ProductId" class="form-control" id="modelStorageAreas{{ index }}"
-                    name="modelStorageAreafgdfgfgs{{ index }}" (ngModelChange)="unitIDDefaultValues($event,i)">
-                    >
-                    <!-- <option value="0"></option> -->
-                    <option *ngFor="let j of this.modelWrapper.Products" [ngValue]="j.ProductId">
-                      <!-- {{ j.ProductName }} | {{j.ProdUnit.RefDescription}} | {{ j.UnitPrice }} -->
-                      {{ j.ProductName }}
-                    </option>
-                  </select>
+                  <button class="btn btn-primary" type="button" (click)="this.AddProdutDialog(i.ProductId,i.OrderDetailsId)">
+                    {{i.Product.ProductName}}
+                  </button>
                 </td>
+
+
 
                 <td>
                   {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
@@ -207,7 +208,7 @@
                   $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
                 </td>
                 <td>
-                 
+
                   <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits{{ index }}"
                     name="ChangedProdUnits{{ index }}">
                     <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
@@ -233,7 +234,7 @@
                 </td>
                 <td>Update</td>
                 <td>
-                  <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId)" class="btn btn-danger btn-sm">
+                  <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId,i.guid)" class="btn btn-danger btn-sm">
                     <span class="fa fa-trash"></span>
                   </button>
                 </td>

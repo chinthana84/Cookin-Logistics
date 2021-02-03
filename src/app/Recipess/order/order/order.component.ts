@@ -10,6 +10,8 @@ import { Product } from 'src/app/models/product.model';
 import { Recipe, RecipeOrderLinkDTO } from 'src/app/models/recipe.model';
 import { Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
+import { ModalDialogService } from 'src/app/_shared/modalDialog/modal-dialog.service';
+import { MyproductServiceService } from 'src/app/_shared/product-dialog/myproduct-service.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
 import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.model';
@@ -30,6 +32,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   modelWrapper: Wrapper = {};
   selectedCouseID: number = 0;
   selectedRecipeID: number = 0;
+  public workingOrderDetID:number=0;
   modelRecipeHeader: Recipe[] = [];
 
   gridOption: GridOptions = {
@@ -50,7 +53,8 @@ export class OrderComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private confirmDialogService: ConfirmDialogService,
     public commonService: CommonService,
-    private gridService: GridService) { }
+    private gridService: GridService,
+    private myproductServiceService:MyproductServiceService) { }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
@@ -90,6 +94,12 @@ export class OrderComponent implements OnInit, OnDestroy {
       }
     });
 
+
+    this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => {
+debugger
+  this.AddOrderLine(message);
+  });
+
   }
 
 
@@ -113,11 +123,32 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.edited = true
   }
 
-  public AddOrderLine(): void {
-    var obj = new OrderDetails();
-    obj.OrderId = this.modelOrder.OrderId;
-    console.log(obj);
-    this.modelOrder.OrderDetails.push(obj);
+  public AddOrderLine(obj_pro:Product): void {
+
+    if (this.workingOrderDetID >0 ){
+
+      let obj=   this.modelOrder.OrderDetails.filter(item => item.OrderDetailsId ==this.workingOrderDetID)[0]
+      obj.Product=obj_pro;
+      obj.OrderId = this.modelOrder.OrderId;
+      obj.ProductId=obj_pro.ProductId;
+      obj.UnitPrice=obj_pro.UnitPrice;
+      obj.ProdUnitId=obj_pro.ProdUnitId;
+
+    }
+    else{
+      var obj = new OrderDetails();
+      obj.Product=obj_pro;
+      obj.OrderId = this.modelOrder.OrderId;
+      obj.ProductId=obj_pro.ProductId;
+      obj.UnitPrice=obj_pro.UnitPrice;
+      obj.ProdUnitId=obj_pro.ProdUnitId;
+      obj.guid=this.commonService.newGuid();
+      this.modelOrder.OrderDetails.push(obj);
+    }
+
+
+
+
   }
 
 
@@ -133,11 +164,19 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   }
 
-  public deleteOrderLine(id: number): void {
-    let that: this;
-    let IsOk: Boolean = false;
+  public deleteOrderLine(id: number,guid:string): void {
+
     this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
-      this.modelOrder.OrderDetails = this.modelOrder.OrderDetails.filter(item => item.OrderDetailsId != id);
+
+      if (id>0){
+        this.modelOrder.OrderDetails = this.modelOrder.OrderDetails.
+        filter(item => item.OrderDetailsId != id);
+      }else{
+        this.modelOrder.OrderDetails = this.modelOrder.OrderDetails.
+        filter(item => item.guid != guid);
+      }
+
+
     },
       function () { })
 
@@ -164,7 +203,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   getProductObject(i: number): Product {
     let x = this.modelWrapper.Products.filter(b => b.ProductId == i)
-     
+
     return x[0];
   }
 
@@ -248,5 +287,14 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 
   }
+
+
+  AddProdutDialog(prod_id:number,order_det_id:number){
+    this.workingOrderDetID=order_det_id;
+    this.myproductServiceService.ProductPopup(this.modelWrapper,prod_id,order_det_id);
+  }
+
+
+
 
 }

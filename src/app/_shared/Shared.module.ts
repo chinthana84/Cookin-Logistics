@@ -10,6 +10,8 @@ import { NumericDirective } from './directive/numeric.directive';
 import { InternalServerComponent } from './error-pages/internal-server/internal-server.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonViewerComponent } from './_grid/common-viewer/common-viewer.component';
+import { ProductDialogComponent } from './product-dialog/product-dialog.component';
+import { MyproductServiceService } from './product-dialog/myproduct-service.service';
 
 const routes: Routes = [
   { path:'common', component: CommonViewerComponent },
@@ -20,14 +22,17 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,NumericDirective, InternalServerComponent, CommonViewerComponent   ],
+  declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,
+    NumericDirective, InternalServerComponent, CommonViewerComponent,
+    ProductDialogComponent   ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,ReactiveFormsModule
   ],
 
-  exports:[SearchComponent,PagerComponent,BreadCrumbComponent,NumericDirective]
-  , providers:[GridService]
+  exports:[SearchComponent,PagerComponent,BreadCrumbComponent,NumericDirective
+  ,ProductDialogComponent]
+  , providers:[GridService,MyproductServiceService]
 })
 export class SharedModule { }
