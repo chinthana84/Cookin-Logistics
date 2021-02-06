@@ -29,7 +29,7 @@ thead th {
 }
 
 tbody td {
-  background-color: #EEEEEE;
+  background-color: white;
 }
 
 tr td:first-child,
@@ -70,11 +70,27 @@ background-color:sandybrown;
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
     font-family:  Poppins,sans-serif;
-
-    background: #fafafa;
+/*
+    background: #fafafa; */
+    background: #ecf0f4;
     /* background: url('assets/bg.jpg') no-repeat center center fixed !important; */
     /* color:white !important; */
     background-size: cover !important;
+}
+
+/* body {
+  font-size: 1rem;
+  font-weight: 200;
+  line-height: 0.5;
+
+} */
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 12px; /* for example */
 }
 
 p {
@@ -297,7 +313,7 @@ ul.social-network li {
 
 
 
- 
+
 
 
 
