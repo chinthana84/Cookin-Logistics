@@ -10,10 +10,11 @@ export enum GridType {
   Weeks = 9,
   Units = 10,
   UserAdmin = 11,
-  Quli =12
+  Quli =12,
+  WorkingYear=13
 }
 
- 
+
 
 export enum OrderTotalReportTypes{
 Breakdown_of_Supply=1

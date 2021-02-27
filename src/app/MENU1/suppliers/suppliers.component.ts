@@ -23,6 +23,7 @@ import { CommonService } from 'src/app/_shared/_services/common.service';
 import { IMyGrid } from 'src/app/models/wrapper.model';
 import { AuthenticationService } from 'src/app/MyServices/authentication.service';
 import { SubSink } from 'subsink';
+import { ErrorHandlerService } from "src/app/_shared/_services/error-handler.service";
 
 @Component({
   selector: "app-suppliers",
@@ -51,6 +52,7 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
   constructor(
     private auth: AuthenticationService,
     private http: HttpClient,
+    private errorHandler: ErrorHandlerService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
@@ -72,7 +74,14 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
         this.edited = true;
         this.subs.sink = this.http
           .get<any>(`${environment.APIEndpoint}/supplier/GetByID/` + params.id)
-          .subscribe((data) => { this.model = data; }, (error) => { this.confirmDialogService.messageBox(environment.APIerror) });
+          .subscribe((data) => { this.model = data; }, (error) =>
+          {
+            //this.confirmDialogService.messageBox(environment.APIerror)
+
+
+            this.errorHandler.handleError(error);
+
+          });
       } else {
         this.edited = false;
       }
@@ -84,7 +93,9 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
     .subscribe((data) => {
       this.gridOption.datas = data;
       this.gridOption.searchObject.saveID=0;
-    }, (error) => {  this.confirmDialogService.messageBox(environment.APIerror)  });
+    }, (error) => {
+     // this.confirmDialogService.messageBox(environment.APIerror) ;
+      this.errorHandler.handleError(error); });
   }
 
   Supplier(item: Supplier) {
@@ -103,6 +114,7 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
       .post<any>(`${environment.APIEndpoint}/supplier`, obj, {}).subscribe((data) => {
         if (data.IsValid == false) {
           this.confirmDialogService.messageListBox(data.ValidationMessages)
+
         }
         else {
           this.toastr.success(environment.dataSaved);
@@ -112,6 +124,9 @@ export class SuppliersComponent implements OnInit, IMyGrid, OnDestroy {
         }
       }, (error) => {
         this.confirmDialogService.messageBox(environment.APIerror)
+
+        this.errorHandler.handleError(error);
+
       });
   }
 

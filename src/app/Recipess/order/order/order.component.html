@@ -274,6 +274,9 @@
                     <th>Quantity</th>
                     <th>Yield</th>
                     <th>Update</th>
+                    <th>Cost</th>
+                    <th>QPS</th>
+                    <th>Ext. Price</th>
                     <th>
                       <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary" data-title="Edit"
                         data-toggle="modal" data-target="#edit">
@@ -319,7 +322,10 @@
                         <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
                           (ngModelChange)="i.Yield = $event === null ? 0 : $event" placeholder="Yield" numeric decimals="2" />
                       </td>
-                      <td>Update</td>
+                      <td>{{i.Quantity}}</td>
+                      <td>{{ (i.UnitPrice * i.Quantity).toFixed(2) }}</td>
+                      <td>{{ (i.Quantity/ this.modelOrder.StudentNumbers ).toFixed(2) }}</td>
+                      <td> {{ ((i.UnitPrice * i.Quantity)/this.modelOrder.StudentNumbers).toFixed(2)}}</td>
                       <td>
                         <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId,i.guid)"
                           class="btn btn-danger btn-sm">

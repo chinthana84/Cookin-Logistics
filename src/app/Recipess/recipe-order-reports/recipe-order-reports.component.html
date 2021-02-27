@@ -1,1 +1,143 @@
-<p>recipe-order-reports works!</p>
+<div class="row mt-3">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="RecipeName">Processing Year</label>
+      <select [(ngModel)]="selectedYear" class="form-control" id="modelStorsageAreas"
+        name="fmodelsafStorageAreafgdfgfgs ">
+        <option value=""></option>
+        <option *ngFor="let j of this.firstMondayList" [(value)]="j.FirstMondayId">
+          {{ j.Description }} - {{ j.FirstMondayDate }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="RecipeName">Select the Lesson Order</label>
+      <select [(ngModel)]="selectedOrder" class="form-control" id="selectedOrder" name="selectedOrder ">
+        <option value=""></option>
+        <option *ngFor="let j of this.orders" [(value)]="j.OrderId">
+          {{ j.OrderDescription }} - {{ j.PractTitle }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <!-- <div class="form-group">
+      <label for="RecipeName">Student/Guest numbers</label>
+      <input [(ngModel)]="this.selectedNumbers" id="selectedNumbers" name="selectedNumbers" type="text"
+        class="form-control" />
+
+    </div> -->
+    <div class="form-group">
+      <label for="RecipeName">Student/Guest numbers</label>
+      <div class="input-group mb-3">
+
+        <input  numeric [(ngModel)]="this.selectedNumbers" id="selectedNumbers" name="selectedNumbers" type="text"
+        class="form-control"   >
+        <div class="input-group-append">
+          <button (click)="this.LoadSingleOrder()" class="btn btn-block btn-primary save_button" type="button">Preview</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div *ngIf="this.selectedYear >0 && this.selectedOrder==0" class="row mt-2">
+  <div class="col-md-6">
+    <!-- <form novalidate #heroForm="ngForm"> -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="" data-target="#home">Header</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="" data-target="#profile">Details</a>
+      </li>
+    </ul>
+    <div  class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home">
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="OrderDescription">Start Week of timetable period</label>
+              <input [(ngModel)]="this.startWeekNo" id="OrderDescription" name="OrderDescription" type="text"
+                class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="StudentNumbers">End Week of timetable period</label>
+              <input [(ngModel)]="this.endWeekNo" id="PractTitle2" name="PractTitle2" type="text"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="btn-group btn-block">
+          <button type="button" (click)="loadreports('w')" class="btn btn-primary save_button">
+            <span class="fa fa-print">Summary</span>
+          </button>
+          <button type="button" (click)="loadreportsAuto('w')" class="btn btn-block btn-primary save_button ">
+            <span class="fa fa-print">Auto Genarate</span>
+          </button>
+        </div>
+
+
+      </div>
+
+      <div class="tab-pane fade" id="profile">
+
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="OrderDescription2">Start Date of timetable period</label>
+              <input type="date" [(ngModel)]="this.startWeekDate" id="OrderDescription2" name="OrderDescription2"
+                class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="StudentNumbers">End Date of timetable period</label>
+              <input [(ngModel)]="this.endWeekDate" id="PractTitle" name="PractTitle" type="date"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" (click)="loadreports('d')" class="btn btn-primary save_button">
+            <span class="fa fa-print">Summary</span>
+          </button>
+          <button type="button" (click)="loadreportsAuto('d')" class="btn btn-primary save_button">
+            <span class="fa fa-print">Auto Genarate</span>
+          </button>
+
+        </div>
+
+      </div>
+
+      <br />
+
+    </div>
+    <!-- </form> -->
+  </div>
+
+  <div class="col-md-1"></div>
+
+  <div class="col-md-5">
+
+
+
+
+  </div>
+
+
+</div>

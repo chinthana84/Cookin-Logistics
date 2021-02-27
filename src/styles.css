@@ -8,12 +8,12 @@ font-size: 10;
 }
 .save_button {
   min-width: 80px;
-  max-width: 80px;
+  max-width: 180px;
 }
 
 .back_button {
   min-width: 80px;
-  max-width: 80px;
+  max-width: 180px;
 }
 
 

@@ -49,6 +49,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
         headerSettings['Authorization'] = 'Bearer ' + localStorage.getItem("todoBearerToken");
         request = request.clone({
+
           setHeaders:  headerSettings
 
         });

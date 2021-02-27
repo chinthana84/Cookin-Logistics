@@ -8,6 +8,8 @@ import { AdminComponent } from './admin/admin.component';
 import { SharedModule } from '../_shared/Shared.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RefTableDataComponent } from './ref-table-data/ref-table-data.component';
+import { FirstMondayComponent } from './first-monday/first-monday.component';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 
 const routes: Routes = [
@@ -24,15 +26,20 @@ const routes: Routes = [
   {
     path: 'ref',data:{titleKey: 'Reference Data'},  component: RefTableDataComponent
   }
+  ,
+  {
+    path: 'first',data:{titleKey: 'Working Year'},  component: FirstMondayComponent
+  }
  ];
 
 @NgModule({
-  declarations: [ LoginComponent, HomeComponent, AdminComponent, ChangePasswordComponent, RefTableDataComponent],
+  declarations: [ LoginComponent, HomeComponent, AdminComponent, ChangePasswordComponent, RefTableDataComponent, FirstMondayComponent],
   imports: [
  CommonModule,
     FormsModule,
     //NgbModule,
     SharedModule,
+
     RouterModule.forChild(routes),
   ],
   exports:[LoginComponent]

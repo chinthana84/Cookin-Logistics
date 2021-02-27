@@ -49,8 +49,8 @@
                 routerLink="{{this.CheckAccess('orders')}}">Order Lessons</a>
 
                 <div class="dropdown-divider"></div>
-                <!-- <a class="dropdown-item" routerLink="RecipeOrderRPT" [queryParams]="{rptID:'1000',
-                subtype: 4 ,rptUI_ID:1000 }">XXXX</a> -->
+                <a class="dropdown-item" routerLink="RecipeOrderRPT" [queryParams]="{rptID:'1000',
+                subtype: 4 ,rptUI_ID:1000 }">Commodities Trolly</a>
             </div>
           </li>
 
@@ -145,6 +145,9 @@
                 Access</a>
               <a class="dropdown-item" [ngClass]="{'norights': !this.currentObj.Reference}"
                 routerLink="{{this.CheckAccess('ref')}}">Ref Tables
+              </a>
+                 <a class="dropdown-item"
+                routerLink="first">Working Year
               </a>
             </div>
           </li>

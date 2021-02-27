@@ -22,10 +22,10 @@
         <td>{{ item.PrepName }}</td>
         <td>
           <div class="btn-group">
-               <button (click)="Action(item)" class="btn btn-primary ">
-            <span class="fa fa-edit"></span></button>
+            <button (click)="Action(item)" class="btn btn-primary ">
+              <span class="fa fa-edit"></span></button>
             <button type="button" class="btn btn-primary  " data-toggle="modal" data-target="#exampleModalCenter"> <span
-              class="fa fa-print"></span> </button>
+                class="fa fa-print"></span> </button>
           </div>
 
         </td>
@@ -67,8 +67,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="Reference">Reference</label>
-                <input [(ngModel)]="this.modelRecipe.Reference" id="Referenceasdfsadf" name="Referenceasdfsadf" type="text"
-                  class="form-control" placeholder="Reference" />
+                <input [(ngModel)]="this.modelRecipe.Reference" id="Referenceasdfsadf" name="Referenceasdfsadf"
+                  type="text" class="form-control" placeholder="Reference" />
               </div>
             </div>
           </div>
@@ -89,8 +89,8 @@
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.StandardPortions"
                           (ngModelChange)="this.modelRecipe.StandardPortions = $event === null ? 0 : $event"
-                          type="number" numeric decimals="2" maxlength="10" id="StandardPortions" name="StandardPortions"
-                          class="form-control" placeholder="StandardPortions" />
+                          type="number" numeric decimals="2" maxlength="10" id="StandardPortions"
+                          name="StandardPortions" class="form-control" placeholder="StandardPortions" />
                       </label>
                     </div>
                     <div class="col-md-4">
@@ -324,7 +324,8 @@
                     <tbody>
                       <tr *ngFor=" let i of this.modelRecipe.RecipeOrderLink; let index = index " class="table-hover">
                         <td>
-                          <select [(ngModel)]="i.OrderId" class="form-control" id="orderLink{{ index }}" name="orderLink{{ index }}">
+                          <select [(ngModel)]="i.OrderId" class="form-control" id="orderLink{{ index }}"
+                            name="orderLink{{ index }}">
                             <option value="0"></option>
                             <option *ngFor="let j of this.modelOrders " [ngValue]="j.OrderId">
                               {{ j.OrderDescription }}
@@ -338,13 +339,13 @@
                         </td>
                       </tr>
                       <tr
-                      *ngIf="this.modelRecipe.RecipeOrderLink?.length == 0 || this.modelRecipe.RecipeOrderLink?.length == null  ">
-                      <td class="datanotfound" colspan="2">Data not found</td>
-                    </tr>
+                        *ngIf="this.modelRecipe.RecipeOrderLink?.length == 0 || this.modelRecipe.RecipeOrderLink?.length == null  ">
+                        <td class="datanotfound" colspan="2">Data not found</td>
+                      </tr>
                     </tbody>
                   </table>
-                  </div>
-                  </div>
+                </div>
+              </div>
             </div>
 
 
@@ -372,8 +373,8 @@
                       <th>HR Food</th>
                       <th>Prod Note</th>
                       <th>
-                          <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary" data-title="Edit"
-                          data-toggle="modal" data-target="#edit">
+                        <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary"
+                          data-title="Edit" data-toggle="modal" data-target="#edit">
                           <span class="fa fa-plus"></span>
                         </button>
                       </th>
@@ -381,15 +382,17 @@
                     <tbody>
                       <tr *ngFor=" let i of this.modelRecipe.RecipeDetails; let index = index " class="table-hover">
                         <td>
-                          <button class="btn btn-primary" type="button" (click)="this.AddProdutDialog(i.ProductId,i.RecipeDetailId)">
+                          <button class="btn btn-primary" type="button"
+                            (click)="this.AddProdutDialog(i.ProductId,i.RecipeDetailId)">
                             {{i.Product.ProductName}}
                           </button>
                         </td>
 
                         <td>
-                          <input [(ngModel)]="i.Quantity" id="Quantity{{ index }}" name="Quantity{{ index }}" class="form-control"
-                            placeholder="Quantity" (ngModelChange)="i.Quantity = $event === null ? 0 : $event" type="number"
-                            numeric decimals="2" maxlength="10" />
+                          <input [(ngModel)]="i.Quantity" id="Quantity{{ index }}" name="Quantity{{ index }}"
+                            class="form-control" placeholder="Quantity"
+                            (ngModelChange)="i.Quantity = $event === null ? 0 : $event" type="number" numeric
+                            decimals="2" maxlength="10" />
                         </td>
                         <td>
                           {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
@@ -407,13 +410,13 @@
                           </select>
                         </td>
                         <td>
-                          <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}" type="number"
-                            class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)" placeholder="UnitPrice"
-                            numeric decimals="2" />
+                          <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}"
+                            type="number" class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)"
+                            placeholder="UnitPrice" numeric decimals="2" />
                         </td>
                         <td>
-                          <input [(ngModel)]="i.Yield" id="Yield{{ index }}" name="Yield{{ index }}" numeric decimals="2" type="text"
-                            class="form-control" placeholder="Yield" />
+                          <input [(ngModel)]="i.Yield" id="Yield{{ index }}" name="Yield{{ index }}" numeric
+                            decimals="2" type="text" class="form-control" placeholder="Yield" />
                         </td>
                         <td>
                           {{(i.Quantity * 100)/i.Yield}}
@@ -423,14 +426,15 @@
                           $ {{ (((i.Quantity * 100)/i.Yield)* ( i.UnitPrice)).toFixed(2)}}
                         </td>
                         <td>QPP</td>
-                        <td>Ext. Price</td>
+                        <td>{{ (i.Quantity/this.modelRecipe.StandardPortions).toFixed(2)}}</td>
                         <td>{{ i.Product?.Hrfood }}</td>
                         <td>
-                          <input [(ngModel)]="i.ProdNote" id="ProdNote{{ index }}" name="ProdNote{{ index }}" type="text"
-                            class="form-control" placeholder="ProdNote" />
+                          <input [(ngModel)]="i.ProdNote" id="ProdNote{{ index }}" name="ProdNote{{ index }}"
+                            type="text" class="form-control" placeholder="ProdNote" />
                         </td>
                         <td>
-                          <button type="button" (click)="deleteRecipeDetails(i.RecipeDetailId,i.guid)" class="btn btn-primary ">
+                          <button type="button" (click)="deleteRecipeDetails(i.RecipeDetailId,i.guid)"
+                            class="btn btn-primary ">
                             <span class="fa fa-trash"></span>
                           </button>
                         </td>
@@ -441,7 +445,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  </div>
+                </div>
               </div>
 
             </div>
@@ -477,8 +481,8 @@
 
 
 
-<div class="modal fade  " data-backdrop="static" data-keyboard="false" id="exampleModalCenter" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade  " data-backdrop="static" data-keyboard="false" id="exampleModalCenter" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -505,7 +509,8 @@
                   <div class="col-md-12">
                     <label class="form-check-label">
                       <!-- [(ngModel)]="this.subSearchType" -->
-                      <input type="radio" class="form-check-input" name="optradio" value="c" />Without costing Information
+                      <input type="radio" class="form-check-input" name="optradio" value="c" />Without costing
+                      Information
                     </label>
                   </div>
                   <div class="col-md-12">

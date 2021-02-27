@@ -63,7 +63,7 @@ import { OrderModule } from './Recipess/order.module';
         path: 'products',data:{titleKey: 'Product'}, component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
     ]),
-
+  
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,

@@ -1,0 +1,48 @@
+<div id="safsdf"  >
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject">
+  </app-search>
+  <table class="table  ">
+    <thead>
+      <th>FirstMondayDate</th>
+      <th>Description</th>
+
+      <th>
+        <button (click)="Action(null)" class="btn btn-primary ">
+          <span class="fa fa-plus"></span></button>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of gridOption.datas.pagedItems;  let index = index" class="table-hover">
+        <td>
+
+          <input  id="FirstMondayDatexxxx{{index}}" name="FirstMondayDatexxxxxx{{index}}"
+           type="date" class="form-control"
+           [ngModel]="item.FirstMondayDate | date:'yyyy-MM-dd'"
+                 (ngModelChange)="item.FirstMondayDate = $event" />
+
+          <!-- <input [(ngModel)]="item.FirstMondayDate" id="FirstMondayDate{{index}}" name="FirstMondayDate{{index}}" type="date"
+          class="form-control" placeholder="FirstMondayDate" /> -->
+
+        <td>
+          <input [(ngModel)]="item.Description" id="Description{{index}}" name="Description{{index}}" type="text"
+          class="form-control" placeholder="Description" />
+
+
+        <td>
+          <div class="btn-group">
+            <button (click)="this.save(item)" class="btn btn-primary ">
+              <span class="fa fa-edit"></span></button>
+
+          </div>
+
+        </td>
+      </tr>
+      <tr class="" *ngIf="this.gridOption.datas.pagedItems == 0">
+        <td class="datanotfound" colspan="7">Data not found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+  <br />
+</div>
