@@ -20,7 +20,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule ,
     RouterModule.forChild(routes),
-    SharedModule
+     SharedModule
   ]
 })
 export class TutorsTimetableModule { }

@@ -50,6 +50,16 @@ export class vw_GetUserGridDTO
     public   UserId?:number=0;
     public    UserName?:string="";
 }
- 
+
+export class VwPo
+{
+  public   Poid?:string="";
+  public   Pono ?:string="";
+  public   CompanyName?:string="";
+  public   DeliveryDate ?:string="";
+  public  PaymentTerms?:string="";
+  public  Orderedby ?:string="";
+
+}
 
 

@@ -23,6 +23,9 @@ export class Wrapper {
   public StandradUnits?: RefTable []=[];
   public YieldUnits?: RefTable []=[];
 
+  public PaymentTerms?: RefTable []=[];
+  public OrderedBy?: RefTable []=[];
+
   public Tutors?:Tutor[]=[];
   public Venues?:Kitchens[]=[];
   public Sessions?:Timeslots[]=[];

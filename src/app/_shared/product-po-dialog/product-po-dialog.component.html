@@ -1,0 +1,42 @@
+<div *ngIf="obj" class="modal" tabindex="-1" style="display:block!important">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Product</h5>
+        <button (click)="this.productPoDialogService.closeDialog()" type="button" class="close"
+          data-dismiss="modal">&times;</button>
+      </div>
+      <div *ngIf="obj?.type == 'confirm'" class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <select [(ngModel)]="obj.SelectedProductId" class="form-control"
+             (change)="this.GetSelectedProduct(obj.SelectedProductId)" >
+              <option value="0"></option>
+              <option *ngFor="let j of this.obj.passingDataModels.Products" [ngValue]="j.ProductId">
+                {{ j.ProductName }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <select [(ngModel)]="obj.SelectedProductUnitID" class="form-control"
+         >
+              <option value="0"></option>
+              <option *ngFor="let j of this.obj.passingDataModels.ProdUnits" [ngValue]="j.RefId">
+                {{ j.RefDescription }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button (click)="this.productPoDialogService.closeDialog()" type="button" class="btn btn-secondary"
+          data-dismiss="modal">Cancel</button>
+        <button (click)="this.addProduct(obj.SelectedProductId)" type="button" class="btn btn-primary">Add
+          Product</button>
+      </div>
+    </div>
+  </div>
+</div>

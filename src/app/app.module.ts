@@ -32,6 +32,7 @@ import { QuliClassUniModule } from './Quals-Classes-Units/quli-class-uni.module'
 import { OrderTotalsModule } from './Order-Totals/order-totals.module';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { OrderModule } from './Recipess/order.module';
+import { PoModule } from './po/po.module';
 
 
 
@@ -63,7 +64,7 @@ import { OrderModule } from './Recipess/order.module';
         path: 'products',data:{titleKey: 'Product'}, component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
     ]),
-  
+
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
@@ -76,7 +77,8 @@ import { OrderModule } from './Recipess/order.module';
     TutorsTimetableModule,
     VenueSessionModule,
     QuliClassUniModule,
-    OrderTotalsModule
+    OrderTotalsModule,
+    PoModule
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

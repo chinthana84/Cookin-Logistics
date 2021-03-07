@@ -1,0 +1,117 @@
+<div *ngIf="!edited">
+  <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"> </app-search>
+  <table class="table  ">
+    <thead>
+      <th>Pono</th>
+      <th>CompanyName</th>
+      <th>
+
+        <button (click)="Action(null)" class="btn btn-primary  ">
+          <span class="fa fa-plus"></span></button>
+      </th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of gridOption.datas.pagedItems" class="table-hover">
+        <td>{{ item.Pono }}</td>
+        <td>{{ item.CompanyName }}</td>
+        <td>
+
+          <button (click)="Action(item)" class="btn btn-primary  ">
+            <span class="fa fa-edit"></span></button>
+        </td>
+      </tr>
+      <tr *ngIf="this.gridOption.datas.pagedItems==0">
+        <td class="datanotfound" colspan="3">Data not found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
+  <br /><br />
+</div>
+
+
+<div class="row mt-2">
+  <div class="col-md-12">
+    <form (ngSubmit)="onSubmit(model)" *ngIf="this.edited" novalidate #heroForm="ngForm">
+      <app-product-po-dialog></app-product-po-dialog>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Supplier">Supplier</label>
+            <select [(ngModel)]="this.model.SupplierId" class="form-control" id="Supplier" name="Supplier">
+              <option value="0"></option>
+              <option *ngFor="let i of this.modelWrapper.Suppliers" [ngValue]="i.SupplierId">
+                {{ i.CompanyName }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="Payment Terms">Payment Terms</label>
+            <select [(ngModel)]="this.model.PaymentTermId" class="form-control" id="Payment Terms" name="Payment Terms">
+              <option value="0"></option>
+              <option *ngFor="let i of this.modelWrapper.PaymentTerms" [ngValue]="i.RefId">
+                {{ i.RefDescription }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="OrderedById">Ordered By</label>
+            <select [(ngModel)]="this.model.OrderedById" class="form-control" id="OrderedById" name="
+            OrderedById">
+              <option value="0"></option>
+              <option *ngFor="let i of this.modelWrapper.OrderedBy" [ngValue]="i.RefId">
+                {{ i.RefDescription }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table class="table  ">
+          <thead>
+            <th>Item No</th>
+            <th>Product Name</th>
+            <th>ProductUnit</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th>
+
+              <button (click)="AddNewItem(null)" class="btn btn-primary  ">
+                <span class="fa fa-plus"></span></button>
+            </th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of  this.model.Podetails; let index=index" class="table-hover">
+              <td></td>
+              <td>{{item.ProductDescription}}</td>
+              <td>{{item.ProductUnitDescription}}</td>
+              <td>
+                <input id="UnitPrice{{index}}" name="UnitPrice{{index}}" [(ngModel)]="item.UnitPrice" type="text"
+                  class="form-control" placeholder="UnitPrice" />
+              </td>
+              <td>
+                <input id="Qty{{index}}" name="Qty{{index}}" [(ngModel)]="item.Qty" type="text" class="form-control"
+                  placeholder="Qty" />
+
+              </td>
+              <td>
+                <button (click)="EditItem(item)" class="btn btn-primary  ">
+                  <span class="fa fa-plus"></span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </form>
+  </div>
+</div>

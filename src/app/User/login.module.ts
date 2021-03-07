@@ -9,7 +9,7 @@ import { SharedModule } from '../_shared/Shared.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RefTableDataComponent } from './ref-table-data/ref-table-data.component';
 import { FirstMondayComponent } from './first-monday/first-monday.component';
-import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+
 
 
 const routes: Routes = [
@@ -37,8 +37,8 @@ const routes: Routes = [
   imports: [
  CommonModule,
     FormsModule,
-    //NgbModule,
-    SharedModule,
+
+     SharedModule,
 
     RouterModule.forChild(routes),
   ],

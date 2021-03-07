@@ -12,6 +12,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonViewerComponent } from './_grid/common-viewer/common-viewer.component';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { MyproductServiceService } from './product-dialog/myproduct-service.service';
+import { ProductPoDialogComponent } from './product-po-dialog/product-po-dialog.component';
+import { ProductPoDialogService } from './product-po-dialog/product-po-dialog.service';
 
 const routes: Routes = [
   { path:'common', component: CommonViewerComponent },
@@ -24,7 +26,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [SearchComponent,PagerComponent, BreadCrumbComponent,
     NumericDirective, InternalServerComponent, CommonViewerComponent,
-    ProductDialogComponent   ],
+    ProductDialogComponent,
+    ProductPoDialogComponent ,ProductPoDialogComponent  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -32,7 +35,7 @@ const routes: Routes = [
   ],
 
   exports:[SearchComponent,PagerComponent,BreadCrumbComponent,NumericDirective
-  ,ProductDialogComponent]
-  , providers:[GridService,MyproductServiceService]
+  ,ProductDialogComponent,ProductPoDialogComponent]
+  , providers:[GridService,MyproductServiceService,ProductPoDialogService]
 })
 export class SharedModule { }

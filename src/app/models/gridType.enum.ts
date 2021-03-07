@@ -10,8 +10,9 @@ export enum GridType {
   Weeks = 9,
   Units = 10,
   UserAdmin = 11,
-  Quli =12,
-  WorkingYear=13
+  Quli = 12,
+  WorkingYear = 13,
+  PO=14
 }
 
 

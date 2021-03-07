@@ -1,30 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PurchaseOrderComponent } from './purchase-order/purchase-order.component';
 import { RouterModule, Routes } from '@angular/router';
-import { WeekComponent } from './week/week.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/Shared.module';
 
-import { OrderReportsComponent } from './order-reports/order-reports.component';
-
 const routes: Routes = [
   {
-    path: 'Search',data:{titleKey: 'Requitions'}, component: WeekComponent
+    path: 'po',data:{titleKey: 'PO'}, component: PurchaseOrderComponent
+    , children: [{ path: 'edit', component: PurchaseOrderComponent }]
   }
-,
-  { path: 'orderRpt', component: OrderReportsComponent}
 ];
 
 
 @NgModule({
-  declarations: [WeekComponent,OrderReportsComponent],
+  declarations: [PurchaseOrderComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule ,
     RouterModule.forChild(routes),
-     SharedModule
-  ],
-  exports: [WeekComponent]
+    SharedModule
+  ]
 })
-export class OrderTotalsModule { }
+export class PoModule { }

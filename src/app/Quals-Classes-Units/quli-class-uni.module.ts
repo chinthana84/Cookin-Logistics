@@ -26,7 +26,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule,
+   SharedModule,
     //NgbModule,
     RouterModule.forChild(routes),
   ]
