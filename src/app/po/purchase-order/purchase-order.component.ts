@@ -24,6 +24,7 @@ export class PurchaseOrderComponent implements OnInit,OnDestroy {
   private subs = new SubSink();
   edited: boolean = false;
   model: PoHeaer={};
+  workingPODetailID:number=0;
 
   modelWrapper: Wrapper = {};
 
@@ -111,13 +112,18 @@ export class PurchaseOrderComponent implements OnInit,OnDestroy {
     this.edited = true;
   }
 
-  AddNewItem(obj: Podetails){
-    this.productPoDialogService.ProductPopup(this.modelWrapper,0,0,0);
-  }
+  // AddNewItem(obj: Podetails){
+  //   this.productPoDialogService.ProductPopup(this.modelWrapper,0,0,0);
+  // }
 
-  EditItem(obj: Podetails){
-    debugger
-    this.productPoDialogService.ProductPopup(this.modelWrapper,obj.ProductId,obj.PodetailId,obj.ProdUnitId);
+  // EditItem(obj: Podetails){
+  //   debugger
+  //   this.productPoDialogService.ProductPopup(this.modelWrapper,obj.ProductId,obj.PodetailId,obj.ProdUnitId);
+  // }
+
+  AddProdutDialog(prod_id:number,podetailid:number,produnitid:number){
+    this.workingPODetailID=podetailid;
+    this.productPoDialogService.ProductPopup(this.modelWrapper,prod_id,0,produnitid);
   }
 
   AddProduct(obj:Product){
@@ -135,9 +141,46 @@ export class PurchaseOrderComponent implements OnInit,OnDestroy {
       this.model.Podetails=[];
     }
     this.model.Podetails.push(newDet)
+
+
+
   }
 
-  onSubmit(obj: any) {
+  deleteProduct(item :any){
+    debugger
+
+    this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
+      if(item.PodetailId > 0)
+      {
+        this.model.Podetails =  this.model.Podetails.filter(i => i.PodetailId != item.PodetailId);
+
+      }
+      else{
+        this.model.Podetails =  this.model.Podetails.filter(i => i.guid != item.guid);
+
+      }
+    },
+      function () { })
+
+  }
+
+  Save() {
+
+    this.subs.sink = this.http
+    .post<any>(`${environment.APIEndpoint}/PO/Save`, this.model, {})
+    .subscribe((data) => {
+      if (data.IsValid == false) {
+        this.confirmDialogService.messageListBox(data.ValidationMessages)
+      }
+      else {
+        this.toastr.success(environment.dataSaved);
+        this.router.navigate(['po']);
+        this.setPage(this.gridOption.searchObject);
+      }
+    }, (error) => {
+
+      this.confirmDialogService.messageBox(environment.APIerror)
+    });
   }
 
 }

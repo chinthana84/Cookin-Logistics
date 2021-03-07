@@ -26,6 +26,7 @@ export class ProductPoDialogComponent implements OnInit {
 
     x[0].ProdUnit=y;
     x[0].ProdUnitId=y.RefId;
+  
     this.productPoDialogService.addSelectedProduct(x[0]);
   }
 
@@ -34,6 +35,7 @@ export class ProductPoDialogComponent implements OnInit {
     let x = this.obj.passingDataModels.Products.filter(b => b.ProductId == productid);
     this.obj.SelectedProductId=x[0].ProductId;
     this.obj.SelectedProductUnitID=x[0].ProdUnitId;
+
 
     let y = this.obj.passingDataModels.ProdUnits.filter(b => b.RefId == this.obj.SelectedProductUnitID)[0]
     this.obj.ProductDescription=x[0].ProductDescription
