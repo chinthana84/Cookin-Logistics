@@ -30,10 +30,8 @@ import { VenueComponent } from './Venus-Sessions/venue/venue.component';
 import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
 import { QuliClassUniModule } from './Quals-Classes-Units/quli-class-uni.module';
 import { OrderTotalsModule } from './Order-Totals/order-totals.module';
-import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 import { OrderModule } from './Recipess/order.module';
-import { PoModule } from './po/po.module';
-
+import { PoModule } from './po/po.module'; 
 
 
 @NgModule({
@@ -78,7 +76,8 @@ import { PoModule } from './po/po.module';
     VenueSessionModule,
     QuliClassUniModule,
     OrderTotalsModule,
-    PoModule
+    PoModule,
+
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

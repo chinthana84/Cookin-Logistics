@@ -4,7 +4,7 @@ import { PurchaseOrderComponent } from './purchase-order/purchase-order.componen
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/Shared.module';
-
+import { DpDatePickerModule } from 'ng2-date-picker';
 const routes: Routes = [
   {
     path: 'po',data:{titleKey: 'PO'}, component: PurchaseOrderComponent
@@ -20,7 +20,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule ,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    DpDatePickerModule
   ]
 })
 export class PoModule { }

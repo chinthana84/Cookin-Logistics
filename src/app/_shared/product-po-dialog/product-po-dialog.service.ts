@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { RefTable } from 'src/app/models/reftable.model';
+import { Wrapper } from 'src/app/models/wrapper.model';
 import { MyDilaogObjectPO } from './product-po-dialog.component';
 
 @Injectable({
@@ -9,19 +10,14 @@ import { MyDilaogObjectPO } from './product-po-dialog.component';
 export class ProductPoDialogService {
 
   constructor() { }
-
   private subjectPro = new Subject<MyDilaogObjectPO>();
 
-  private subjectSelectedproduct = new Subject<string>();
-
-  ProductPopup(passingdata: any,selectedProductid :number ,selectedPodetailID:number,selectedProdUnitID:number ): any {
-
+  ProductPopup(passingdata: Wrapper,selectedProductid :number ,selectedPodetailID:number,selectedProdUnitID:number ): any {
       this.ProductPopup_(passingdata,selectedProductid,selectedPodetailID,selectedProdUnitID,"confirm");
   }
 
-  ProductPopup_(message: any,selectedProductid :number,selectedPodetailID:number,selectedProdUnitID:number,msgtype): any {
+  ProductPopup_(message: Wrapper,selectedProductid :number,selectedPodetailID:number,selectedProdUnitID:number,msgtype): any {
     const that = this;
-
     this.subjectPro.next({
         type: msgtype,
         passingDataModels:message,
@@ -29,7 +25,6 @@ export class ProductPoDialogService {
         SelectedPODetailID:selectedPodetailID,
         SelectedProductUnitID:selectedProdUnitID
     });
-
 }
 
 getProdut(): Observable<MyDilaogObjectPO> {
@@ -37,14 +32,11 @@ getProdut(): Observable<MyDilaogObjectPO> {
 }
 
 addSelectedProduct(obj:any){
-  this.subjectSelectedproduct.next(obj)
-  this.closeDialog()
+  this.subjectPro.next(obj)
+   this.closeDialog()
 }
 
-getSelectedProduct():Observable<any> {
-  return this.subjectSelectedproduct.asObservable();
-}
-
+ 
 closeDialog(){
   this.subjectPro.next();
 }

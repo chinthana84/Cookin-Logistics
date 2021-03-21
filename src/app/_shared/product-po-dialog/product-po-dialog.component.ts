@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/models/product.model';
 import { SubSink } from 'subsink';
 import { ProductPoDialogService } from './product-po-dialog.service';
 
@@ -16,18 +17,24 @@ export class ProductPoDialogComponent implements OnInit {
 
   ngOnInit(): any {
     this.subs.sink = this.productPoDialogService.getProdut().subscribe(message => {
+      debugger
       this.obj = message;
+
     });
   }
 
   addProduct(i: number): any {
+    debugger
     let x = this.obj.passingDataModels.Products.filter(b => b.ProductId == i)
     let y = this.obj.passingDataModels.ProdUnits.filter(b => b.RefId == this.obj.SelectedProductUnitID)[0]
 
     x[0].ProdUnit=y;
     x[0].ProdUnitId=y.RefId;
-  
-    this.productPoDialogService.addSelectedProduct(x[0]);
+    x[0].ProdUnit=y;
+
+    this.obj.Product=x[0];
+
+    this.productPoDialogService.addSelectedProduct(this.obj);
   }
 
   GetSelectedProduct(productid :number){
@@ -59,6 +66,8 @@ export class MyDilaogObjectPO {
 
   public ProductDescription?:string="";
   public ProductUnitDescription?:string=""
+
+  public Product?: Product;
 
   noFn?: () => void;
   AddFn?: () => void;

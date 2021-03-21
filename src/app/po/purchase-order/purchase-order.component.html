@@ -34,7 +34,7 @@
 <div class="row mt-2">
   <div class="col-md-12">
 
-    <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.model)" novalidate #heroForm="ngForm">
+    <form *ngIf="this.edited"   novalidate #heroForm="ngForm">
 
       <div class="row">
         <div class="col-md-4">
@@ -76,6 +76,22 @@
       </div>
 
       <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="OrderDescription">Start Week of timetable period</label>
+            <input  theme="dp-material" type="text"
+             name="someName"
+             [ngModel]="model.DeliveryDate | date: 'yyyy-MM-dd'" (ngModelChange)="model.DeliveryDate=$event"
+           [dpDayPicker]="datePickerConfig"
+             minDate="1999-09-09"
+             />
+
+              <!-- <ng-datepicker [(ngModel)]="model.DeliveryDate" ></ng-datepicker> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <table class="table  ">
           <thead>
             <th>Item No</th>
@@ -96,8 +112,8 @@
           <tbody>
             <tr *ngFor="let item of  this.model.Podetails; let index=index" class="table-hover">
               <td>{{item.ProductId}}</td>
-              <td>{{item.ProductDescription}}</td>
-              <td>{{item.ProductUnitDescription}}</td>
+              <td>{{item.Product.ProductName}}</td>
+              <td> {{item.Product.ProdUnit.RefDescription}}</td>
 
               <td>
                 <input id="Qty{{index}}" name="Qty{{index}}" [(ngModel)]="item.Qty" type="text" class="form-control"
@@ -115,12 +131,12 @@
               <td>{{(item.UnitPrice *item.Qty).toFixed(2)  }}</td>
 
               <td>
-                <input id="Discount{{index}}" name="Discount{{index}}" [(ngModel)]="item.Discount" type="text"
+                <input id="DiscountAmount{{index}}" name="DiscountAmount{{index}}" [(ngModel)]="item.DiscountAmount" type="text"
                 type="number" numeric decimals="2"
-                class="form-control" placeholder="Discount" />
+                class="form-control" placeholder="DiscountAmount" />
               </td>
 
-              <td>{{((item.UnitPrice *item.Qty) -item.Discount) .toFixed(2)   }}</td>
+              <td>{{((item.UnitPrice *item.Qty) -item.DiscountAmount) .toFixed(2)   }}</td>
               <td>
                 <button (click)="this.deleteProduct(item) " class="btn btn-primary  ">
                   <span class="fa fa-trash"></span></button>

@@ -1,3 +1,5 @@
+import { Product } from "./product.model";
+
 export class PoHeaer {
 
 
@@ -19,9 +21,12 @@ export class Podetails
     public  ProdUnitId ?: number=0;
     public  Qty ?: number=0;
     public  UnitPrice?: number=0;
+    public DiscountAmount?:number=0;
+
 
     public guid?:string="";
-    public ProductDescription?:string="";
-    public ProductUnitDescription?:string=""
+
+
+    public   Product?:Product;
 
 }
