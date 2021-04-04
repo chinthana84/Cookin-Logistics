@@ -35,6 +35,9 @@ export class OrderComponent implements OnInit, OnDestroy {
   public workingOrderDetID:number=0;
   modelRecipeHeader: Recipe[] = [];
 
+  orders: Order[]=[];
+  selectedOrderIDRRRRR:number=0;
+
   gridOption: GridOptions = {
     datas: {},
     searchObject: {
@@ -54,36 +57,51 @@ export class OrderComponent implements OnInit, OnDestroy {
     private confirmDialogService: ConfirmDialogService,
     public commonService: CommonService,
     private gridService: GridService,
-    private myproductServiceService:MyproductServiceService) { }
+    private myproductServiceService:MyproductServiceService) {
+
+      this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`).subscribe(r=>{
+        this.orders=r;
+      },
+      (error) => {
+        this.confirmDialogService.messageBox(environment.APIerror);
+        this.errorHandler.handleError(error);
+      });
+    }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
   ngOnInit(): void {
+
     this.setPage(this.gridOption.searchObject);
 
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
-
+      debugger
       if (params.id == 0) {
         this.edited = true;
 
         this.modelOrder = new Order();
         this.modelOrder.OrderDetails = [];
+       // this.selectedOrderID=params.id;
 
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
         .subscribe((data) => { this.modelWrapper = data; });
 
       } else if (params.id > 0) {
+
         this.edited = true;
 
+        this.selectedOrderIDRRRRR=params.id;
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-
+      //  let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
         this.subs.sink = forkJoin([a, b]).subscribe(results => {
           this.modelOrder = results[0]
           this.modelWrapper = results[1];
-          console.log(this.modelOrder)
+         // this.orders=results[2];
+       //   this.selectedOrderIDRRRRR=params.id;
+        //  console.log(this.selectedOrderID)
         },
           (error) => {
             this.confirmDialogService.messageBox(environment.APIerror);
@@ -91,12 +109,13 @@ export class OrderComponent implements OnInit, OnDestroy {
           });
       } else {
         this.edited = false;
+
       }
     });
 
 
     this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => {
-debugger
+
   this.AddOrderLine(message);
   });
 
@@ -109,6 +128,19 @@ debugger
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
     });
+  }
+
+  GetOrderByID(){
+
+    this.subs.sink =   this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + this.selectedOrderIDRRRRR).subscribe(r=>{
+      this.modelOrder=r;
+    },
+    (error) => {
+      this.confirmDialogService.messageBox(environment.APIerror);
+      this.errorHandler.handleError(error);
+    });
+    // this.router.navigate(['/orders/edit'], { queryParams: { id: this.selectedOrderID } });
+    // debugger
   }
 
 
@@ -153,7 +185,7 @@ debugger
 
 
   unitPriceDefaultValues(val: any, obj: OrderDetails) {
-    debugger
+     
     if (val === 0 || val === null || val === undefined) {
       let objProd = this.getProductObject(obj.ProductId)
       obj.UnitPrice = objProd.UnitPrice

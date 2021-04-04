@@ -56,6 +56,23 @@
         <div class="tab-pane fade show active" id="home">
 
           <div class="container-fluid  mt-3 rounded  " style="background-color:#ecf0f4;">
+            <div class="row" *ngIf="this.selectedOrderIDRRRRR >0" >
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="Cource">All Orders</label>
+                  <!-- (change)="this.GetOrderByID()" -->
+                  <select [(ngModel)]="this.selectedOrderIDRRRRR"
+                    class="form-control" id="selectedOrderIuouioDXXX" (change)="this.GetOrderByID()" name="oiioioi">
+                    <option value="0"></option>
+                    <option *ngFor="let i of this.orders" [value]="i.OrderId">
+                      {{ i.OrderDescription }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
             <div class="row ">
               <div class="col-md-6">
 
