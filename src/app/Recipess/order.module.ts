@@ -31,6 +31,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule
   ],
+ 
   exports: [RecipeComponent,OrderComponent]
 })
   export class OrderModule { }

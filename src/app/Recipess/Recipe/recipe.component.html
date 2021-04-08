@@ -44,15 +44,6 @@
   <div class="col-md-12">
     <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelRecipe)" novalidate #heroForm="ngForm">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <!-- <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true">Header</a>
-        </li> -->
-
-        <!-- <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders"
-            aria-selected="false">Associated Orders</a>
-        </li> -->
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -410,12 +401,13 @@
                           </select>
                         </td>
                         <td>
-                          <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}"
-                            type="number" class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)"
-                            placeholder="UnitPrice" numeric decimals="2" />
+                          <input [(ngModel)]="i.UnitPrice" id="UnitPrice2xxxx{{ index }}"
+                            name="UnitPrice2xxx{{ index }}" type="number" class="form-control"
+                            (ngModelChange)="unitPriceDefaultValues($event,i)" placeholder="UnitPrice" numeric
+                            decimals="2" />
                         </td>
                         <td>
-                          <input [(ngModel)]="i.Yield" id="Yield{{ index }}" name="Yield{{ index }}" numeric
+                          <input [(ngModel)]="i.Yield" id="Yieldxxx{{ index }}" name="Yieldxxx{{ index }}" numeric
                             decimals="2" type="text" class="form-control" placeholder="Yield" />
                         </td>
                         <td>
@@ -464,7 +456,7 @@
 
 
         <br />
-        <div class="btn-group">
+        <div *ngIf="this.recipeIDFromMain ==0" class="btn-group">
           <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
           <button type="button" class="btn btn-primary  " data-toggle="modal" data-target="#exampleModalCenter"> <span
               class="fa fa-print"></span> </button>
@@ -472,7 +464,9 @@
           <button type="button" (click)="router.navigate(['recipes']);" class="btn btn-primary back_button"> <span
               class="fa fa-arrow-left"></span> </button>
         </div>
-
+        <div *ngIf="this.recipeIDFromMain > 0" class="btn-group">
+          <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+        </div>
       </div>
     </form>
   </div>

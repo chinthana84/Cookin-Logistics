@@ -242,7 +242,7 @@ export class OrderReportsComponent implements OnInit, OnDestroy {
     if (this.params.rptID == 3) {
       let catDesc: string = ""
       let obj = this.modelWrapper.Categories.filter(r => r.CategoryId == this.categoryID)
-      debugger
+       
       if (obj.length > 0) {
         catDesc = obj[0].CategoryName
       }

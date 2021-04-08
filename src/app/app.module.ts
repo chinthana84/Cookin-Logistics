@@ -31,7 +31,8 @@ import { VenueSessionModule } from './Venus-Sessions/venue-session.module';
 import { QuliClassUniModule } from './Quals-Classes-Units/quli-class-uni.module';
 import { OrderTotalsModule } from './Order-Totals/order-totals.module';
 import { OrderModule } from './Recipess/order.module';
-import { PoModule } from './po/po.module'; 
+import { PoModule } from './po/po.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -77,8 +78,10 @@ import { PoModule } from './po/po.module';
     QuliClassUniModule,
     OrderTotalsModule,
     PoModule,
+    NgbModule,
 
   ],
+  exports:[NgbModule],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ],

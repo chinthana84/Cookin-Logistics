@@ -107,7 +107,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.productPoDialogService.getProdut().subscribe(message => {
-      debugger
+
       if (message != undefined && message.SelectedProductId > 0) {
         this.AddProduct(message);
       }
@@ -143,7 +143,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
 
   AddProduct(obj: any) {
 
-    debugger;
+
     var newDet = new Podetails();
     newDet.Product = obj.Product;
     newDet.guid=this.commonService.newGuid();
@@ -163,7 +163,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   deleteProduct(item: any) {
-    debugger
+
 
     this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
       if (item.PodetailId > 0) {
@@ -180,7 +180,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   Save() {
-debugger
+ 
     this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/PO/Save`, this.model, {})
       .subscribe((data) => {

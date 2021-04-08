@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { OrdersGridDTO } from 'src/app/models/Grid/grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Order, OrderDetails, OrderTheoryNotesDTO } from 'src/app/models/order.model';
@@ -10,7 +11,6 @@ import { Product } from 'src/app/models/product.model';
 import { Recipe, RecipeOrderLinkDTO } from 'src/app/models/recipe.model';
 import { Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
-import { ModalDialogService } from 'src/app/_shared/modalDialog/modal-dialog.service';
 import { MyproductServiceService } from 'src/app/_shared/product-dialog/myproduct-service.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
 import { GridOptions } from 'src/app/_shared/_grid/gridModels/gridOption.model';
@@ -34,7 +34,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   selectedRecipeID: number = 0;
   public workingOrderDetID:number=0;
   modelRecipeHeader: Recipe[] = [];
-
+  public mr: NgbModalRef;
   orders: Order[]=[];
   selectedOrderIDRRRRR:number=0;
 
@@ -50,6 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     }
   };
   constructor(private http: HttpClient,
+    private modalService: NgbModal,
     private errorHandler: ErrorHandlerService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
@@ -73,52 +74,40 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.setPage(this.gridOption.searchObject);
 
+
+    this.subs.sink =this.commonService.IsSavedCurrentStatus().subscribe(r=>{
+      this.mr.close();
+      location.reload();
+    }, (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror);
+            this.errorHandler.handleError(error);
+          });
+
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
-      debugger
       if (params.id == 0) {
         this.edited = true;
-
         this.modelOrder = new Order();
         this.modelOrder.OrderDetails = [];
-       // this.selectedOrderID=params.id;
-
-        this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-        .subscribe((data) => { this.modelWrapper = data; });
-
+        this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
       } else if (params.id > 0) {
-
         this.edited = true;
-
         this.selectedOrderIDRRRRR=params.id;
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
         let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-      //  let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
         this.subs.sink = forkJoin([a, b]).subscribe(results => {
           this.modelOrder = results[0]
           this.modelWrapper = results[1];
-         // this.orders=results[2];
-       //   this.selectedOrderIDRRRRR=params.id;
-        //  console.log(this.selectedOrderID)
-        },
-          (error) => {
+        }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror);
             this.errorHandler.handleError(error);
           });
       } else {
         this.edited = false;
-
       }
     });
-
-
-    this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => {
-
-  this.AddOrderLine(message);
-  });
-
+    this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => { this.AddOrderLine(message); });
   }
 
 
@@ -140,7 +129,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.errorHandler.handleError(error);
     });
     // this.router.navigate(['/orders/edit'], { queryParams: { id: this.selectedOrderID } });
-    // debugger
+
   }
 
 
@@ -185,7 +174,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 
   unitPriceDefaultValues(val: any, obj: OrderDetails) {
-     
+
     if (val === 0 || val === null || val === undefined) {
       let objProd = this.getProductObject(obj.ProductId)
       obj.UnitPrice = objProd.UnitPrice
@@ -231,6 +220,8 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.confirmDialogService.messageBox(environment.APIerror)
       });
   }
+
+
 
 
   getProductObject(i: number): Product {
@@ -327,6 +318,15 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+  doubleclickRecipeID:number=0;
+
+  open(content,obj : any) {
+    debugger
+    this.doubleclickRecipeID=obj.RecipeId;
+    this.mr= this.modalService.open(content, { size: 'xl' });
+  }
 
 
 }

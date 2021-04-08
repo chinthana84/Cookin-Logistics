@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { inject } from '@angular/core/testing';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -22,7 +23,7 @@ import { SubSink } from 'subsink';
 
 
 @Component({
-  selector: 'app-order',
+  selector: 'app-recipe',
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.css']
 })
@@ -32,7 +33,8 @@ export class RecipeComponent implements OnInit {
   modelWrapper: Wrapper = {};
   modelRecipe: Recipe = {};
   modelOrders: Order[] = [];
-  public workingRecipeDetID:number=0;
+  public workingRecipeDetID: number = 0;
+  @Input() recipeIDFromMain: number = 0;
 
   gridOption: GridOptions = {
     datas: {},
@@ -60,57 +62,78 @@ export class RecipeComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private commonService: CommonService,
     private gridService: GridService,
-    public myproductServiceService:MyproductServiceService
+    public myproductServiceService: MyproductServiceService
   ) {
     this.edited = true;
   }
 
   ngOnInit(): void {
+    debugger
     this.setPage(this.gridOption.searchObject);
 
-    this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
-      if (params.id == 0) {
-        this.edited = true;
-        this.modelRecipe = new Recipe();
-        this.modelRecipe.RecipeDetails = []
+    if (this.recipeIDFromMain > 0) {
+      this.edited = true;
+      let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + this.recipeIDFromMain);
+      let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+      let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
-        let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-        let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
+      this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
+        this.modelRecipe = results[0]
+        this.modelWrapper = results[1];
+        this.modelOrders = results[2]
+        this.onChangeYieldUnit();
+        console.log(this.modelRecipe)
+      }, (error) => {
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+    }
+    else {
 
-        this.subs.sink = forkJoin([b, c]).subscribe(results => {
-          this.modelWrapper = results[0];
-          this.modelOrders = results[1]
-          this.onChangeYieldUnit();
+      this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
+        debugger
+        if (params.id == 0) {
+          this.edited = true;
+          this.modelRecipe = new Recipe();
+          this.modelRecipe.RecipeDetails = []
+
+          let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+          let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
+
+          this.subs.sink = forkJoin([b, c]).subscribe(results => {
+            this.modelWrapper = results[0];
+            this.modelOrders = results[1]
+            this.onChangeYieldUnit();
 
 
-        }, (error) => {
-          this.confirmDialogService.messageBox(environment.APIerror)
-        });
+          }, (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror)
+          });
 
-      } else if (params.id > 0) {
-        this.edited = true;
-        let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
-        let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
-        let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
+        } else if (params.id > 0) {
+          this.edited = true;
+          let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
+          let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+          let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
-        this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
-          this.modelRecipe = results[0]
-          this.modelWrapper = results[1];
-          this.modelOrders = results[2]
-          this.onChangeYieldUnit();
-          console.log(this.modelRecipe)
-        }, (error) => {
-          this.confirmDialogService.messageBox(environment.APIerror)
-        });
-      } else {
-        this.edited = false;
-      }
+          this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
+            this.modelRecipe = results[0]
+            this.modelWrapper = results[1];
+            this.modelOrders = results[2]
+            this.onChangeYieldUnit();
+            console.log(this.modelRecipe)
+          }, (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror)
+          });
+        } else {
+          this.edited = false;
+        }
+      });
+    }
+
+    this.subs.sink = this.myproductServiceService.getSelectedProduct().subscribe(message => {
+
+      this.AddRecipeLine(message);
     });
-
-    this.subs.sink= this.myproductServiceService.getSelectedProduct().subscribe(message => {
-      debugger
-        this.AddRecipeLine(message);
-        });
 
   }
 
@@ -189,8 +212,13 @@ export class RecipeComponent implements OnInit {
         }
         else {
           this.toastr.success(environment.dataSaved);
-          this.router.navigate(['recipes']);
+          if(this.recipeIDFromMain ==0){
+           this.router.navigate(['recipes']);
           this.setPage(this.gridOption.searchObject);
+          }
+          else{
+            this.commonService.Saved();
+          }
         }
       }, (error) => {
 
@@ -231,15 +259,15 @@ export class RecipeComponent implements OnInit {
     return x[0];
   }
 
-  deleteRecipeDetails(i: number,guid:string): void {
+  deleteRecipeDetails(i: number, guid: string): void {
 
     this.confirmDialogService.confirmThis("Are you sure to delete?", () => {
-      if (i >0){
-      this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
+      if (i > 0) {
+        this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.filter(item => item.RecipeDetailId != i);
       }
-      else{
+      else {
         this.modelRecipe.RecipeDetails = this.modelRecipe.RecipeDetails.
-        filter(item => item.guid != guid);
+          filter(item => item.guid != guid);
       }
 
     },
@@ -252,49 +280,43 @@ export class RecipeComponent implements OnInit {
       this.modelRecipe.RecipeOrderLink = this.modelRecipe.RecipeOrderLink.filter(item => item.OrderId != i);
     },
       function () { })
-
-
   }
 
   ViewReport() {
     alert('not implemnted')
   }
 
+  public AddRecipeLine(obj_pro: Product): void {
 
-
-
-  public AddRecipeLine(obj_pro:Product): void {
-    debugger;
     var obj = new RecipeDetailsDTO();
     obj.RecipeId = this.modelRecipe.RecipeId;
 
-    if (this.workingRecipeDetID >0 ){
+    if (this.workingRecipeDetID > 0) {
 
-      let obj=   this.modelRecipe.RecipeDetails
-          .filter(item => item.RecipeDetailId ==this.workingRecipeDetID)[0]
-      obj.Product=obj_pro;
+      let obj = this.modelRecipe.RecipeDetails
+        .filter(item => item.RecipeDetailId == this.workingRecipeDetID)[0]
+      obj.Product = obj_pro;
       obj.RecipeId = this.modelRecipe.RecipeId;
-      obj.ProductId=obj_pro.ProductId;
-      obj.UnitPrice=obj_pro.UnitPrice;
-      obj.ProdUnitId=obj_pro.ProdUnitId;
+      obj.ProductId = obj_pro.ProductId;
+      obj.UnitPrice = obj_pro.UnitPrice;
+      obj.ProdUnitId = obj_pro.ProdUnitId;
 
-    }else
-    {
+    } else {
 
-    obj.Product=obj_pro;
-    obj.ProductId=obj_pro.ProductId;
-    obj.UnitPrice=obj_pro.UnitPrice;
-    obj.ProdUnitId=obj_pro.ProdUnitId;
-    obj.guid=this.commonService.newGuid();
-    this.modelRecipe.RecipeDetails.push(obj);
+      obj.Product = obj_pro;
+      obj.ProductId = obj_pro.ProductId;
+      obj.UnitPrice = obj_pro.UnitPrice;
+      obj.ProdUnitId = obj_pro.ProdUnitId;
+      obj.guid = this.commonService.newGuid();
+      this.modelRecipe.RecipeDetails.push(obj);
     }
   }
 
 
 
-  AddProdutDialog(prod_id:number,recipe_det_id:number){
-    this.workingRecipeDetID=recipe_det_id;
-    this.myproductServiceService.ProductPopup(this.modelWrapper,prod_id,0);
+  AddProdutDialog(prod_id: number, recipe_det_id: number) {
+    this.workingRecipeDetID = recipe_det_id;
+    this.myproductServiceService.ProductPopup(this.modelWrapper, prod_id, 0);
   }
 
 

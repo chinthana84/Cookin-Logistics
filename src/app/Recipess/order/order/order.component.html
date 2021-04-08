@@ -241,7 +241,7 @@
                         <th></th>
                       </thead>
                       <tbody>
-                        <tr *ngFor="  let i of this.modelOrder.RecipeOrderLink;  let index = index " class="table-hover">
+                        <tr (dblclick)="open(content,i);" *ngFor="  let i of this.modelOrder.RecipeOrderLink;  let index = index " class="table-hover">
                           <td>
                             {{i.Recipe.RecipeName}}
                           </td>
@@ -317,8 +317,8 @@
                         $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
                       </td>
                       <td>
-                        <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits{{ index }}"
-                          name="ChangedProdUnits{{ index }}">
+                        <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnitsXXXXXX{{ index }}"
+                          name="ChangedProdUnitsXXXXXX{{ index }}">
                           <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
                             {{ j.RefDescription }}
                           </option>
@@ -331,12 +331,12 @@
                       </td>
                       <td>
                         <input [(ngModel)]="i.Quantity" type="number"
-                          (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2" id="Quantity"
-                          name="Quantity{{ index }}" class="form-control" placeholder="Quantity" />
+                          (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2" id="QuantityEEE{{ index }}"
+                          name="QuantityEEE{{ index }}" class="form-control" placeholder="Quantity" />
                       </td>
 
                       <td>
-                        <input [(ngModel)]="i.Yield" id="Yield" name="Yield{{ index }}" type="number" class="form-control"
+                        <input [(ngModel)]="i.Yield" id="Yieldxxxx{{ index }}" name="Yieldxxxx{{ index }}" type="number" class="form-control"
                           (ngModelChange)="i.Yield = $event === null ? 0 : $event" placeholder="Yield" numeric decimals="2" />
                       </td>
                       <td>{{i.Quantity}}</td>
@@ -434,9 +434,25 @@
             <span class="fa fa-arrow-left"></span>
           </button>
         </div>
+
+        
       </div>
     </form>
   </div>
 </div>
 
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Recipe</h4>
+
+  </div>
+  <div class="modal-body">
+    <app-recipe recipeIDFromMain= "{{  this.doubleclickRecipeID }}"></app-recipe>
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</ng-template>
 

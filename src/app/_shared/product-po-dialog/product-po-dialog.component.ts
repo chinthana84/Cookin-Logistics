@@ -17,14 +17,14 @@ export class ProductPoDialogComponent implements OnInit {
 
   ngOnInit(): any {
     this.subs.sink = this.productPoDialogService.getProdut().subscribe(message => {
-      debugger
+
       this.obj = message;
 
     });
   }
 
   addProduct(i: number): any {
-    debugger
+
     let x = this.obj.passingDataModels.Products.filter(b => b.ProductId == i)
     let y = this.obj.passingDataModels.ProdUnits.filter(b => b.RefId == this.obj.SelectedProductUnitID)[0]
 
@@ -38,7 +38,7 @@ export class ProductPoDialogComponent implements OnInit {
   }
 
   GetSelectedProduct(productid :number){
-    debugger;
+     ;
     let x = this.obj.passingDataModels.Products.filter(b => b.ProductId == productid);
     this.obj.SelectedProductId=x[0].ProductId;
     this.obj.SelectedProductUnitID=x[0].ProdUnitId;

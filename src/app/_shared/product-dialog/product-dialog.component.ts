@@ -22,7 +22,7 @@ export class ProductDialogComponent implements OnInit {
     }
 
     addProduct(i:number):any{
-      debugger
+       
       let x = this.obj.passingDataModels.Products.filter(b => b.ProductId == i)
 
      let y=  this.obj.passingDataModels.ProdUnits.filter(b => b.ProductId == this.obj.SelectedProductUnitID)[0]
