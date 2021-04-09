@@ -93,7 +93,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
         this.subs.sink = forkJoin([a, b]).subscribe(results => {
           this.modelWrapper = results[0]
           this.model = results[1];
-          console.log(this.model)
+        
 
         }, (error) => {
           this.confirmDialogService.messageBox(environment.APIerror)
@@ -180,7 +180,7 @@ export class PurchaseOrderComponent implements OnInit, OnDestroy {
   }
 
   Save() {
- 
+
     this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/PO/Save`, this.model, {})
       .subscribe((data) => {

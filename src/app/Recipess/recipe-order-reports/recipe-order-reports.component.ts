@@ -41,8 +41,7 @@ export class RecipeOrderReportsComponent implements OnInit {
   ngOnInit(): void {
 
 
-
-    console.log(this.startWeekDate)
+ 
 
     this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllMondays`)
       .subscribe(r => {

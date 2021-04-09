@@ -175,7 +175,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item " [ngClass]="{'norights': !this.currentObj.ChangePW}"
               routerLink="{{this.CheckAccess('changepw')}}">Change Password</a>
-              <a class="dropdown-item " href="#">Log Out</a>
+              <a class="dropdown-item "(click)="logout()">Log Out</a>
             </div>
           </li>
 

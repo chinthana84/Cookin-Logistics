@@ -231,6 +231,16 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   }
 
+  logout(){
+    localStorage.removeItem("todoBearerToken");
+
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem( "username" )
+
+    localStorage.removeItem("pw");
+    this.router.navigate(['login']);
+  }
+
 
   ReportsUIs = [
      { "ID": "900", "Name": "Order Breakdown by Category" }

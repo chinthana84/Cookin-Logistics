@@ -4,10 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { TutorComponent } from './tutor/tutor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../_shared/Shared.module';
+import { AuthGuard } from '../_shared/guard/auth-guard.service';
 
 const routes: Routes = [
   {
-    path: 'tutor',data:{titleKey: 'Tutor'}, component: TutorComponent
+    path: 'tutor', data: { titleKey: 'Tutor' }, component: TutorComponent
     , children: [{ path: 'edit', component: TutorComponent }]
   }
 ];
@@ -18,9 +19,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
-     SharedModule
+    SharedModule
   ]
 })
 export class TutorsTimetableModule { }

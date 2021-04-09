@@ -16,6 +16,8 @@ export class Order {
   public    RecipeOrderLink?:RecipeOrderLinkDTO[];
   public   OrderDetails?: OrderDetails[];
   public   OrderTheoryNotes?: OrderTheoryNotesDTO []=[];
+
+  public isNew?:Boolean=false;
 }
 
 export class OrderDetails

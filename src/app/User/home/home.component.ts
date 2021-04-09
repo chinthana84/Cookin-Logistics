@@ -55,12 +55,10 @@ export class HomeComponent implements OnInit {
     private securityService: CommonService
   ) {
     this.securityModel = securityService.securityModel;
-    console.log(
-      `From snapshot ${activatedRoute.snapshot.paramMap.get("name")}`
-    );
+
     activatedRoute.paramMap.subscribe(
       (item) => {
-        console.log(`From PramMap ${item.get("name")}`);
+       
       },
       (error) => error,
       () => {}

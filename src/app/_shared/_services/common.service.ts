@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Login, SecurityModel } from 'src/app/models/Security.model';
+import { Login, SecurityModel, TokenApiModel } from 'src/app/models/Security.model';
 import { AuthenticationService } from 'src/app/MyServices/authentication.service';
 import { environment } from 'src/environments/environment';
 
@@ -81,14 +81,23 @@ export class CommonService {
 
   public logout() {
     this._securityModel = new SecurityModel();
-    localStorage.removeItem("todoBearerToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("pw");
-    this.router.navigate(['login']);
+
+      localStorage.removeItem("todoBearerToken");
+
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem( "username" )
+
+      localStorage.removeItem("pw");
+      this.router.navigate(['login']);
+
+
   }
 
-  public Login(userForm: Login): Observable<SecurityModel> {
 
+
+
+  public Login(userForm: Login): Observable<SecurityModel> {
+debugger
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -113,6 +122,8 @@ export class CommonService {
               "todoBearerToken",
               this.securityModel.BearerToken
             );
+
+            localStorage.setItem("refreshToken", this.securityModel.RefreshToken);
             localStorage.setItem(
               "username",
               userForm.UserName
@@ -125,6 +136,51 @@ export class CommonService {
           } else {
             this.securityModel = new SecurityModel();
           }
+        })
+      );
+  }
+
+
+  public Referesh(): Observable<SecurityModel> {
+
+    const credentials=new TokenApiModel();
+
+    const token: string = localStorage.getItem("todoBearerToken");
+    const refreshToken: string = localStorage.getItem("refreshToken");
+    credentials.AccessToken=token;
+    credentials.RefreshToken=refreshToken;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+      }),
+    };
+    return this.http
+      .post<SecurityModel>(
+        `${environment.APIEndpoint}/Token/Refresh`,
+        credentials,
+        httpOptions
+      )
+      .pipe(
+        tap((result) => {
+          this.securityModel = new SecurityModel();
+          Object.assign(this.securityModel, result);
+          //Now check if Authenticated is true store token in sessionStorage
+          if (this.securityModel.IsAuthenticated) {
+            this._securityModel2.next(result);
+
+            localStorage.setItem(
+              "todoBearerToken",
+              this.securityModel.BearerToken
+            );
+
+            localStorage.setItem("refreshToken", this.securityModel.RefreshToken);
+
+          } else {
+            this.securityModel = new SecurityModel();
+          }
+          return <any>result;
+
         })
       );
   }

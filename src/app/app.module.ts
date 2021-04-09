@@ -33,6 +33,12 @@ import { OrderTotalsModule } from './Order-Totals/order-totals.module';
 import { OrderModule } from './Recipess/order.module';
 import { PoModule } from './po/po.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './_shared/guard/auth-guard.service';
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 
 @NgModule({
@@ -63,6 +69,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         path: 'products',data:{titleKey: 'Product'}, component: ProductComponent, children: [{ path: 'edit', component: ProductComponent }]
       }
     ]),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      //  whitelistedDomains: ["localhost:5000"],
+      //  blacklistedRoutes: []
+      }
+    }),
 
     HttpClientModule,
     BrowserAnimationsModule,
@@ -78,7 +91,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     QuliClassUniModule,
     OrderTotalsModule,
     PoModule,
-    NgbModule,
+    NgbModule
 
   ],
   exports:[NgbModule],

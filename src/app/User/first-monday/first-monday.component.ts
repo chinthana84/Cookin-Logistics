@@ -49,7 +49,7 @@ export class FirstMondayComponent implements OnInit {
   setPage(obj: SearchObject): void {
     this.subs.sink = this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
-      console.log(data)
+
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
     });

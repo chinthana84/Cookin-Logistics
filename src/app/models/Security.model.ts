@@ -5,6 +5,8 @@ export class SecurityModel {
 
   public BearerToken?: string = "";
 
+  public RefreshToken?:string="";
+
   public Supplier?: Boolean = false;
   public Category?: Boolean = false;
   public Product?: Boolean = false;
@@ -75,4 +77,12 @@ export class UserRightsDTO {
 
   public userid?: number = 0;
 
+}
+
+
+export class TokenApiModel
+{
+    public   AccessToken ?:string="";
+
+    public   RefreshToken ?:string="";
 }

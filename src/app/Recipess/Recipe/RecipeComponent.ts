@@ -82,7 +82,7 @@ export class RecipeComponent implements OnInit {
         this.modelWrapper = results[1];
         this.modelOrders = results[2]
         this.onChangeYieldUnit();
-        console.log(this.modelRecipe)
+
       }, (error) => {
         this.confirmDialogService.messageBox(environment.APIerror)
       });
@@ -120,7 +120,7 @@ export class RecipeComponent implements OnInit {
             this.modelWrapper = results[1];
             this.modelOrders = results[2]
             this.onChangeYieldUnit();
-            console.log(this.modelRecipe)
+
           }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror)
           });
@@ -244,7 +244,7 @@ export class RecipeComponent implements OnInit {
   public AddAssosiatedOrders(): void {
     var obj = new RecipeOrderLinkDTO();
     obj.RecipeId = this.modelRecipe.RecipeId;
-    console.log(this.modelRecipe.RecipeOrderLink)
+ 
 
     if (this.modelRecipe.RecipeOrderLink == undefined) {
       this.modelRecipe.RecipeOrderLink = [];
