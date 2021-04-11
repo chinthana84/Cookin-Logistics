@@ -1,141 +1,72 @@
+import { SecurityModel } from 'src/app/models/Security.model';
 import { Injectable } from "@angular/core";
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, from, Observable } from "rxjs";
 import { catchError, filter, finalize, map, switchMap, take, tap } from "rxjs/operators";
 import { LoaderService } from '../MyServices/loader.service';
 import { throwError } from "rxjs";
 import { CommonService } from "../_shared/_services/common.service";
+import { AuthService } from "../_shared/_services/auth.service";
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
 
+  constructor(public authService: AuthService,private router: Router,private loaderService :LoaderService) { }
 
-  private isTokenRefreshing: boolean = false;
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.loaderService.show();
+    if (this.authService.getJwtToken()) {
+      request = this.addToken(request, this.authService.getJwtToken());
+    }
 
-  tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-
-  constructor (public loaderService: LoaderService,private commonService : CommonService) {}
-
-  intercept(request : HttpRequest<any>, next : HttpHandler): Observable<HttpEvent<any>>
-  {
-      // Check if the user is logging in for the first time
-      this.loaderService.show();
-      return next.handle(this.attachTokenToRequest(request)).pipe(
-          tap((event : HttpEvent<any>) => {
-              if(event instanceof HttpResponse)
-              {
-                this.loaderService.hide();
-              }
-          }),
-
-          catchError((err) : Observable<any> => {
-            this.loaderService.hide();
-              if(err instanceof HttpErrorResponse) {
-                  switch((<HttpErrorResponse>err).status)
-              {
-                      case 401:
-                          console.log("Token expired. Attempting refresh ...");
-                          return this.handleHttpResponseError(request, next);
-                      case 400:
-                        // alert('asdfasdf')
-                           return <any>this.commonService.logout();
-                        //return this.handleHttpResponseError(request, next);
-
-                  }
-              } else
-              {
-                  return throwError(this.handleError);
-              }
-          })
-
-         );
-
-  }
-
-
-  // Global error handler method
-  private handleError(errorResponse : HttpErrorResponse)
-  {
-      let errorMsg : string;
-
-      if(errorResponse.error instanceof Error)
-      {
-           // A client-side or network error occurred. Handle it accordingly.
-          errorMsg = "An error occured : " + errorResponse.error.message;
-      } else
-      {
-          // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMsg = `Backend returned code ${errorResponse.status}, body was: ${errorResponse.error}`;
+    return  next.handle(request).pipe(catchError(error => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+         return this.handle401Error(request, next);
+      } else {
+        this.router.navigate(['login']);
+        return throwError(error);
       }
-
-       return throwError(errorMsg);
+    })).pipe(
+         finalize(() => this.loaderService.hide()))
   }
 
-
-  // Method to handle http error response
-  private handleHttpResponseError(request : HttpRequest<any>, next : HttpHandler)
-  {
-
-      // First thing to check if the token is in process of refreshing
-      if(!this.isTokenRefreshing)  // If the Token Refresheing is not true
-      {
-          this.isTokenRefreshing = true;
-
-          // Any existing value is set to null
-          // Reset here so that the following requests wait until the token comes back from the refresh token API call
-          this.tokenSubject.next(null);
-
-          /// call the API to refresh the token
-          return this.commonService.Referesh().pipe(
-              switchMap((tokenresponse: any)  => {
-                  if(tokenresponse)
-                  {
-                    debugger
-                      this.tokenSubject.next(tokenresponse.BearerToken);
-
-                      // localStorage.setItem(
-                      //   "todoBearerToken",
-                      //   this.securityModel.BearerToken
-                      // );
-
-                      // localStorage.setItem("refreshToken", this.securityModel.RefreshToken);
-
-                      return next.handle(this.attachTokenToRequest(request));
-
-              }
-                  return <any>this.commonService.logout();
-              }),
-              catchError(err => {
-                  this.commonService.logout();
-                  return this.handleError(err);
-              }),
-              finalize(() => {
-                this.isTokenRefreshing = false;
-              })
-              );
-
+  private addToken(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`
       }
-      else
-      {
-          this.isTokenRefreshing = false;
-          return this.tokenSubject.pipe(filter(token => token != null),
-              take(1),
-              switchMap(token => {
-              return next.handle(this.attachTokenToRequest(request));
-              }));
-      }
-
-
+    });
   }
 
+  private isRefreshing = false;
+private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  private attachTokenToRequest(request: HttpRequest<any>)
-  {
-      var token = localStorage.getItem('todoBearerToken');
+private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+  debugger
+  if (!this.isRefreshing) {
+    this.isRefreshing = true;
+    this.refreshTokenSubject.next(null);
 
-      return request.clone({setHeaders: {Authorization: `Bearer ${token}`}});
+    return this.authService.refreshToken().pipe(
+      switchMap((token: SecurityModel) => {
+        this.isRefreshing = false;
+        this.refreshTokenSubject.next(token.BearerToken);
+        return next.handle(this.addToken(request, token.BearerToken));
+      }));
+
+  } else {
+    return this.refreshTokenSubject.pipe(
+      filter(token => token != null),
+      take(1),
+      switchMap(jwt => {
+        return next.handle(this.addToken(request, jwt));
+      }));
   }
+}
+    //     //       return next.handle(request).pipe(
+    //     //     finalize(() => this.loaderService.hide())
 
    // constructor(public loaderService: LoaderService) { }
     // // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

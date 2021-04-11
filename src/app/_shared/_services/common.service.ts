@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { share, tap } from 'rxjs/operators';
 import { Login, SecurityModel, TokenApiModel } from 'src/app/models/Security.model';
 import { AuthenticationService } from 'src/app/MyServices/authentication.service';
 import { environment } from 'src/environments/environment';
@@ -162,6 +162,7 @@ debugger
         httpOptions
       )
       .pipe(
+        share(),
         tap((result) => {
           this.securityModel = new SecurityModel();
           Object.assign(this.securityModel, result);
