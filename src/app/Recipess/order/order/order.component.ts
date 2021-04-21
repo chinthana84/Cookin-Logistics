@@ -208,7 +208,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(obj: Order) {
-     
+
     if(this.isNew){
       obj.isNew=true;
     }
@@ -340,7 +340,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   doubleclickRecipeID: number = 0;
 
   open(content, obj: any) {
-    debugger
+    
     this.doubleclickRecipeID = obj.RecipeId;
     this.mr = this.modalService.open(content, { size: 'xl' });
   }

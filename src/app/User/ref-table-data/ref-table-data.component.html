@@ -21,18 +21,19 @@
   <div class="col-md-12">
     <table class="table  ">
       <thead>
+        <th>#</th>
         <th>RefDescription</th>
         <th>
-          <button (click)="addRef()" class="btn btn-primary  ">
+          <button *ngIf="this.selectedValue.length >0" (click)="addRef()" class="btn btn-primary  ">
             <span class="fa fa-plus"></span></button>
         </th>
       </thead>
       <tbody>
         <tr *ngFor="let item of this.model;let i=index;" class="table-hover">
-
+          <td>{{ i+1}}</td>
           <td>
             <input id="RefDescription{{i}}" name="RefDescription{{i}}" [(ngModel)]="item.RefDescription" type="text"
-              class="form-control" placeholder="RefDescription" />
+              class="form-control"   />
           </td>
           <td>
             <button (click)="saveRef(item)" class="btn btn-primary  ">

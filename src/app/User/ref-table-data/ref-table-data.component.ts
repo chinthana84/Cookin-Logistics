@@ -58,7 +58,15 @@ export class RefTableDataComponent implements OnInit {
   addRef() {
     let obj = new RefTable();
     obj.RefTableName = this.selectedValue;
-    this.model.push(obj)
+    obj.RefId=0;
+
+
+
+    this.model.push(obj);
+
+    this.model= this.model.sort(( a, b ) => a.RefId > b.RefId ? 1 : -1 )
+
+
   }
 
   saveRef(obj: RefTable) {

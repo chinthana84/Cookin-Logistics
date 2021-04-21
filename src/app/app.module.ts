@@ -51,6 +51,7 @@ export function tokenGetter() {
     LoaderComponent,
     VenueComponent
 
+
   ],
   imports: [
     BrowserModule,

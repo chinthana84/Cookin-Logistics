@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(private jwtHelper: JwtHelperService, private router: Router, private http: HttpClient) {
   }
   async canActivate() {
-    debugger
+    
     const token = localStorage.getItem("todoBearerToken");
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {

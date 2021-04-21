@@ -25,7 +25,7 @@ export class LoaderInterceptor implements HttpInterceptor {
       if (error instanceof HttpErrorResponse && error.status === 401) {
          return this.handle401Error(request, next);
       } else {
-        this.router.navigate(['login']);
+        //this.router.navigate(['login']);
         return throwError(error);
       }
     })).pipe(
@@ -44,7 +44,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
 private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-  debugger
+  debgger
   if (!this.isRefreshing) {
     this.isRefreshing = true;
     this.refreshTokenSubject.next(null);
@@ -138,7 +138,7 @@ private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     //               status: error.status
     //           };
     //           this.loaderService.hide();
-    //           debugger
+    //
     //           alert(error)
     //           ////this.errorDialogService.openDialog(data);
     //           return throwError(error);

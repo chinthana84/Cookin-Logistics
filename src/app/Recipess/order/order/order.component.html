@@ -56,35 +56,32 @@
         <div class="tab-pane fade show active" id="home">
 
           <div class="container-fluid  mt-3 rounded  " style="background-color:#ecf0f4;">
-            <div class="row"  >
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="Cource">All Orders</label>
-                  <!-- (change)="this.GetOrderByID()" -->
-                  <select [(ngModel)]="this.selectedOrderIDRRRRR"
-                    class="form-control" id="selectedOrderIuouioDXXX" (change)="this.GetOrderByID()" name="oiioioi">
-                    <option value="0"></option>
-                    <option *ngFor="let i of this.orders" [value]="i.OrderId">
-                      {{ i.OrderDescription }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-
             <div class="row ">
               <div class="col-md-6">
 
                 <div class="row mt-3">
-                  <div class="col-md-6">
+                  <div class="col-md-4">
                     <div class="form-group">
-                      <label for="OrderDescription">Order Description</label>
-                      <input [(ngModel)]="this.modelOrder.OrderDescription" id="OrderDescription" name="OrderDescription"
-                        type="text" class="form-control" placeholder="OrderDescription" />
+                      <label for="Cource">All Orders</label>
+                      <!-- (change)="this.GetOrderByID()" -->
+                      <select [(ngModel)]="this.selectedOrderIDRRRRR" class="form-control" id="selectedOrderIuouioDXXX"
+                        (change)="this.GetOrderByID()" name="oiioioi">
+                        <option value="0"></option>
+                        <option *ngFor="let i of this.orders" [value]="i.OrderId">
+                          {{ i.OrderDescription }}
+                        </option>
+                      </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="OrderDescription">Order Description</label>
+                      <input [(ngModel)]="this.modelOrder.OrderDescription" id="OrderDescription"
+                        name="OrderDescription" type="text" class="form-control" placeholder="OrderDescription" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="StudentNumbers">Topic</label>
                       <input [(ngModel)]="this.modelOrder.PractTitle" id="PractTitle" name="PractTitle" type="text"
@@ -107,7 +104,8 @@
                                   <input [(ngModel)]="this.modelOrder.StudentNumbers" id="StudentNumbers"
                                     name="StudentNumbers"
                                     (ngModelChange)="this.modelOrder.StudentNumbers = $event === null ? 0 : $event"
-                                    type="number" numeric maxlength="4" class="form-control" placeholder="StudentNumbers" />
+                                    type="number" numeric maxlength="4" class="form-control"
+                                    placeholder="StudentNumbers" />
                                 </div>
                               </div>
                               <div class="col-md-6">
@@ -134,15 +132,14 @@
                     <div class="row mt-3">
                       <div class="col-md-12">
                         <div class="card">
-                          <div class="card-header">.........</div>
                           <div class="card-body">
                             <div class="row">
                               <div class="col-md-3">
                                 <div class="form-group">
                                   <div class="form-check">
                                     <label>
-                                      <input [(ngModel)]="this.modelOrder.IsAssessment" name="IsAssessmentx" type="checkbox"
-                                        class="form-check-input" id="IsAssessmentx" />
+                                      <input [(ngModel)]="this.modelOrder.IsAssessment" name="IsAssessmentx"
+                                        type="checkbox" class="form-check-input" id="IsAssessmentx" />
                                       Assessment</label>
                                   </div>
                                 </div>
@@ -192,8 +189,9 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="Cource">Course</label>
-                      <select [(ngModel)]="this.selectedCouseID" (change)="this.GetSelectedCouseRecipes(this.selectedCouseID)"
-                        class="form-control" id="Cource" name="CuisneTypes">
+                      <select [(ngModel)]="this.selectedCouseID"
+                        (change)="this.GetSelectedCouseRecipes(this.selectedCouseID)" class="form-control" id="Cource"
+                        name="CuisneTypes">
                         <option value="0"></option>
                         <option *ngFor="let i of this.modelWrapper.Courses" [ngValue]="i.RefId">
                           {{ i.RefDescription }}
@@ -218,11 +216,13 @@
                     <div class="form-group">
                       <br />
                       <div class="btn-group">
-                        <button [disabled]="this.selectedRecipeID==0" (click)="this.AddLinkRecipe(this.selectedRecipeID)"
-                          type="button" class="form-control btn btn-primary">
+                        <button [disabled]="this.selectedRecipeID==0"
+                          (click)="this.AddLinkRecipe(this.selectedRecipeID)" type="button"
+                          class="form-control btn btn-primary">
                           <span class="fa fa-plus"></span>
                         </button>
-                        <button (click)="this.AutoBuild()" type="button" class="form-control btn btn-warning"> Auto Build
+                        <button (click)="this.AutoBuild()" type="button" class="form-control btn btn-warning"> Auto
+                          Build
                         </button>
                       </div>
 
@@ -231,44 +231,46 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-12" >
+                  <div class="col-md-12">
                     <div style="max-height: 25vh;overflow-y: scroll;">
                       <table class="table ">
-                      <thead>
-                        <th>Assosicated Recipe</th>
-                        <th>X Rec.</th>
-                        <th>Clac Note</th>
-                        <th></th>
-                      </thead>
-                      <tbody>
-                        <tr (dblclick)="open(content,i);" *ngFor="  let i of this.modelOrder.RecipeOrderLink;  let index = index " class="table-hover">
-                          <td>
-                            {{i.Recipe.RecipeName}}
-                          </td>
-                          <td>
-                            <input [(ngModel)]="i.NumReq" id="NumReq{{index}}" name="NumReq{{index}}" type="number" numeric
-                              decimals="2" class="form-control" placeholder="X Rec." />
-                          </td>
-                          <td>
-                            <input [(ngModel)]="i.CalcNote" id="CalcNote{{index}}" name="CalcNote{{index}}" type="text"
-                              class="form-control" placeholder="TherNoteTitle" />
-                          </td>
-                          <td>
-                            <div class="btn-group">
-                              <button (click)="this.DeleteLinkRecipe(i.ROLinkId)" type="button"
-                                class="form-control btn btn-danger">
-                                <span class="fa fa-trash"></span>
-                              </button>
+                        <thead>
+                          <th>Assosicated Recipe</th>
+                          <th>X Rec.</th>
+                          <th>Clac Note</th>
+                          <th></th>
+                        </thead>
+                        <tbody>
+                          <tr (dblclick)="open(content,i);"
+                            *ngFor="  let i of this.modelOrder.RecipeOrderLink;  let index = index "
+                            class="table-hover">
+                            <td>
+                              {{i.Recipe.RecipeName}}
+                            </td>
+                            <td>
+                              <input [(ngModel)]="i.NumReq" id="NumReq{{index}}" name="NumReq{{index}}" type="number"
+                                numeric decimals="2" class="form-control" placeholder="X Rec." />
+                            </td>
+                            <td>
+                              <input [(ngModel)]="i.CalcNote" id="CalcNote{{index}}" name="CalcNote{{index}}"
+                                type="text" class="form-control" placeholder="TherNoteTitle" />
+                            </td>
+                            <td>
+                              <div class="btn-group">
+                                <button (click)="this.DeleteLinkRecipe(i.ROLinkId)" type="button"
+                                  class="form-control btn btn-danger">
+                                  <span class="fa fa-trash"></span>
+                                </button>
 
-                            </div>
+                              </div>
 
-                          </td>
-                        </tr>
-                        <tr *ngIf="this.modelOrder.RecipeOrderLink?.length == 0">
-                          <td class="datanotfound" colspan="4">Data Not Found</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                            </td>
+                          </tr>
+                          <tr *ngIf="this.modelOrder.RecipeOrderLink?.length == 0">
+                            <td class="datanotfound" colspan="4">Data Not Found</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
 
                   </div>
@@ -280,7 +282,11 @@
 
           <div class="container-fluid mt-3 rounded" style="background-color: #ecf0f4;">
             <div class="row">
+
+
               <div class="col-md-12">
+                <div style="max-height: 100vh; overflow-y: scroll;">
+
                 <table class="table ">
                   <thead>
                     <th>Product Name</th>
@@ -295,8 +301,8 @@
                     <th>QPS</th>
                     <th>Ext. Price</th>
                     <th>
-                      <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary" data-title="Edit"
-                        data-toggle="modal" data-target="#edit">
+                      <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary"
+                        data-title="Edit" data-toggle="modal" data-target="#edit">
                         <span class="fa fa-plus"></span>
                       </button>
 
@@ -325,19 +331,21 @@
                         </select>
                       </td>
                       <td>
-                        <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}" type="number"
-                          class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)" placeholder="UnitPrice"
-                          numeric decimals="2" />
+                        <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}"
+                          type="number" class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)"
+                          placeholder="UnitPrice" numeric decimals="2" />
                       </td>
                       <td>
                         <input [(ngModel)]="i.Quantity" type="number"
-                          (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2" id="QuantityEEE{{ index }}"
-                          name="QuantityEEE{{ index }}" class="form-control" placeholder="Quantity" />
+                          (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2"
+                          id="QuantityEEE{{ index }}" name="QuantityEEE{{ index }}" class="form-control"
+                          placeholder="Quantity" />
                       </td>
 
                       <td>
-                        <input [(ngModel)]="i.Yield" id="Yieldxxxx{{ index }}" name="Yieldxxxx{{ index }}" type="number" class="form-control"
-                          (ngModelChange)="i.Yield = $event === null ? 0 : $event" placeholder="Yield" numeric decimals="2" />
+                        <input [(ngModel)]="i.Yield" id="Yieldxxxx{{ index }}" name="Yieldxxxx{{ index }}" type="number"
+                          class="form-control" (ngModelChange)="i.Yield = $event === null ? 0 : $event"
+                          placeholder="Yield" numeric decimals="2" />
                       </td>
                       <td>{{i.Quantity}}</td>
                       <td>{{ (i.UnitPrice * i.Quantity).toFixed(2) }}</td>
@@ -350,12 +358,15 @@
                         </button>
                       </td>
                     </tr>
-                    <tr *ngIf="this.modelOrder.OrderDetails?.length == 0 || this.modelOrder.OrderDetails?.length == null  ">
+                    <tr
+                      *ngIf="this.modelOrder.OrderDetails?.length == 0 || this.modelOrder.OrderDetails?.length == null  ">
                       <td class="datanotfound" colspan="12">Data not found</td>
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </div>
+
             </div>
           </div>
 
@@ -449,10 +460,9 @@
 
   </div>
   <div class="modal-body">
-    <app-recipe recipeIDFromMain= "{{  this.doubleclickRecipeID }}"></app-recipe>
+    <app-recipe recipeIDFromMain="{{  this.doubleclickRecipeID }}"></app-recipe>
   </div>
   <div class="modal-footer">
 
   </div>
 </ng-template>
-

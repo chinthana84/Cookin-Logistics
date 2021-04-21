@@ -1,16 +1,20 @@
+import { filter } from 'rxjs/operators';
+import { TypeheadService } from './../../_shared/_services/typehead.service';
 import { HttpClient } from '@angular/common/http';
 import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { inject } from '@angular/core/testing';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { RecipeGrid } from 'src/app/models/Grid/recipe-grid.model';
 import { GridType } from 'src/app/models/gridType.enum';
 import { Order } from 'src/app/models/order.model';
 import { Product } from 'src/app/models/product.model';
 import { Recipe, RecipeDetailsDTO, RecipeOrderLinkDTO } from 'src/app/models/recipe.model';
 import { RefTable } from 'src/app/models/reftable.model';
+import { TypeHeadSearchDTO } from 'src/app/models/typeheadSearchDTO.model';
 import { IMyGrid, Wrapper } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { MyproductServiceService } from 'src/app/_shared/product-dialog/myproduct-service.service';
@@ -53,6 +57,13 @@ export class RecipeComponent implements OnInit {
   };
 
 
+  model: any;
+  searching = false;
+  searchFailed = false;
+  formatter = (x: TypeHeadSearchDTO) => x.Name
+  formatterx = (x: TypeHeadSearchDTO) => x.Name;
+
+
 
   constructor(
     private http: HttpClient,
@@ -62,13 +73,14 @@ export class RecipeComponent implements OnInit {
     private confirmDialogService: ConfirmDialogService,
     private commonService: CommonService,
     private gridService: GridService,
-    public myproductServiceService: MyproductServiceService
+    public myproductServiceService: MyproductServiceService,
+    private typeheadService: TypeheadService
   ) {
     this.edited = true;
   }
 
   ngOnInit(): void {
-    debugger
+
     this.setPage(this.gridOption.searchObject);
 
     if (this.recipeIDFromMain > 0) {
@@ -90,11 +102,12 @@ export class RecipeComponent implements OnInit {
     else {
 
       this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
-        debugger
+
         if (params.id == 0) {
           this.edited = true;
           this.modelRecipe = new Recipe();
           this.modelRecipe.RecipeDetails = []
+          this.model = {};
 
           let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
           let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
@@ -111,6 +124,7 @@ export class RecipeComponent implements OnInit {
 
         } else if (params.id > 0) {
           this.edited = true;
+          this.model = {};
           let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + params.id);
           let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
           let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
@@ -212,11 +226,11 @@ export class RecipeComponent implements OnInit {
         }
         else {
           this.toastr.success(environment.dataSaved);
-          if(this.recipeIDFromMain ==0){
-           this.router.navigate(['recipes']);
-          this.setPage(this.gridOption.searchObject);
+          if (this.recipeIDFromMain == 0) {
+            this.router.navigate(['recipes']);
+            this.setPage(this.gridOption.searchObject);
           }
-          else{
+          else {
             this.commonService.Saved();
           }
         }
@@ -244,7 +258,7 @@ export class RecipeComponent implements OnInit {
   public AddAssosiatedOrders(): void {
     var obj = new RecipeOrderLinkDTO();
     obj.RecipeId = this.modelRecipe.RecipeId;
- 
+
 
     if (this.modelRecipe.RecipeOrderLink == undefined) {
       this.modelRecipe.RecipeOrderLink = [];
@@ -317,6 +331,62 @@ export class RecipeComponent implements OnInit {
   AddProdutDialog(prod_id: number, recipe_det_id: number) {
     this.workingRecipeDetID = recipe_det_id;
     this.myproductServiceService.ProductPopup(this.modelWrapper, prod_id, 0);
+  }
+
+
+  searchItems = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      filter(r => r.length > 3),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap(term =>
+        this.typeheadService.TypeHeadSearch(term, 1)
+          .pipe(
+            tap(() => {
+              this.searchFailed = false;
+            }),
+            catchError(() => {
+              this.searchFailed = true;
+              return of([]);
+            }))
+      ),
+      tap(() => this.searching = false)
+    )
+
+  selectedItem(ID: any) {
+
+    let id = this.activatedRoute.snapshot.queryParams["id"];
+    if (id == "0") {
+
+
+      let a = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetByID/` + ID.item.ID);
+      let b = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`)
+      let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
+
+      this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
+        
+        let id = this.activatedRoute.snapshot.queryParams["id"];
+
+
+        this.modelRecipe = results[0]
+        this.modelWrapper = results[1];
+        this.modelOrders = results[2]
+        this.onChangeYieldUnit();
+        if (id == "0") {
+          this.modelRecipe.RecipeId = 0;
+        }
+
+
+      }, (error) => {
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+    }
+    else {
+      this.router.navigate(["/recipes/edit"], { queryParams: { id: ID.item.ID } });
+    }
+
+
   }
 
 

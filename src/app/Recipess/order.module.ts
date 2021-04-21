@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { OrderComponent } from './order/order/order.component';
 
 import { RecipeOrderReportsComponent } from './recipe-order-reports/recipe-order-reports.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -29,9 +30,10 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule ,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    NgbModule
   ],
- 
+
   exports: [RecipeComponent,OrderComponent]
 })
   export class OrderModule { }
