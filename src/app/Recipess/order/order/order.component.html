@@ -14,7 +14,7 @@
       </th>
     </thead>
     <tbody>
-      <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover">
+      <tr *ngFor="let item of gridOption.datas.pagedItems;let index = index" class="table-hover" (click)="Action(item)">
         <td>{{ item.OrderDescription }}</td>
         <td>{{ item.StudentNumbers }}</td>
         <td>{{ item.ReqStudentNumbers }}</td>
