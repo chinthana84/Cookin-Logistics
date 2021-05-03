@@ -60,11 +60,11 @@
               <div class="col-md-6">
 
                 <div class="row mt-3">
-                  <div class="col-md-4">
+                  <div *ngIf="!this.isNew" class="col-md-4">
                     <div class="form-group">
                       <label for="Cource">All Orders</label>
                       <!-- (change)="this.GetOrderByID()" -->
-                      <select [(ngModel)]="this.selectedOrderIDRRRRR" class="form-control" id="selectedOrderIuouioDXXX"
+                      <select  [(ngModel)]="this.selectedOrderIDRRRRR" class="form-control" id="selectedOrderIuouioDXXX"
                         (change)="this.GetOrderByID()" name="oiioioi">
                         <option value="0"></option>
                         <option *ngFor="let i of this.orders" [value]="i.OrderId">

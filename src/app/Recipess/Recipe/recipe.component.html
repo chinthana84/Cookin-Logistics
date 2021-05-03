@@ -370,8 +370,8 @@
                       <thead>
                         <th>Product</th>
                         <th>Standard</th>
-                        <th>Unit</th>
-                        <th>Unit Price </th>
+                        <!-- <th>Unit</th>
+                        <th>Unit Price </th> -->
                         <th>Changed Unit</th>
                         <th>Unit Price</th>
                         <th>Yield%</th>
@@ -401,15 +401,15 @@
                             <input [(ngModel)]="i.Quantity" id="Quantity{{ index }}" name="Quantity{{ index }}"
                               class="form-control" placeholder="Quantity"
                               (ngModelChange)="i.Quantity = $event === null ? 0 : $event" type="number" numeric
-                              decimals="2" maxlength="10" />
+                              decimals="3" maxlength="10" />
                           </td>
-                          <td>
+                          <!-- <td>
                             {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
                           </td>
-                          <td>
+                           <td>
                             $ {{this.getProductObject(i.ProductId)?.UnitPrice || 0}}
-                          </td>
-                          <td>
+                          </td> -->
+                            <td>
                             <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnits{{ index }}"
                               name="ChangedProdUnits{{ index }}">
 
@@ -422,22 +422,24 @@
                             <input [(ngModel)]="i.UnitPrice" id="UnitPrice2xxxx{{ index }}"
                               name="UnitPrice2xxx{{ index }}" type="number" class="form-control"
                               (ngModelChange)="unitPriceDefaultValues($event,i)" placeholder="UnitPrice" numeric
-                              decimals="2" />
+                              decimals="3" />
                           </td>
                           <td>
                             <input [(ngModel)]="i.Yield" id="Yieldxxx{{ index }}" name="Yieldxxx{{ index }}" numeric
-                              decimals="2" type="text" class="form-control" placeholder="Yield" />
+                              decimals="3" type="text" class="form-control" placeholder="Yield" />
                           </td>
                           <td>
                             {{(i.Quantity * 100)/i.Yield}}
 
                           <td>
                             <!-- $ {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }} -->
-                            $ {{ (((i.Quantity * 100)/i.Yield)* ( i.UnitPrice)).toFixed(2)}}
+                            $ {{ (((i.Quantity * 100)/i.Yield)* ( i.UnitPrice)).toFixed(3)}}
                           </td>
                           <td>QPP</td>
-                          <td>{{ (i.Quantity/this.modelRecipe.StandardPortions).toFixed(2)}}</td>
-                          <td>{{ i.Product?.Hrfood }}</td>
+                          <td>{{ (i.Quantity/this.modelRecipe.StandardPortions).toFixed(3)}}</td>
+                          <td>
+                            <input id="Hrfood{{ index }}" name="Hrfood{{ index }}" disabled  [checked]="i.Product?.Hrfood" type="checkbox"/>
+                            <!-- {{ i.Product?.Hrfood }}</td> -->
                           <td>
                             <input [(ngModel)]="i.ProdNote" id="ProdNote{{ index }}" name="ProdNote{{ index }}"
                               type="text" class="form-control" placeholder="ProdNote" />
@@ -449,8 +451,7 @@
                             </button>
                           </td>
                         </tr>
-                        <tr
-                          *ngIf="this.modelRecipe.RecipeDetails?.length == 0 || this.modelRecipe.RecipeDetails?.length == null  ">
+                        <tr  *ngIf="this.modelRecipe.RecipeDetails?.length == 0 || this.modelRecipe.RecipeDetails?.length == null  ">
                           <td class="datanotfound" colspan="15">Data not found</td>
                         </tr>
                       </tbody>

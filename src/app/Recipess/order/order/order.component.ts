@@ -81,6 +81,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 
     this.subs.sink = this.commonService.IsSavedCurrentStatus().subscribe(r => {
+      debugger;
       this.mr.close();
       location.reload();
     }, (error) => {
@@ -96,6 +97,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.modelOrder.OrderDetails = [];
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
       } else if (params.id > 0) {
+        this.isNew=false;
         this.edited = true;
         this.selectedOrderIDRRRRR = params.id;
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
@@ -125,14 +127,16 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   GetOrderByID() {
 
-    this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + this.selectedOrderIDRRRRR).subscribe(r => {
-      this.modelOrder = r;
-    },
-      (error) => {
-        this.confirmDialogService.messageBox(environment.APIerror);
-        this.errorHandler.handleError(error);
-      });
-    // this.router.navigate(['/orders/edit'], { queryParams: { id: this.selectedOrderID } });
+    this.router.navigate(['/orders/edit'], { queryParams: { id: this.selectedOrderIDRRRRR } });
+
+    // this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + this.selectedOrderIDRRRRR).subscribe(r => {
+    //   this.modelOrder = r;
+    // },
+    //   (error) => {
+    //     this.confirmDialogService.messageBox(environment.APIerror);
+    //     this.errorHandler.handleError(error);
+    //   });
+
 
   }
 
@@ -340,7 +344,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   doubleclickRecipeID: number = 0;
 
   open(content, obj: any) {
-    
+
     this.doubleclickRecipeID = obj.RecipeId;
     this.mr = this.modalService.open(content, { size: 'xl' });
   }

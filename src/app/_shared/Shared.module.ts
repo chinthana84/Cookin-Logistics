@@ -16,6 +16,7 @@ import { ProductPoDialogComponent } from './product-po-dialog/product-po-dialog.
 import { ProductPoDialogService } from './product-po-dialog/product-po-dialog.service';
 import { AuthGuard } from './guard/auth-guard.service';
 import { JwtModule } from "@auth0/angular-jwt";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: 'common', component: CommonViewerComponent },
@@ -37,6 +38,7 @@ export function tokenGetter() {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
   exports: [SearchComponent, PagerComponent, BreadCrumbComponent, NumericDirective
     , ProductDialogComponent, ProductPoDialogComponent]

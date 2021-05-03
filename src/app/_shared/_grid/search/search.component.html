@@ -29,10 +29,18 @@
     <div class="col-md-6 col-sm-5 form-horizontal">
       <div class="form-group">
         <div class="col-md-12 col-sm-12">
-          <input id="textinput" name="textinput" type="text" [(ngModel)]="searchText" placeholder="Search Text" class="form-control">
+          <input id="textinput" [(ngModel)]="this.searchText" name="textinput" type="text"   placeholder="Search Text" class="form-control"
+
+          />
         </div>
       </div>
     </div>
+
+    <!-- [(ngModel)]="model" [resultFormatter]= "formatter" [inputFormatter]="formatterx"
+
+          [ngbTypeahead]="searchItems" -->
+
+    <!-- [resultFormatter]= "formatter" [inputFormatter]="formatterx" -->
 
     <div class="col-md-2 col-sm-12 form-horizontal">
       <div class="form-group">

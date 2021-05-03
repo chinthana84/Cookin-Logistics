@@ -14,7 +14,10 @@ export class TypeheadService {
 
 
   TypeHeadSearch(term: string,id:number) {
+    debugger
     return this.http
       .get<TypeHeadSearchDTO[]>(`${environment.APIEndpoint}/Token/TypeHeadSearch/${term}/${id}` );
   }
+
+ 
 }
