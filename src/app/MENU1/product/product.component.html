@@ -84,7 +84,7 @@
                     <label for="Unit">Unit Price($)</label>
                     <input id="Unit" name="Unit" [(ngModel)]="model.UnitPrice" type="number"
                      (ngModelChange)="model.UnitPrice = $event === null ? 0 : $event"
-                     numeric decimals="2" maxlength="10" class="form-control"
+                     numeric decimals="3" maxlength="10" class="form-control"
                       placeholder="Unit Price" />
                   </div>
                 </div>
@@ -227,7 +227,7 @@
             <thead>
               <tr>
                 <th>OrderID</th>
-                <th>Lession Topic</th>
+                <th>Lesson Topic</th>
               </tr>
               <tr *ngFor="let ii of this.modelWrapper.Orders">
                 <td>{{ii.OrderDescription }} </td>

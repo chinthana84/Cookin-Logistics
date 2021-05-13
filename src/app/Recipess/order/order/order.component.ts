@@ -1,5 +1,6 @@
+import { RefTable } from './../../../models/reftable.model';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -19,13 +20,12 @@ import { CommonService } from 'src/app/_shared/_services/common.service';
 import { ErrorHandlerService } from 'src/app/_shared/_services/error-handler.service';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
-
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit, OnDestroy {
+export class OrderComponent implements OnInit, OnDestroy, AfterViewInit {
   private subs = new SubSink();
   edited: boolean = false;
   modelOrder: Order = {};
@@ -38,7 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   selectedOrderIDRRRRR: number = 0;
 
-  isNew:boolean=false;
+  isNew: boolean = false;
 
   gridOption: GridOptions = {
     datas: {},
@@ -70,14 +70,17 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.errorHandler.handleError(error);
       });
   }
+  ngAfterViewInit() {
 
+
+  }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.isNew=false;
-    this.setPage(this.gridOption.searchObject);
+    // this.isNew = false;
+    // this.setPage(this.gridOption.searchObject);
 
 
     this.subs.sink = this.commonService.IsSavedCurrentStatus().subscribe(r => {
@@ -90,14 +93,15 @@ export class OrderComponent implements OnInit, OnDestroy {
     });
 
     this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
+      debugger
       if (params.id == 0) {
-        this.isNew=true;
+        this.isNew = true;
         this.edited = true;
         this.modelOrder = new Order();
         this.modelOrder.OrderDetails = [];
         this.subs.sink = this.http.get<any>(`${environment.APIEndpoint}/Recipe/GetAllRefs`).subscribe((data) => { this.modelWrapper = data; });
       } else if (params.id > 0) {
-        this.isNew=false;
+        this.isNew = false;
         this.edited = true;
         this.selectedOrderIDRRRRR = params.id;
         let a = this.http.get<any>(`${environment.APIEndpoint}/order/GetByID/` + params.id);
@@ -110,7 +114,8 @@ export class OrderComponent implements OnInit, OnDestroy {
           this.errorHandler.handleError(error);
         });
       } else {
-        this.edited = false;
+        this.router.navigate(['/orders/edit'], { queryParams: { id: 0 } });
+        this.selectedOrderIDRRRRR = 0;
       }
     });
     this.subs.sink = this.myproductServiceService.getSelectedProduct().subscribe(message => { this.AddOrderLine(message); });
@@ -145,6 +150,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   Action(obj: OrdersGridDTO) {
     if (obj == undefined) {
       this.router.navigate(['/orders/edit'], { queryParams: { id: 0 } });
+      this.selectedOrderIDRRRRR = 0;
     }
     else {
       this.router.navigate(['/orders/edit'], { queryParams: { id: obj.OrderId } });
@@ -213,8 +219,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   onSubmit(obj: Order) {
 
-    if(this.isNew){
-      obj.isNew=true;
+    if (this.selectedOrderIDRRRRR === 0) {
+      obj.isNew = true;
     }
     this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Order/Save`, obj, {})
@@ -233,7 +239,8 @@ export class OrderComponent implements OnInit, OnDestroy {
             });
 
           this.toastr.success(environment.dataSaved);
-          this.router.navigate(['orders']);
+          // this.router.navigate(['orders']);
+          this.router.navigate(['/orders/edit'], { queryParams: { id: 0 } });
           this.setPage(this.gridOption.searchObject);
         }
       }, (error) => {
@@ -321,6 +328,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         .post<any>(`${environment.APIEndpoint}/Order/OrderDetailAutoBuild`, this.modelOrder.RecipeOrderLink, {})
         .subscribe((data) => {
           this.modelOrder.OrderDetails = data;
+        
         }, (error) => {
 
           this.confirmDialogService.messageBox(environment.APIerror)
@@ -348,6 +356,23 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.doubleclickRecipeID = obj.RecipeId;
     this.mr = this.modalService.open(content, { size: 'xl' });
   }
+
+  getPerLesson() {
+    let total = 0;
+    this.modelOrder?.OrderDetails?.forEach(i => {
+      total = total +  ((((i.Quantity/ this.modelOrder.StudentNumbers )/ (i.Yield/100)) *this.modelOrder.ReqStudentNumbers ) *  i.UnitPrice);
+    });
+    return total.toFixed(3);
+  }
+
+  getPerStudent() {
+    let total = 0;
+    this.modelOrder?.OrderDetails?.forEach(i => {
+      total = total + (((i.UnitPrice * i.Quantity)/this.modelOrder.StudentNumbers)/(i.Yield/100));
+    });
+    return total.toFixed(3);
+  }
+
 
 
 }

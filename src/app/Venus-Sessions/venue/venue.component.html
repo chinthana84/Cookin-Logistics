@@ -54,7 +54,7 @@
         <label for="Capacity">Capacity</label>
         <input id="Capacity" name="Capacity" [(ngModel)]="model.Capacity"
         (ngModelChange)="model.Capacity = $event === null ? 0 : $event"
-        type="number" numeric decimals="2" maxlength="10"
+        type="number" numeric decimals="3" maxlength="10"
         class="form-control"
           placeholder="Capacity" />
       </div>

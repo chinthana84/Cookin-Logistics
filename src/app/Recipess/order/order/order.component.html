@@ -1,4 +1,4 @@
-<div id="safsdf" *ngIf="!this.edited">
+<!-- <div id="safsdf" *ngIf="!this.edited">
   <app-search (searchClicked)="setPage($event)" [search]="this.gridOption.searchObject"></app-search>
 
   <table class="table ">
@@ -35,12 +35,12 @@
   </table>
 
   <app-pager (pagedClicked)="setPage($event)" [pagerX]="gridOption"></app-pager>
-</div>
+</div> -->
 
 
 <div class="row mt-2">
   <div class="col-md-12">
-    <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelOrder)" novalidate #heroForm="ngForm">
+    <form (ngSubmit)="onSubmit(this.modelOrder)" novalidate #heroForm="ngForm">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="" data-target="#home">Header</a>
@@ -60,13 +60,13 @@
               <div class="col-md-6">
 
                 <div class="row mt-3">
-                  <div *ngIf="!this.isNew" class="col-md-4">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="Cource">All Orders</label>
                       <!-- (change)="this.GetOrderByID()" -->
-                      <select  [(ngModel)]="this.selectedOrderIDRRRRR" class="form-control" id="selectedOrderIuouioDXXX"
+                      <select [(ngModel)]="this.selectedOrderIDRRRRR" class="form-control" id="selectedOrderIuouioDXXX"
                         (change)="this.GetOrderByID()" name="oiioioi">
-                        <option value="0"></option>
+                        <option value="0">---New---</option>
                         <option *ngFor="let i of this.orders" [value]="i.OrderId">
                           {{ i.OrderDescription }}
                         </option>
@@ -249,7 +249,7 @@
                             </td>
                             <td>
                               <input [(ngModel)]="i.NumReq" id="NumReq{{index}}" name="NumReq{{index}}" type="number"
-                                numeric decimals="2" class="form-control" placeholder="X Rec." />
+                                numeric decimals="3" class="form-control" placeholder="X Rec." />
                             </td>
                             <td>
                               <input [(ngModel)]="i.CalcNote" id="CalcNote{{index}}" name="CalcNote{{index}}"
@@ -287,83 +287,93 @@
               <div class="col-md-12">
                 <div style="max-height: 100vh; overflow-y: scroll;">
 
-                <table class="table ">
-                  <thead>
-                    <th>Product Name</th>
-                    <th>Unit</th>
-                    <th>Unit Price</th>
-                    <th>Change Unit</th>
-                    <th>Unit Price</th>
-                    <th>Quantity</th>
-                    <th>Yield</th>
-                    <th>Update</th>
-                    <th>Cost</th>
-                    <th>QPS</th>
-                    <th>Ext. Price</th>
-                    <th>
-                      <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary"
-                        data-title="Edit" data-toggle="modal" data-target="#edit">
-                        <span class="fa fa-plus"></span>
-                      </button>
+                  <table class="table ">
+                    <thead>
+                      <th>No</th>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <!-- <th>Unit</th>
+                      <th>Unit Price</th> -->
+                      <th>Change Unit</th>
+                      <th>Unit Price</th>
 
-                    </th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
-                      <td>
-                        <button class="btn btn-secondary" type="button"
-                          (click)="this.AddProdutDialog(i.ProductId,i.OrderDetailsId)">
-                          {{i.Product.ProductName}}
+                      <th>Yield</th>
+                      <th>Update</th>
+                      <th>Cost</th>
+                      <th>QPS</th>
+                      <th>Ext. Price</th>
+                      <th>
+                        <button (click)="this.AddProdutDialog(0,0)" type="button" class="btn btn-primary"
+                          data-title="Edit" data-toggle="modal" data-target="#edit">
+                          <span class="fa fa-plus"></span>
                         </button>
-                      </td>
-                      <td>
-                        {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
-                      </td>
-                      <td>
-                        $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
-                      </td>
-                      <td>
-                        <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnitsXXXXXX{{ index }}"
-                          name="ChangedProdUnitsXXXXXX{{ index }}">
-                          <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
-                            {{ j.RefDescription }}
-                          </option>
-                        </select>
-                      </td>
-                      <td>
-                        <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}"
-                          type="number" class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)"
-                          placeholder="UnitPrice" numeric decimals="2" />
-                      </td>
-                      <td>
-                        <input [(ngModel)]="i.Quantity" type="number"
-                          (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="2"
-                          id="QuantityEEE{{ index }}" name="QuantityEEE{{ index }}" class="form-control"
-                          placeholder="Quantity" />
-                      </td>
 
-                      <td>
-                        <input [(ngModel)]="i.Yield" id="Yieldxxxx{{ index }}" name="Yieldxxxx{{ index }}" type="number"
-                          class="form-control" (ngModelChange)="i.Yield = $event === null ? 0 : $event"
-                          placeholder="Yield" numeric decimals="2" />
-                      </td>
-                      <td>{{i.Quantity}}</td>
-                      <td>{{ (i.UnitPrice * i.Quantity).toFixed(2) }}</td>
-                      <td>{{ (i.Quantity/ this.modelOrder.StudentNumbers ).toFixed(2) }}</td>
-                      <td> {{ ((i.UnitPrice * i.Quantity)/this.modelOrder.StudentNumbers).toFixed(2)}}</td>
-                      <td>
-                        <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId,i.guid)"
-                          class="btn btn-danger btn-sm">
-                          <span class="fa fa-trash"></span>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr
-                      *ngIf="this.modelOrder.OrderDetails?.length == 0 || this.modelOrder.OrderDetails?.length == null  ">
-                      <td class="datanotfound" colspan="12">Data not found</td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </th>
+                    </thead>
+                    <tbody>
+               <tr *ngFor="  let i of this.modelOrder.OrderDetails;  let index = index " class="table-hover">
+
+                        <td>{{ index+1 }}</td>
+                          <td>
+                            <button class="btn btn-secondary" type="button"
+                              (click)="this.AddProdutDialog(i.ProductId,i.OrderDetailsId)">
+                              {{i.Product.ProductName}}
+                            </button>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="i.Quantity" type="number"
+                              (ngModelChange)="i.Quantity = $event === null ? 0 : $event" numeric decimals="3"
+                              id="QuantityEEE{{ index }}" name="QuantityEEE{{ index }}" class="form-control"
+                              placeholder="Quantity" />
+                          </td>
+                          <!-- <td>
+                            {{ this.getProductObject(i.ProductId)?.ProdUnit?.RefDescription }}
+                          </td>
+                          <td>
+                            $ {{ this.getProductObject(i.ProductId)?.UnitPrice }}
+                          </td> -->
+                          <td>
+                            <select [(ngModel)]="i.ProdUnitId" class="form-control" id="ChangedProdUnitsXXXXXX{{ index }}"
+                              name="ChangedProdUnitsXXXXXX{{ index }}">
+                              <option *ngFor="let j of this.modelWrapper.ProdUnits" [ngValue]="j.RefId">
+                                {{ j.RefDescription }}
+                              </option>
+                            </select>
+                          </td>
+                          <td>
+                            <input [(ngModel)]="i.UnitPrice" id="UnitPrice2{{ index }}" name="UnitPrice2{{ index }}"
+                              type="number" class="form-control" (ngModelChange)="unitPriceDefaultValues($event,i)"
+                              placeholder="UnitPrice" numeric decimals="3" />
+                          </td>
+
+
+                          <td>
+                            <input [(ngModel)]="i.Yield" id="Yieldxxxx{{ index }}" name="Yieldxxxx{{ index }}"
+                              type="number" class="form-control" (ngModelChange)="i.Yield = $event === null ? 0 : $event"
+                              placeholder="Yield" numeric decimals="3" />
+                          </td>
+                         <td>{{(((i.Quantity/ this.modelOrder.StudentNumbers )/ (i.Yield/100)) *this.modelOrder.ReqStudentNumbers).toFixed(3)}}</td>  <!-- update -->
+                          <td>{{ ((((i.Quantity/ this.modelOrder.StudentNumbers )/ (i.Yield/100)) *this.modelOrder.ReqStudentNumbers ) *  i.UnitPrice).toFixed(3)}}</td>   <!-- cost -->
+                          <td>{{ ((i.Quantity/ this.modelOrder.StudentNumbers )/ (i.Yield/100)) .toFixed(3) }}</td> <!-- QPS -->
+                          <td> {{ (((i.UnitPrice * i.Quantity)/this.modelOrder.StudentNumbers)/(i.Yield/100)).toFixed(3)}}</td> <!-- ext price -->
+                          <td>
+                            <button type="button" (click)="this.deleteOrderLine(i.OrderDetailsId,i.guid)"
+                              class="btn btn-danger btn-sm">
+                              <span class="fa fa-trash"></span>
+                            </button>
+                          </td>
+                        </tr>
+
+                        <tr
+                          *ngIf="this.modelOrder.OrderDetails?.length == 0 || this.modelOrder.OrderDetails?.length == null  ">
+                          <td class="datanotfound" colspan="13">Data not found</td>
+                        </tr>
+
+
+
+                    </tbody>
+                  </table>
+
                 </div>
               </div>
 
@@ -437,13 +447,18 @@
         </div>
 
         <br />
+        <div class="clearfix">
+          <div class="float-right h2">Per Lesson :{{this.getPerLesson() }}  <br />Per Student :{{this.getPerStudent() }} </div>
+
+        </div>
         <div class="btn-group">
           <button type="submit" class="btn btn-primary save_button">
             <span class="fa fa-save"></span>
           </button>
-          <button type="button" (click)="router.navigate(['orders']);" class="btn btn-primary back_button">
+
+          <!-- <button type="button" (click)="router.navigate(['orders']);" class="btn btn-primary back_button">
             <span class="fa fa-arrow-left"></span>
-          </button>
+          </button> -->
         </div>
 
 

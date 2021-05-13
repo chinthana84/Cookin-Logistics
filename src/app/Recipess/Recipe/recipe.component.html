@@ -97,7 +97,7 @@
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.StandardPortions"
                           (ngModelChange)="this.modelRecipe.StandardPortions = $event === null ? 0 : $event"
-                          type="number" numeric decimals="2" maxlength="10" id="StandardPortions"
+                          type="number" numeric decimals="3" maxlength="10" id="StandardPortions"
                           name="StandardPortions" class="form-control" placeholder="StandardPortions" />
                       </label>
                     </div>
@@ -124,7 +124,7 @@
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.ReqPortions" id="Reference" name="ReqPortions"
                           (ngModelChange)="this.modelRecipe.ReqPortions = $event === null ? 0 : $event" type="number"
-                          numeric decimals="2" maxlength="10" class="form-control" placeholder="ReqPortions" />
+                          numeric decimals="3" maxlength="10" class="form-control" placeholder="ReqPortions" />
                       </label>
                     </div>
 
@@ -150,7 +150,7 @@
                     <div class="col-md-6">
                       <label class="form-check-label">
                         <input [(ngModel)]="this.modelRecipe.YieldNumber" id="YieldNumber1" name="YieldNumber1"
-                          type="text" numeric decimals="2" class="form-control" placeholder="YieldNumber" />
+                          type="text" numeric decimals="3" class="form-control" placeholder="YieldNumber" />
                       </label>
                     </div>
                     <div class="col-md-6">
@@ -429,7 +429,7 @@
                               decimals="3" type="text" class="form-control" placeholder="Yield" />
                           </td>
                           <td>
-                            {{(i.Quantity * 100)/i.Yield}}
+                            {{((i.Quantity * 100)/i.Yield).toFixed(3)}}
 
                           <td>
                             <!-- $ {{ ((i.Quantity * 100)/i.Yield)*this.getProductObject(i.ProductId)?.UnitPrice }} -->

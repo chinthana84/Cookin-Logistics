@@ -8,6 +8,8 @@ import { OrderComponent } from './order/order/order.component';
 
 import { RecipeOrderReportsComponent } from './recipe-order-reports/recipe-order-reports.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VirtualScrollModule } from 'angular2-virtual-scroll';
+import { VirtualScrollerModule } from 'ngx-virtual-scroller';
 
 
 const routes: Routes = [
@@ -31,7 +33,8 @@ const routes: Routes = [
     ReactiveFormsModule ,
     RouterModule.forChild(routes),
     SharedModule,
-    NgbModule
+    NgbModule,
+    VirtualScrollerModule
   ],
 
   exports: [RecipeComponent,OrderComponent]

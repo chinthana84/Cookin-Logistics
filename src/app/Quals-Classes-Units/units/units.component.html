@@ -167,7 +167,7 @@
                         </a>
                       </div>
                       <div class="col-md-1">
-                        <input id="Pcnum" numeric decimals="2" name="{{index}}Pcnum{{itemPC.PCsGuid}}"
+                        <input id="Pcnum" numeric decimals="3" name="{{index}}Pcnum{{itemPC.PCsGuid}}"
                           [(ngModel)]="itemPC.Pcnum" type="number"
                           (ngModelChange)="model.Pcnum = $event === null ? 0 : $event"
                           class="form-control" placeholder="Pcnum" />
