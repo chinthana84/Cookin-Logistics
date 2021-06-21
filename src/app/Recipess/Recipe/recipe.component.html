@@ -42,7 +42,8 @@
 <app-product-dialog></app-product-dialog>
 <div class="row mt-2">
   <div class="col-md-12">
-    <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelRecipe)" novalidate #heroForm="ngForm">
+    <!-- <form *ngIf="this.edited" (ngSubmit)="onSubmit(this.modelRecipe)" novalidate #heroForm="ngForm"> -->
+      <form *ngIf="this.edited"  novalidate #heroForm="ngForm">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -477,7 +478,7 @@
 
         <br />
         <div *ngIf="this.recipeIDFromMain ==0" class="btn-group">
-          <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+          <button  type="submit"    (click)="onSubmit(this.modelRecipe)"   class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
           <button type="button" class="btn btn-primary  " data-toggle="modal" data-target="#exampleModalCenter"> <span
               class="fa fa-print"></span> </button>
 
@@ -485,7 +486,7 @@
               class="fa fa-arrow-left"></span> </button>
         </div>
         <div *ngIf="this.recipeIDFromMain > 0" class="btn-group">
-          <button type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
+          <button  type="submit" class="btn btn-primary save_button"> <span class="fa fa-save"></span> </button>
         </div>
       </div>
     </form>

@@ -40,7 +40,7 @@
 
 <div class="row mt-2">
   <div class="col-md-12">
-    <form (ngSubmit)="onSubmit(this.modelOrder)" novalidate #heroForm="ngForm">
+    <form novalidate #heroForm="ngForm">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" data-toggle="tab" href="" data-target="#home">Header</a>
@@ -452,7 +452,7 @@
 
         </div>
         <div class="btn-group">
-          <button type="submit" class="btn btn-primary save_button">
+          <button  type="button"   (click)="onSubmit(this.modelOrder)"     class="btn btn-primary save_button">
             <span class="fa fa-save"></span>
           </button>
 

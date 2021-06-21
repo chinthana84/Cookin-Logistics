@@ -17,6 +17,8 @@ import { ProductPoDialogService } from './product-po-dialog/product-po-dialog.se
 import { AuthGuard } from './guard/auth-guard.service';
 import { JwtModule } from "@auth0/angular-jwt";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DisableButtonAfterClickDirective } from './directive/disableafterclick.directive';
+import { PreventDoubleSubmitModule } from 'ngx-prevent-double-submission';
 
 const routes: Routes = [
   { path: 'common', component: CommonViewerComponent },
@@ -32,16 +34,17 @@ export function tokenGetter() {
   declarations: [SearchComponent, PagerComponent, BreadCrumbComponent,
     NumericDirective, InternalServerComponent, CommonViewerComponent,
     ProductDialogComponent,
-    ProductPoDialogComponent, ProductPoDialogComponent],
+    ProductPoDialogComponent, ProductPoDialogComponent,DisableButtonAfterClickDirective],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    PreventDoubleSubmitModule.forRoot()
   ],
   exports: [SearchComponent, PagerComponent, BreadCrumbComponent, NumericDirective
-    , ProductDialogComponent, ProductPoDialogComponent]
+    , ProductDialogComponent, ProductPoDialogComponent,DisableButtonAfterClickDirective]
   , providers: [GridService, MyproductServiceService, ProductPoDialogService]
 })
 export class SharedModule { }

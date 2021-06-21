@@ -35,6 +35,7 @@ import { PoModule } from './po/po.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './_shared/guard/auth-guard.service';
+import { PreventDoubleSubmitModule } from 'ngx-prevent-double-submission';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -92,7 +93,7 @@ export function tokenGetter() {
     QuliClassUniModule,
     OrderTotalsModule,
     PoModule,
-    NgbModule
+    NgbModule 
 
   ],
   exports:[NgbModule],
