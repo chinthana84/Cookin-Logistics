@@ -10,6 +10,7 @@ import { RecipeOrderReportsComponent } from './recipe-order-reports/recipe-order
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VirtualScrollModule } from 'angular2-virtual-scroll';
 import { VirtualScrollerModule } from 'ngx-virtual-scroller';
+import { PreventDoubleSubmitModule } from 'ngx-prevent-double-submission';
 
 
 const routes: Routes = [

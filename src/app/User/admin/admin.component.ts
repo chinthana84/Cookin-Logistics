@@ -64,10 +64,10 @@ export class AdminComponent implements OnInit {
         this.edited = true;
         this.newUser=false;
         this.subs.sink=    this.http
-          .get<any>(`${environment.APIEndpoint}/User/GetUserRightsByUserID/` + params.id)
+          .get<any>(`${environment.APIEndpoint}/Admin/GetUserRightsByUserID/` + params.id)
           .subscribe((data) => {
             this.modelUserRights = data;
-           
+
           }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror)
           });
@@ -103,7 +103,7 @@ export class AdminComponent implements OnInit {
   onSubmit() {
 
     this.subs.sink=   this.http
-      .post<any>(`${environment.APIEndpoint}/User/SaveRights`, this.modelUserRights, {})
+      .post<any>(`${environment.APIEndpoint}/Admin/SaveRights`, this.modelUserRights, {})
       .subscribe((data) => {
         if (data.IsValid == false) {
           this.confirmDialogService.messageListBox(data.ValidationMessages)
@@ -122,7 +122,7 @@ export class AdminComponent implements OnInit {
 
   SaveUser(){
     this.subs.sink=   this.http
-    .post<any>(`${environment.APIEndpoint}/User/SaveUser`, this.modelUserDetails, {})
+    .post<any>(`${environment.APIEndpoint}/Ad,om/SaveUser`, this.modelUserDetails, {})
     .subscribe((data) => {
       if (data.IsValid == false) {
         this.confirmDialogService.messageListBox(data.ValidationMessages)

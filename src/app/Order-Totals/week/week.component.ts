@@ -82,7 +82,7 @@ export class WeekComponent implements OnInit {
 
       } else {
 
-        
+
       }
     });
   }
@@ -110,6 +110,8 @@ export class WeekComponent implements OnInit {
           }
           else {
             this.toastr.success(environment.dataSaved);
+            location.reload()
+
           }
         }, (error) => {
           this.confirmDialogService.messageBox(environment.APIerror)
@@ -132,6 +134,7 @@ export class WeekComponent implements OnInit {
         }
         else {
           this.toastr.success(environment.dataSaved);
+          location.reload();
         }
       }, (error) => {
         this.confirmDialogService.messageBox(environment.APIerror)
