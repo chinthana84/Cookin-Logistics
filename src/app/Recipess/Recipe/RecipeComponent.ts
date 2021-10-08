@@ -307,6 +307,7 @@ export class RecipeComponent implements OnInit {
 
     var obj = new RecipeDetailsDTO();
     obj.RecipeId = this.modelRecipe.RecipeId;
+    obj.Yield=100
 
     if (this.workingRecipeDetID > 0) {
 
