@@ -131,7 +131,7 @@ export class RecipeComponent implements OnInit {
           let c = this.http.get<any>(`${environment.APIEndpoint}/Order/GetAllOrders`)
 
           this.subs.sink = forkJoin([a, b, c]).subscribe(results => {
-           
+
             this.modelRecipe = results[0]
             this.modelWrapper = results[1];
             this.modelOrders = results[2]
@@ -220,6 +220,7 @@ export class RecipeComponent implements OnInit {
   }
 
   onSubmit(obj: Recipe) {
+    debugger
     this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Recipe/Save`, obj, {})
       .subscribe((data) => {
