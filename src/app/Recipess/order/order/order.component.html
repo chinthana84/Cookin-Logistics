@@ -221,7 +221,7 @@
                           class="form-control btn btn-primary">
                           <span class="fa fa-plus"></span>
                         </button>
-                        <button (click)="this.AutoBuild()" type="button" class="form-control btn btn-warning"> Auto
+                        <button (click)="this.AutoBuild()" *ngIf='this.modelOrder?.RecipeOrderLink?.length >0' type="button" class="form-control btn btn-warning"> Auto
                           Build
                         </button>
                       </div>
