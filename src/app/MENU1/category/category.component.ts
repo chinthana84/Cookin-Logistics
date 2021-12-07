@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -5,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Categories } from 'src/app/models/categories.model';
 import { GridType } from 'src/app/models/gridType.enum';
+import { Product } from 'src/app/models/product.model';
 import { IMyGrid } from 'src/app/models/wrapper.model';
 import { ConfirmDialogService } from 'src/app/_shared/confirm-dialog/confirm-dialog.service';
 import { GridService } from 'src/app/_shared/_grid/grid-service/grid.service';
@@ -23,6 +25,7 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
   edited: boolean = false;
   private subs = new SubSink();
   model: Categories = {};
+  relatedProducts:Product[]=[];
 
   gridOption: GridOptions = {
     datas: {},
@@ -57,17 +60,28 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
     this.subs.sink =  this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
-
+        this.relatedProducts = [];
         this.model = new Categories();
       } else if (params.id > 0) {
         this.edited = true;
         this.subs.sink =  this.http
           .get<any>(`${environment.APIEndpoint}/Common/GetCategoryByID/` + params.id)
           .subscribe((data) => {
+
             this.model = data;
           }, (error) => {
             this.confirmDialogService.messageBox(environment.APIerror)
           });
+
+          this.subs.sink =  this.http
+          .get<any>(`${environment.APIEndpoint}/Product/GetProductsByCategory/` + params.id)
+          .subscribe((data) => {
+            this.relatedProducts = data;
+            console.log(data)
+          }, (error) => {
+            this.confirmDialogService.messageBox(environment.APIerror)
+          });
+
       } else {
         this.edited = false;
       }
@@ -112,4 +126,26 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
 
   }
 
+  SaveAllRelatedProductsPrice(){
+    debugger
+
+  if(this.relatedProducts.filter(r=> r.UnitPrice.toString()=='').length >0 ){
+    this.confirmDialogService.messageBox("Invalid price found");
+    return
+  }
+
+    this.subs.sink = this.http
+      .post<any>(`${environment.APIEndpoint}/Product/SaveAllRelatedProductsPrice`, this.relatedProducts, {})
+      .subscribe((data) => {
+        if (data.IsValid == false) {
+          this.confirmDialogService.messageListBox(data.ValidationMessages)
+        }
+        else {
+          this.toastr.success(environment.dataSaved);
+        }
+      }, (error) => {
+
+        this.confirmDialogService.messageBox(environment.APIerror)
+      });
+  }
 }
