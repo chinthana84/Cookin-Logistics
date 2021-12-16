@@ -1,5 +1,5 @@
 import { filter } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -15,17 +15,18 @@ import { SearchObject } from 'src/app/_shared/_grid/gridModels/searchObject.mode
 import { CommonService } from 'src/app/_shared/_services/common.service';
 import { environment } from 'src/environments/environment';
 import { SubSink } from 'subsink';
+import { FileUploadeService } from 'src/app/_shared/_services/file-uploade.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
-export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
+export class CategoryComponent implements OnInit, IMyGrid, OnDestroy {
   edited: boolean = false;
   private subs = new SubSink();
   model: Categories = {};
-  relatedProducts:Product[]=[];
+  relatedProducts: Product[] = [];
 
   gridOption: GridOptions = {
     datas: {},
@@ -46,25 +47,27 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
     public commonService: CommonService,
     private http: HttpClient, public router: Router,
     private activatedRoute: ActivatedRoute, private toastr: ToastrService,
-    private confirmDialogService: ConfirmDialogService
+    private confirmDialogService: ConfirmDialogService,
+    public fileUploadeService: FileUploadeService
   ) {
     this.edited = false
   }
   ngOnDestroy(): void {
-   this.subs.unsubscribe();
+    this.subs.unsubscribe();
+
   }
 
   ngOnInit(): void {
     this.setPage(this.gridOption.searchObject);
 
-    this.subs.sink =  this.activatedRoute.queryParams.subscribe((params) => {
+    this.subs.sink = this.activatedRoute.queryParams.subscribe((params) => {
       if (params.id == 0) {
         this.edited = true;
         this.relatedProducts = [];
         this.model = new Categories();
       } else if (params.id > 0) {
         this.edited = true;
-        this.subs.sink =  this.http
+        this.subs.sink = this.http
           .get<any>(`${environment.APIEndpoint}/Common/GetCategoryByID/` + params.id)
           .subscribe((data) => {
 
@@ -73,7 +76,7 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
             this.confirmDialogService.messageBox(environment.APIerror)
           });
 
-          this.subs.sink =  this.http
+        this.subs.sink = this.http
           .get<any>(`${environment.APIEndpoint}/Product/GetProductsByCategory/` + params.id)
           .subscribe((data) => {
             this.relatedProducts = data;
@@ -89,7 +92,7 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
   }
 
   setPage(obj: SearchObject) {
-    this.subs.sink =    this.gridService.getGridData(obj).subscribe((data) => {
+    this.subs.sink = this.gridService.getGridData(obj).subscribe((data) => {
       this.gridOption.datas = data;
     }, (error) => {
       this.confirmDialogService.messageBox(environment.APIerror)
@@ -126,13 +129,59 @@ export class CategoryComponent implements OnInit, IMyGrid,OnDestroy {
 
   }
 
-  SaveAllRelatedProductsPrice(){
+
+  DownloadExcel() {
+
+    this.http.get(`${environment.APIEndpoint}/File/Excel/` + this.model.CategoryId
+      , {
+        responseType: 'blob'
+      }).subscribe(x => {
+        debugger
+        const url = window.URL.createObjectURL(x);
+        window.open(url);
+      });
+  }
+
+
+  addFile(event): void {
+    debugger
+    let fileList: FileList = event.target.files;
+    let self=this;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+      this.fileUploadeService
+        .upload(file).subscribe((res) => {
+          const param = new HttpParams({ fromObject: { path: res.UploadFileName, categoryid: self.model.CategoryId.toString()} });
+          this.subs.sink = this.http
+            .get<any>(`${environment.APIEndpoint}/File/UploadFileExcel`, { params: param })
+            .subscribe((data) => {
+              if (data.IsValid == false) {
+                this.confirmDialogService.messageListBox(data.ValidationMessages)
+                event.target.value = null;
+              }
+              else {
+                this.toastr.success(environment.dataSaved);
+                event.target.value = null;
+              }
+            }, (error) => {
+              this.confirmDialogService.messageBox(environment.APIerror)
+              event.target.value = null;
+            });
+        }, (error) => { this.confirmDialogService.messageBox(environment.APIerror)
+          event.target.value = null;
+         });
+    }
+  }
+
+  SaveAllRelatedProductsPrice() {
     debugger
 
-  if(this.relatedProducts.filter(r=> r.UnitPrice.toString()=='').length >0 ){
-    this.confirmDialogService.messageBox("Invalid price found");
-    return
-  }
+    if (this.relatedProducts.filter(r => r.UnitPrice.toString() == '').length > 0) {
+      this.confirmDialogService.messageBox("Invalid price found");
+      return
+    }
 
     this.subs.sink = this.http
       .post<any>(`${environment.APIEndpoint}/Product/SaveAllRelatedProductsPrice`, this.relatedProducts, {})

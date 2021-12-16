@@ -66,22 +66,56 @@
 
 
       <div class="col-md-6">
-        <button *ngIf="this.relatedProducts.length >0" type="button" (click)="SaveAllRelatedProductsPrice()"  class="btn btn-primary save_button"> Save All Related Products</button>
+        <div id="accordion">
 
-        <!-- <ul *ngFor="let item of this.relatedProducts; let index=index" >
-          <li>{{item.ProductName}}</li>
-          <li><input type="text" id="sdfsdf{{index}}" name="dsdfsdfsdfsdfsdf{{index}}" [(ngModel)]="item.UnitPrice"/></li>
-        </ul> -->
-
-        <div class="row mt-2" *ngFor="let item of this.relatedProducts; let index=index">
-            <div class="col-md-6">
-              <label for="CategoryName">{{item.ProductName}}</label>
-
+          <div class="card">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                Export and Import price list
+              </a>
             </div>
-            <div class="col-md-6">
-              <input numeric decimals="3" maxlength="10" type="text" id="sdfsdf{{index}}" name="dsdfsdfsdfsdfsdf{{index}}" [(ngModel)]="item.UnitPrice"/>
+            <div id="collapseOne" class="collapse show" data-parent="#accordion">
+              <div class="card-body">
+                <button *ngIf="this.relatedProducts.length >0" type="button" (click)="DownloadExcel()"  class="btn btn-primary save_button"> DownloadExcel</button>
+               <br /><br /> <input name="fileuploader{{index}}" type="file" (change)="  this.addFile($event)" />
+              </div>
             </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                Update price list
+              </a>
+            </div>
+            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+              <div class="card-body">
+                <button *ngIf="this.relatedProducts.length >0" type="button" (click)="SaveAllRelatedProductsPrice()"  class="btn btn-primary save_button"> Save All Related Products</button>
+
+
+
+                <div class="row mt-2" *ngFor="let item of this.relatedProducts; let index=index">
+                    <div class="col-md-6">
+                      <label for="CategoryName">{{item.ProductName}}</label>
+
+                    </div>
+                    <div class="col-md-3">
+                      <input numeric decimals="3" maxlength="10" type="text" id="sdfsdf{{index}}" name="dsdfsdfsdfsdfsdf{{index}}" [(ngModel)]="item.UnitPrice"/>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="CategoryName">{{item.ProdUnit.RefDescription}}</label>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
         </div>
+
+
+
 
       </div>
 
