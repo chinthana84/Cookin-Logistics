@@ -43,6 +43,10 @@
             <button (click)="this.AddNewLine(null)" type="button" class="btn btn-primary btn-xs" data-title="Edit"
               data-toggle="modal" data-target="#edit">
               <span class="fa fa-plus"></span></button>
+              <button (click)="Copy()">Copy</button>
+              <button *ngIf="this.copyYearID>0" (click)="Paste()">Paste</button>
+              <button *ngIf="this.model.length" (click)="deleteAllLine()">Delete all</button>
+               <button *ngIf="this.model.length" (click)="saveALLLine()">Save all</button>
           </th>
         </thead>
         <tbody>

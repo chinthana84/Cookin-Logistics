@@ -12,6 +12,8 @@ export   class RequistionSummary
     public   FirstMondayId ? :number=0
 
     public IsDeleted?:Boolean=false;
+
+    public guid:string='';
 }
 
 

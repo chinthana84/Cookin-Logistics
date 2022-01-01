@@ -95,6 +95,7 @@ export class WeekComponent implements OnInit {
 
   AddNewLine(objx: RequistionSummary){
     var obj = new RequistionSummary();
+    obj.guid=this.commonService.newGuid();
     this.model.push(obj);
   }
 
@@ -118,16 +119,70 @@ export class WeekComponent implements OnInit {
         });
   }
 
+
+  saveALLLine(){
+
+
+    this.subs.sink=   this.http
+        .post<any>(`${environment.APIEndpoint}/common/saveALLLine`, this.model, {})
+        .subscribe((data) => {
+          if (data.IsValid == false) {
+            this.confirmDialogService.messageListBox(data.ValidationMessages)
+          }
+          else {
+            this.toastr.success(environment.dataSaved);
+            location.reload()
+
+          }
+        }, (error) => {
+          this.confirmDialogService.messageBox(environment.APIerror)
+        });
+  }
+
   deleteLine(obj:RequistionSummary){
-    if (obj.ReqSumEntryId ===0){
-      this.model = this.model.filter(item => item.ReqSumEntryId != 0);
+
+    if (obj.ReqSumEntryId > 0){
+
+
+      this.confirmDialogService.confirmThis("Are you sure to delete?", ()=>{
+        obj.IsDeleted=true;
+        this.subs.sink=   this.http
+        .post<any>(`${environment.APIEndpoint}/common/SaveRequisition`, obj, {})
+        .subscribe((data) => {
+          if (data.IsValid == false) {
+            this.confirmDialogService.messageListBox(data.ValidationMessages)
+          }
+          else {
+            this.toastr.success(environment.dataSaved);
+            location.reload();
+          }
+        }, (error) => {
+          this.confirmDialogService.messageBox(environment.APIerror)
+        });
+      },
+      function () { })
+
+
+    }
+
+    else  {
+      this.model = this.model.filter(item => item.guid != obj.guid);
       return;
     }
 
+
+
+
+  }
+
+  deleteAllLine(){
+
+    this.model = this.model.filter(item => item.ReqSumEntryId != 0);
+
     this.confirmDialogService.confirmThis("Are you sure to delete?", ()=>{
-      obj.IsDeleted=true;
+
       this.subs.sink=   this.http
-      .post<any>(`${environment.APIEndpoint}/common/SaveRequisition`, obj, {})
+      .post<any>(`${environment.APIEndpoint}/common/DeleteAllRequisition`, this.model, {})
       .subscribe((data) => {
         if (data.IsValid == false) {
           this.confirmDialogService.messageListBox(data.ValidationMessages)
@@ -144,5 +199,53 @@ export class WeekComponent implements OnInit {
 
 
   }
+
+
+  copyWeekID:number;
+  copyYearID:number;
+
+  Copy(){
+    debugger
+    this.copyWeekID=this.selectedWeekID;
+    this.copyYearID=this.selectedYear;
+  }
+
+  Paste(){
+
+    if(this.model.length>0){
+      this.confirmDialogService.messageBox("to work on copy/paste , need to delete all the current records.")
+      return;
+    }
+
+    debugger
+    let c = this.http.get<any>(`${environment.APIEndpoint}/Common/GetAllReftsForRequisitionSummary`);
+    let d = this.http.get<any>(`${environment.APIEndpoint}/Common/getWeeksData/${this.copyYearID}/${this.copyWeekID}` )
+    let e = this.http.get<any>(`${environment.APIEndpoint}/Common/GetWeekDays/${this.selectedYear}/${this.selectedWeekID}` )
+    let f = this.http.get<any>(`${environment.APIEndpoint}/Common/GetRequitionStatistics/${this.copyYearID}/${this.copyWeekID}` )
+    this.subs.sink =      forkJoin([c,d,e,f]).subscribe(results => {
+
+      this.modelWrapper=results[0];
+      this.model = results[1];
+      this.weekDays= results[2];
+      this.summaryWrapper=results[3];
+
+
+
+    this.model.forEach(r => {
+      r.ReqSumEntryId=0;
+      r.ReqDate=null;
+      r.guid=this.commonService.newGuid();
+      r.WeekId=this.selectedWeekID;
+      r.FirstMondayId=this.selectedYear;
+    });
+
+    this.copyWeekID=0;
+    this.copyYearID=0;
+
+    }, (error) => {
+      this.confirmDialogService.messageBox(environment.APIerror)
+    });
+
+}
 
 }
